@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import { Router } from '@reach/router';
 import Article from './components/Article';
+import Main from './components/Main';
 
 class App extends Component {
   render() {
@@ -13,9 +14,8 @@ class App extends Component {
       <div className="App">
         <Nav />
         <Router>
-          <Articles path='/' />
-          <Articles path='/topics/:topic' />
-          <Article path='/topics/:topic/:article_id' />
+          <Main path='/*' />
+          <Main path='/topics/:topic' />
         </Router>
         <Sidebar />
         <Footer />

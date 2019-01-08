@@ -1,11 +1,4 @@
 .head {
-  grid-area: head;
-  border: 1px solid rgba(0, 0, 255, 1);
-  background-color: rgba(0, 0, 255, 0.1)
-}
-
-.main {
-  grid-area: main;
-  border: 1px solid rgba(255, 0, 0, 1);
-  background-color: rgba(255, 0, 0, 0.1)
+  border: 1px solid rgba(150, 50, 255, 1);
+  background-color: rgba(150, 50, 255, 0.1)
 }

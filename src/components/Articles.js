@@ -12,17 +12,7 @@ class Articles extends Component {
     const { articles } = this.state;
     return (
       <React.Fragment>
-        <div>
-          <header className="head">
-            <h1>{
-              this.props.topic
-                ? this.props.topic[0].toUpperCase() + this.props.topic.slice(1)
-                : 'Home'
-            }</h1>
-          </header>
-        </div>
         <div className="main" >
-          <p><u>Articles</u></p>
           {articles.map(article => <p><Link to={`${article.article_id}`} key={article.article_id}>{article.title}</Link></p>)}
         </div>
       </React.Fragment>
