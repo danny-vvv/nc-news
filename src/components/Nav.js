@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import './Nav.css';
+import { Link } from '@reach/router';
 
 class Nav extends Component {
   render() {
     return (
       <nav>
-        <span>NavLink1</span>
-        <span>NavLink2</span>
-        <span>NavLink3</span>
+        <Link to='/'>NC NEWS</Link>
+        <Link to='/topics/cooking'>Cooking</Link>
+        <Link to='/topics/coding'>Coding</Link>
+        <Link to='topics/football'>Football</Link>
       </nav >
     );
+  }
+
+  handleClick() {
+
   }
 }
 
