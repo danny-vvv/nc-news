@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Articles.css';
+import { Link } from '@reach/router';
 import * as api from '../api';
 
 class Articles extends Component {
@@ -13,7 +14,6 @@ class Articles extends Component {
       <React.Fragment>
         <div>
           <header className="head">
-            {console.log(this.props)}
             <h1>{
               this.props.topic
                 ? this.props.topic[0].toUpperCase() + this.props.topic.slice(1)
@@ -23,7 +23,7 @@ class Articles extends Component {
         </div>
         <div className="main" >
           <p><u>Articles</u></p>
-          {articles.map(article => <p key={article.article_id}>{article.title}</p>)}
+          {articles.map(article => <p><Link to={`${article.article_id}`} key={article.article_id}>{article.title}</Link></p>)}
         </div>
       </React.Fragment>
     );

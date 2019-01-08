@@ -8,3 +8,9 @@ export const fetchArticles = async (topic) => {
     : await axios.get(`${BASE_URL}/articles`);
   return data;
 }
+
+export const fetchArticle = async (articleId) => {
+  console.log('HELLO')
+  const { data } = await axios.get(`${BASE_URL}/articles/${articleId}`);
+  return data;
+}
