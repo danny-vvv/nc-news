@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Articles.css';
 import { Link } from '@reach/router';
+import * as api from '../api';
 
 class Articles extends Component {
   state = {
@@ -28,36 +29,8 @@ class Articles extends Component {
   }
 
   fetchArticles(topic) {
-    if (topic === 'cooking') {
-      this.setState({
-        articles: [{
-          title: "Seafood substitutions are increasing",
-          article_id: 33
-        },
-        {
-          title: "Twice-Baked Butternut Squash Is the Thanksgiving Side Dish of Your Dreams",
-          article_id: 30
-        },
-        {
-          title: "Sweet potato & butternut squash soup with lemon & garlic toast",
-          article_id: 25
-        }]
-      })
-    } else if (topic === 'coding') {
-      this.setState({
-        articles: [{
-          title: 'CODING!!',
-          article_id: 2
-        }]
-      })
-    } else if (topic === 'football') {
-      this.setState({
-        articles: [{
-          title: 'FOOTBALL!',
-          article_id: 3
-        }]
-      })
-    }
+    api.fetchArticles(topic)
+      .then(({ articles }) => this.setState({ articles: articles }))
   }
 }
 
