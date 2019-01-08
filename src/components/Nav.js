@@ -9,8 +9,8 @@ class Nav extends Component {
         <Link to='/'>NC NEWS</Link>
         <Link to='/topics/cooking'>Cooking</Link>
         <Link to='/topics/coding'>Coding</Link>
-        <Link to='topics/football'>Football</Link>
-      </nav >
+        <Link to='/topics/football'>Football</Link>
+      </nav>
     );
   }
 

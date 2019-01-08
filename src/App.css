@@ -1,9 +1,9 @@
 .App {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr 1fr 4fr 1fr;
+  grid-template-rows: 1fr 10fr 1fr;
   grid-template-areas:  'nav nav' 
-                        'head head' 
+                        /* 'head head'  */
                         'main sidebar' 
                         'footer footer';
 }
