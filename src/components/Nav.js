@@ -13,10 +13,6 @@ class Nav extends Component {
       </nav>
     );
   }
-
-  handleClick() {
-
-  }
 }
 
 export default Nav;

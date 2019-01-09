@@ -5,18 +5,36 @@ import Articles from './Articles';
 import Article from './Article';
 
 class Main extends Component {
+  state = {
+    currentTopic: this.props.topic
+  }
   render() {
     return (
       <div className='main'>
-        {console.log('TOPIC on Main >>>', this.props.topic)}
-        <Header heading={this.props.topic} />
+        <Header heading={this.state.currentTopic} />
         <Router>
           <Articles path='/' />
           <Articles path='/topics/:topic' />
-          <Article path='/topics/:topic/:article_id' />
+          <Article path='/articles/:article_id' />
         </Router>
       </div>
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.setCurrentTopicInState(prevProps, prevState)
+  }
+
+  setCurrentTopicInState(prevProps, prevState) {
+    if (prevState.currentTopic !== this.props.topic) {
+      if (this.props.topic) { this.setState({ currentTopic: this.props.topic }) }
+      else {
+        if (this.props['*'] === '' && this.state.currentTopic !== 'Home') {
+          this.setState({ currentTopic: 'Home' })
+        }
+      }
+    }
+
   }
 }
 

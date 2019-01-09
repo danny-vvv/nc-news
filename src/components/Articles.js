@@ -13,7 +13,7 @@ class Articles extends Component {
     return (
       <React.Fragment>
         <div className="main" >
-          {articles.map(article => <p><Link to={`${article.article_id}`} key={article.article_id}>{article.title}</Link></p>)}
+          {articles.map(article => <p key={article.article_id}><Link to={`/articles/${article.article_id}`}>{article.title}</Link></p>)}
         </div>
       </React.Fragment>
     );
