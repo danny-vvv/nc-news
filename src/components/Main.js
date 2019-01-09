@@ -10,14 +10,14 @@ class Main extends Component {
   }
   render() {
     return (
-      <div className='main'>
+      <section>
         <Header heading={this.state.currentTopic} />
         <Router>
           <Articles path='/' />
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />
         </Router>
-      </div>
+      </section>
     );
   }
 
@@ -34,7 +34,6 @@ class Main extends Component {
         }
       }
     }
-
   }
 }
 

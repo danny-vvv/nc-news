@@ -13,3 +13,8 @@ export const fetchArticle = async (articleId) => {
   const { data } = await axios.get(`${BASE_URL}/articles/${articleId}`);
   return data;
 }
+
+export const fetchComments = async (articleId) => {
+  const { data } = await axios.get(`${BASE_URL}/articles/${articleId}/comments`)
+  return data;
+}

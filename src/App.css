@@ -1,7 +1,7 @@
 .App {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-rows: 50px 1fr 50px;
   grid-template-areas:  'nav nav' 
                         'main sidebar' 
                         'footer footer';

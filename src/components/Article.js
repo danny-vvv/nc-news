@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../api';
 import './Article.css';
+import Comments from './Comments';
 
 class Article extends Component {
   state = {
@@ -9,10 +10,11 @@ class Article extends Component {
   render() {
     const { title, body, author } = this.state.article;
     return (
-      <div className='main'>
-        <p>{title}</p>
+      <div className='article'>
+        <h2>{title}</h2>
         <p>by {author}</p>
         <p>{body}</p>
+        <Comments articleId={this.props.article_id} />
       </div>
     );
   }

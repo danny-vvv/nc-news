@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <Nav />
-        <Router>
+        <Router className='main'>
           <Main path='/*' />
           <Main path='/topics/:topic' />
         </Router>
@@ -20,7 +20,6 @@ class App extends Component {
       </div>
     );
   }
-
 }
 
 export default App;
