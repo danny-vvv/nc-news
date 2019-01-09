@@ -5,33 +5,47 @@ import * as api from '../api';
 
 class Articles extends Component {
   state = {
-    articles: []
+    articles: [],
+    page: 1
   }
 
   render() {
     const { articles } = this.state;
+    console.log(this.state)
     return (
       <React.Fragment>
         <div>
-          {articles.map(article => <p key={article.article_id}><Link to={`/articles/${article.article_id}`}>{article.title}</Link></p>)}
+          <button onClick={() => this.changePage(-1)}>Previous</button>
+          <button onClick={() => this.changePage(1)}>Next</button>
+          {articles.map(article =>
+            <p key={article.article_id}>
+              <Link to={`/articles/${article.article_id}`}>
+                {article.title}
+              </Link>
+            </p>
+          )}
         </div>
       </React.Fragment>
     );
   }
 
   componentDidMount() {
-    this.fetchArticles(this.props.topic)
+    this.fetchArticles()
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.topic !== this.props.topic) {
-      this.fetchArticles(this.props.topic)
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.topic !== this.props.topic || this.state.page !== prevState.page) {
+      this.fetchArticles()
     }
   }
 
-  fetchArticles(topic) {
-    api.fetchArticles(topic)
+  fetchArticles() {
+    api.fetchArticles(this.props.topic, this.state.page)
       .then(({ articles }) => this.setState({ articles: articles }))
+  }
+
+  changePage(increment) {
+    this.setState({ page: Math.max(this.state.page + increment, 1) })
   }
 }
 

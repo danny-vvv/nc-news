@@ -32,7 +32,7 @@ class Article extends Component {
 
   fetchArticle(topic) {
     api.fetchArticle(topic)
-      .then(({ article }) => this.setState({ article: article }))
+      .then((article) => this.setState({ article: article }))
   }
 }
 
