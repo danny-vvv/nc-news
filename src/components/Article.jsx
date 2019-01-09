@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as api from '../api';
 import './Article.css';
 import Comments from './Comments';
+import { Link } from '@reach/router';
 
 class Article extends Component {
   state = {
@@ -12,7 +13,7 @@ class Article extends Component {
     return (
       <div className='article'>
         <h2>{title}</h2>
-        <p>by {author}</p>
+        <p>by <Link to={`/users/${author}`}>{author}</Link></p>
         <p>{body}</p>
         <Comments articleId={this.props.article_id} />
       </div>

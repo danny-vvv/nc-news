@@ -3,6 +3,7 @@ import { Router } from '@reach/router';
 import Header from './Header';
 import Articles from './Articles';
 import Article from './Article';
+import User from './User';
 
 class Main extends Component {
   state = {
@@ -16,6 +17,7 @@ class Main extends Component {
           <Articles path='/' />
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />
+          <User path='/users/:username' />
         </Router>
       </section>
     );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Comments.css';
 import * as api from '../api';
+import { Link } from '@reach/router';
 
 class Comments extends Component {
   state = {
@@ -14,7 +15,7 @@ class Comments extends Component {
         <h3>Comments:</h3>
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
-            <p>{comment.votes} votes | {comment.author} | {comment.created_at}</p>
+            <p>{comment.votes} votes | <Link to={`/users/${comment.author}`}>{comment.author}</Link> | {comment.created_at}</p>
             <p>{comment.body}</p>
             <p>---</p>
           </React.Fragment>
