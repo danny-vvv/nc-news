@@ -8,16 +8,17 @@ import Main from './components/Main';
 
 class App extends Component {
   state = {
-    username: ''
+    username: '',
+    userId: ''
   }
 
   render() {
-    const { username } = this.state;
+    const { username, userId } = this.state;
     return (
       <div className="App">
         <Nav username={username} />
         <Router className='main'>
-          <Main path='/*' changeLoginState={this.changeLoginState} username={username} />
+          <Main path='/*' changeLoginState={this.changeLoginState} username={username} userId={userId} />
           <Main path='/topics/:topic' />
         </Router>
         <Sidebar />
@@ -26,10 +27,10 @@ class App extends Component {
     );
   }
 
-  changeLoginState = (username, loggedIn) => {
+  changeLoginState = (username, userId) => {
     this.setState({
       username,
-      loggedIn
+      userId
     })
   }
 }

@@ -33,3 +33,13 @@ export const fetchTopics = async () => {
   const { data } = await axios.get(`${BASE_URL}/topics`);
   return data;
 }
+
+export const postArticle = async (topic, title, body, user_id) => {
+  const { data } = await axios.post(`${BASE_URL}/topics/${topic}/articles`, {
+    title,
+    body,
+    user_id
+  })
+  console.log(data)
+  return data;
+}

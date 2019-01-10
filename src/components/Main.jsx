@@ -12,6 +12,7 @@ class Main extends Component {
     currentTopic: this.props.topic
   }
   render() {
+    const { username, userId } = this.props;
     return (
       <section>
         <Header heading={this.state.currentTopic} />
@@ -21,7 +22,7 @@ class Main extends Component {
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />
           <User path='/users/:username' />
-          <Submit path='/submit' username={this.props.username} changeLoginState={this.props.changeLoginState} />
+          <Submit path='/submit' username={username} userId={userId} changeLoginState={this.props.changeLoginState} />
         </Router>
       </section>
     );
