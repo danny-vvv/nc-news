@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
 import Header from './Header';
+import Login from './Login';
 import Articles from './Articles';
 import Article from './Article';
 import User from './User';
@@ -15,6 +16,7 @@ class Main extends Component {
       <section>
         <Header heading={this.state.currentTopic} />
         <Router>
+          <Login path='/login' changeLoginState={this.props.changeLoginState} />
           <Articles path='/' />
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />

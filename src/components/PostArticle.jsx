@@ -30,10 +30,6 @@ class PostArticle extends Component {
     this.fetchTopics();
   }
 
-  componentDidUpdate() {
-    console.log('Update! State: ', this.state)
-  }
-
   fetchTopics() {
     api.fetchTopics().then(({ topics }) => this.setState({ topics: topics }))
   }

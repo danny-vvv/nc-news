@@ -12,7 +12,6 @@ class Articles extends Component {
 
   render() {
     const { articles } = this.state;
-    console.log(this.state)
     return (
       <React.Fragment>
         <div>

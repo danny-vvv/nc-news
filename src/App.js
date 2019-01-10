@@ -7,18 +7,29 @@ import { Router } from '@reach/router';
 import Main from './components/Main';
 
 class App extends Component {
+  state = {
+    username: ''
+  }
+
   render() {
     return (
       <div className="App">
-        <Nav />
+        <Nav username={this.state.username} />
         <Router className='main'>
-          <Main path='/*' />
+          <Main path='/*' changeLoginState={this.changeLoginState} />
           <Main path='/topics/:topic' />
         </Router>
         <Sidebar />
         <Footer />
       </div>
     );
+  }
+
+  changeLoginState = (username, loggedIn) => {
+    this.setState({
+      username,
+      loggedIn
+    })
   }
 }
 
