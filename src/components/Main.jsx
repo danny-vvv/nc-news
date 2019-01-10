@@ -4,6 +4,7 @@ import Header from './Header';
 import Articles from './Articles';
 import Article from './Article';
 import User from './User';
+import PostArticle from './PostArticle';
 
 class Main extends Component {
   state = {
@@ -18,6 +19,7 @@ class Main extends Component {
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />
           <User path='/users/:username' />
+          <PostArticle path='/submit' />
         </Router>
       </section>
     );
