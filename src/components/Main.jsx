@@ -5,7 +5,7 @@ import Login from './Login';
 import Articles from './Articles';
 import Article from './Article';
 import User from './User';
-import PostArticle from './PostArticle';
+import Submit from './Submit';
 
 class Main extends Component {
   state = {
@@ -21,7 +21,7 @@ class Main extends Component {
           <Articles path='/topics/:topic' />
           <Article path='/articles/:article_id' />
           <User path='/users/:username' />
-          <PostArticle path='/submit' />
+          <Submit path='/submit' username={this.props.username} changeLoginState={this.props.changeLoginState} />
         </Router>
       </section>
     );

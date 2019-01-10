@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as api from '../api';
 
-class PostArticle extends Component {
+class SubmitForm extends Component {
   state = {
     topics: []
   }
@@ -35,4 +35,4 @@ class PostArticle extends Component {
   }
 }
 
-export default PostArticle;
+export default SubmitForm;
