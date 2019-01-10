@@ -6,7 +6,8 @@ import * as api from '../api';
 class Articles extends Component {
   state = {
     articles: [],
-    page: 1
+    page: 1,
+    onLastPage: false,
   }
 
   render() {
@@ -15,8 +16,8 @@ class Articles extends Component {
     return (
       <React.Fragment>
         <div>
-          <button onClick={() => this.changePage(-1)}>Previous</button>
-          <button onClick={() => this.changePage(1)}>Next</button>
+          {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
+          {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
           {articles.map(article =>
             <p key={article.article_id}>
               <Link to={`/articles/${article.article_id}`}>
@@ -37,11 +38,20 @@ class Articles extends Component {
     if (prevProps.topic !== this.props.topic || this.state.page !== prevState.page) {
       this.fetchArticles()
     }
+    if (prevProps.topic !== this.props.topic) {
+      this.setState({ page: 1 })
+    }
   }
 
   fetchArticles() {
     api.fetchArticles(this.props.topic, this.state.page)
-      .then(({ articles }) => this.setState({ articles: articles }))
+      .then(({ articles }) => {
+        this.setState({ articles: articles })
+
+        articles.length < 10
+          ? this.setState({ onLastPage: true })
+          : this.setState({ onLastPage: false })
+      })
   }
 
   changePage(increment) {

@@ -7,6 +7,7 @@ class User extends Component {
     user: {}
   }
   render() {
+    console.log(this.state.user)
     const { user } = this.state;
     const { username, avatar_url, name } = user;
     return (

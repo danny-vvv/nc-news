@@ -9,11 +9,11 @@ class Article extends Component {
     article: {}
   }
   render() {
-    const { title, body, author } = this.state.article;
+    const { title, body, author, created_at } = this.state.article;
     return (
       <div className='article'>
         <h2>{title}</h2>
-        <p>by <Link to={`/users/${author}`}>{author}</Link></p>
+        <p>by <Link to={`/users/${author}`}>{author}</Link> | <i>{created_at}</i></p>
         <p>{body}</p>
         <Comments articleId={this.props.article_id} />
       </div>
