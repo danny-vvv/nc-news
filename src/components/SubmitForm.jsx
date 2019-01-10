@@ -20,7 +20,7 @@ class SubmitForm extends Component {
           <br />
           <input type='text' placeholder='Body' id='body' className='form-body'></input>
           <br />
-          <button type='submit' className='btn-submit'>Submit</button>
+          <button type='submit' className='btn-submit' onClick={(e) => this.handleClick(e)}>Submit</button>
         </form>
       </div>
     );
@@ -32,6 +32,10 @@ class SubmitForm extends Component {
 
   fetchTopics() {
     api.fetchTopics().then(({ topics }) => this.setState({ topics: topics }))
+  }
+
+  handleClick(e) {
+    e.preventDefault();
   }
 }
 
