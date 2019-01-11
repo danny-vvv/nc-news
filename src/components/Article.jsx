@@ -12,18 +12,18 @@ class Article extends Component {
     body: '',
     comment_count: 0,
     created_at: '',
-    title: 'this is a test',
-    topic: 'coding',
+    title: '',
+    topic: '',
     user_id: 6,
     votes: 0,
     userIsAuthor: false,
     deleted: false
   }
   render() {
-    const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
+    const { articleId, title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
     return (
       <div className='article'>
-        {!deleted &&
+        {!deleted && title &&
           <article>
             <h2>{title}</h2>
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>

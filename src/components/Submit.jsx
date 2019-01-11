@@ -13,7 +13,7 @@ class Submit extends Component {
     const { success, fail } = this.state;
     return (
       <div>
-        {!success && username && <SubmitForm userId={userId} setSubmitState={this.setSubmitState} />}
+        {!success && username && <SubmitForm userId={userId} setSubmitState={this.setSubmitState} setArticleId={this.setArticleId} />}
         {!username && <Login changeLoginState={this.props.changeLoginState} />}
         {success && <p>Post successful!</p>}
         {fail && <p>Please ensure all fields are completed.</p>}

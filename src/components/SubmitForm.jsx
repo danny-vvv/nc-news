@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../api';
+import { navigate } from '@reach/router';
 
 class SubmitForm extends Component {
   state = {
@@ -57,7 +58,12 @@ class SubmitForm extends Component {
   postArticle() {
     const { topic, title, body } = this.state;
     api.postArticle(topic, title, body, this.props.userId)
-      .then(this.setState({ submitSuccess: true }))
+      .then(({ article }) => {
+        console.log('data >>>>', article)
+        const { article_id } = article;
+        console.log(`/articles/${article_id}`)
+        navigate(`/articles/${article_id}`)
+      })
       .catch((err) => console.log(err))
   }
 }
