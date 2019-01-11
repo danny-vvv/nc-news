@@ -16,7 +16,7 @@ class App extends Component {
     const { username, userId } = this.state;
     return (
       <div className="App">
-        <Nav username={username} />
+        <Nav username={username} changeLoginState={this.changeLoginState} />
         <Router className='main'>
           <Main path='/*' changeLoginState={this.changeLoginState} username={username} userId={userId} />
           <Main path='/topics/:topic' />
@@ -29,12 +29,10 @@ class App extends Component {
 
   changeLoginState = (data) => {
     const { username, userId } = data;
-    if (username && userId) {
-      this.setState({
-        username,
-        userId
-      })
-    }
+    this.setState({
+      username,
+      userId
+    })
   }
 
   cacheLoginData(data) {
