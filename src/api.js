@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:9090/api';
+const BASE_URL = 'https://dv-knews.herokuapp.com/api';
 
 export const fetchArticle = async (articleId) => {
   const { data } = await axios.get(`${BASE_URL}/articles/${articleId}`);
