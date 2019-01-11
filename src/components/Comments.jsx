@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Comments.css';
 import * as api from '../api';
 import { Link } from '@reach/router';
+import AddCommentForm from './AddCommentForm';
 
 class Comments extends Component {
   state = {
@@ -13,6 +14,7 @@ class Comments extends Component {
     return (
       <div>
         <h3>Comments:</h3>
+        {this.props.username && <AddCommentForm username={this.props.username} userId={this.props.userId} articleId={this.props.articleId} />}
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
             <p>{comment.votes} votes | <Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>

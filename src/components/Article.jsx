@@ -21,7 +21,6 @@ class Article extends Component {
   }
   render() {
     const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
-    console.log(this.state)
     return (
       <div className='article'>
         {!deleted &&
@@ -30,7 +29,7 @@ class Article extends Component {
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>
             {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
-            <Comments articleId={this.props.article_id} />
+            <Comments articleId={this.props.article_id} username={this.props.username} userId={this.props.userId} />
           </article>
         }
         {deleted &&
@@ -98,7 +97,6 @@ class Article extends Component {
   }
 
   deleteArticle = () => {
-    console.log('deleteArticle')
     api.deleteArticle(this.state.articleId)
     this.setState({ deleted: true })
   }
