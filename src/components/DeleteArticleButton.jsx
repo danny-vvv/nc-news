@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class DeleteArticleButton extends Component {
   state = { clicked: false }
   render() {
-    console.log(this)
     const { clicked } = this.state;
     return (
       <div>

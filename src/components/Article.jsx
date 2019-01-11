@@ -7,19 +7,25 @@ import DeleteArticleButton from './DeleteArticleButton';
 
 class Article extends Component {
   state = {
-    article: {},
+    article_id: 0,
+    author: '',
+    body: '',
+    comment_count: 0,
+    created_at: '',
+    title: 'this is a test',
+    topic: 'coding',
+    user_id: 6,
+    votes: 0,
     userIsAuthor: false
   }
   render() {
-    const { article, userIsAuthor } = this.state;
-    console.log(article)
-    const { title, body, author, created_at } = article;
+    const { title, body, author, created_at, userIsAuthor } = this.state;
     return (
       <div className='article'>
         <h2>{title}</h2>
         <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
         <p>{body}</p>
-        {userIsAuthor && <DeleteArticleButton />}
+        {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
         <Comments articleId={this.props.article_id} />
       </div>
     );
@@ -40,18 +46,45 @@ class Article extends Component {
 
   fetchArticle(topic) {
     api.fetchArticle(topic)
-      .then((article) => this.setState({ article: article }))
-      .then(() => this.setUserIsAuthor())
+      .then((article) => {
+        const {
+          article_id,
+          author,
+          body,
+          comment_count,
+          created_at,
+          title,
+          topic,
+          user_id,
+          votes
+        } = article;
+        this.setState({
+          article_id,
+          author,
+          body,
+          comment_count,
+          created_at,
+          title,
+          topic,
+          user_id,
+          votes
+        })
+      })
+      .then((this.setUserIsAuthor()))
   }
 
   setUserIsAuthor = () => {
-    const { author } = this.state.article;
+    const { author } = this.state;
     const { username } = this.props;
     if (username === author) {
       this.setState({ userIsAuthor: true })
     } else {
       this.setState({ userIsAuthor: false })
     }
+  }
+
+  deleteArticle() {
+    // api.deleteArticle(article)
   }
 }
 
