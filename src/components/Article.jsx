@@ -6,14 +6,17 @@ import { Link } from '@reach/router';
 
 class Article extends Component {
   state = {
-    article: {}
+    article: {},
+    userIsAuthor: false
   }
   render() {
-    const { title, body, author, created_at } = this.state.article;
+    const { article, userIsAuthor } = this.state;
+    const { title, body, author, created_at } = article;
+    console.log(userIsAuthor)
     return (
       <div className='article'>
         <h2>{title}</h2>
-        <p>by <Link to={`/users/${author}`}>{author}</Link> | <i>{created_at}</i></p>
+        <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
         <p>{body}</p>
         <Comments articleId={this.props.article_id} />
       </div>
@@ -33,6 +36,18 @@ class Article extends Component {
   fetchArticle(topic) {
     api.fetchArticle(topic)
       .then((article) => this.setState({ article: article }))
+      .then(() => this.setUserIsAuthor())
+  }
+
+  setUserIsAuthor = () => {
+    console.log('invoked')
+    const { author } = this.state.article;
+    const { username } = this.props;
+    if (username === author) {
+      this.setState({ userIsAuthor: true })
+    } else {
+      this.setState({ userIsAuthor: false })
+    }
   }
 }
 

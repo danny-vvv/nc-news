@@ -20,7 +20,7 @@ class Main extends Component {
           <Login path='/login' changeLoginState={this.props.changeLoginState} />
           <Articles path='/' />
           <Articles path='/topics/:topic' />
-          <Article path='/articles/:article_id' />
+          <Article path='/articles/:article_id' username={username} />
           <User path='/users/:username' />
           <Submit path='/submit' username={username} userId={userId} changeLoginState={this.props.changeLoginState} />
         </Router>
