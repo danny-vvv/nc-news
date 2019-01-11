@@ -3,6 +3,7 @@ import * as api from '../api';
 import './Article.css';
 import Comments from './Comments';
 import { Link } from '@reach/router';
+import DeleteArticleButton from './DeleteArticleButton';
 
 class Article extends Component {
   state = {
@@ -11,13 +12,14 @@ class Article extends Component {
   }
   render() {
     const { article, userIsAuthor } = this.state;
+    console.log(article)
     const { title, body, author, created_at } = article;
     return (
       <div className='article'>
         <h2>{title}</h2>
         <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
-        {userIsAuthor && <button>Delete</button>}
         <p>{body}</p>
+        {userIsAuthor && <DeleteArticleButton />}
         <Comments articleId={this.props.article_id} />
       </div>
     );
