@@ -7,7 +7,7 @@ import DeleteArticleButton from './DeleteArticleButton';
 
 class Article extends Component {
   state = {
-    article_id: 0,
+    articleId: 0,
     author: '',
     body: '',
     comment_count: 0,
@@ -35,12 +35,25 @@ class Article extends Component {
     this.fetchArticle(this.props.article_id)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.username !== prevProps.username) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.username !== prevProps.username
+      || this.state.author !== prevState.author
+    ) {
       this.setUserIsAuthor();
     }
-    if (prevProps.article_id !== this.props.article_id) {
-      this.fetchArticle(this.props.article_id)
+
+    if (prevProps.articleId !== this.props.articleId) {
+      this.fetchArticle(this.props.articleId)
+    }
+  }
+
+  setUserIsAuthor = () => {
+    const { author } = this.state;
+    const { username } = this.props;
+    if (username === author) {
+      this.setState({ userIsAuthor: true })
+    } else {
+      this.setState({ userIsAuthor: false })
     }
   }
 
@@ -59,7 +72,7 @@ class Article extends Component {
           votes
         } = article;
         this.setState({
-          article_id,
+          articleId: article_id,
           author,
           body,
           comment_count,
@@ -70,21 +83,10 @@ class Article extends Component {
           votes
         })
       })
-      .then((this.setUserIsAuthor()))
-  }
-
-  setUserIsAuthor = () => {
-    const { author } = this.state;
-    const { username } = this.props;
-    if (username === author) {
-      this.setState({ userIsAuthor: true })
-    } else {
-      this.setState({ userIsAuthor: false })
-    }
   }
 
   deleteArticle() {
-    // api.deleteArticle(article)
+    api.deleteArticle(this.state.articleId)
   }
 }
 
