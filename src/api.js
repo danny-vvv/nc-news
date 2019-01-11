@@ -42,3 +42,8 @@ export const postArticle = async (topic, title, body, user_id) => {
   })
   return data;
 }
+
+export const deleteArticle = async (articleId) => {
+  const { data } = await axios.delete(`${BASE_URL}/articles/${articleId}`);
+  return data;
+}

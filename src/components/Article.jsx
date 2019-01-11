@@ -16,17 +16,29 @@ class Article extends Component {
     topic: 'coding',
     user_id: 6,
     votes: 0,
-    userIsAuthor: false
+    userIsAuthor: false,
+    deleted: false
   }
   render() {
-    const { title, body, author, created_at, userIsAuthor } = this.state;
+    const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
+    console.log(this.state)
     return (
       <div className='article'>
-        <h2>{title}</h2>
-        <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
-        <p>{body}</p>
-        {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
-        <Comments articleId={this.props.article_id} />
+        {!deleted &&
+          <article>
+            <h2>{title}</h2>
+            <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
+            <p>{body}</p>
+            {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
+            <Comments articleId={this.props.article_id} />
+          </article>
+        }
+        {deleted &&
+          <React.Fragment>
+            <p>Your post has been successfully deleted.</p>
+            <Link to={`/topics/${topic}`}>Return to {topic}</Link>
+          </React.Fragment>
+        }
       </div>
     );
   }
@@ -85,8 +97,10 @@ class Article extends Component {
       })
   }
 
-  deleteArticle() {
+  deleteArticle = () => {
+    console.log('deleteArticle')
     api.deleteArticle(this.state.articleId)
+    this.setState({ deleted: true })
   }
 }
 
