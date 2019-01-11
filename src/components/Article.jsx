@@ -27,6 +27,9 @@ class Article extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props.username !== prevProps.username) {
+      this.setUserIsAuthor();
+    }
     if (prevProps.article_id !== this.props.article_id) {
       this.fetchArticle(this.props.article_id)
     }
