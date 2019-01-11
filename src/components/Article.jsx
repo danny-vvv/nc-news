@@ -16,6 +16,7 @@ class Article extends Component {
       <div className='article'>
         <h2>{title}</h2>
         <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
+        {userIsAuthor && <button>Delete</button>}
         <p>{body}</p>
         <Comments articleId={this.props.article_id} />
       </div>

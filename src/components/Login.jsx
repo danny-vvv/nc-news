@@ -4,12 +4,11 @@ import * as api from '../api';
 class Login extends Component {
   state = {
     usernameInput: '',
-    successfulLoginAttempt: false,
     failedLoginAttempt: false,
   }
 
   render() {
-    const { usernameInput, successfulLoginAttempt, failedLoginAttempt } = this.state;
+    const { usernameInput, failedLoginAttempt } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -19,8 +18,7 @@ class Login extends Component {
           </label>
           <button type='submit'>Login</button>
         </form>
-        {successfulLoginAttempt && <p>Welcome, {usernameInput}!</p>}
-        {failedLoginAttempt && <p>Login failed</p>}
+        {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>
     );
   }
@@ -34,9 +32,9 @@ class Login extends Component {
     this.setState(({ [event.target.id]: event.target.value }))
   }
 
-  updateCurrState = (successfulLoginAttempt, failedLoginAttempt) => {
+  updateCurrState = (failedLoginAttempt) => {
     this.setState(() => {
-      return { successfulLoginAttempt, failedLoginAttempt };
+      return { failedLoginAttempt };
     })
   }
 
@@ -46,10 +44,10 @@ class Login extends Component {
       .then(({ user }) => {
         const userId = user.user_id;
         changeLoginState({ username, userId })
-        this.updateCurrState(true, false)
+        this.updateCurrState(false)
       })
       .catch(err => {
-        this.updateCurrState(false, true)
+        this.updateCurrState(true)
       })
   }
 }
