@@ -27,11 +27,38 @@ class App extends Component {
     );
   }
 
-  changeLoginState = (username, userId) => {
-    this.setState({
-      username,
-      userId
-    })
+  changeLoginState = (data) => {
+    const { username, userId } = data;
+    if (username && userId) {
+      this.setState({
+        username,
+        userId
+      })
+    }
+  }
+
+  cacheLoginData(data) {
+    const { username, userId } = data;
+    localStorage.setItem('loginData', JSON.stringify({ username, userId }))
+  }
+
+  componentDidMount() {
+    this.retrieveLoginData()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { username, userId } = this.state;
+    if (prevState.username !== username) {
+      this.cacheLoginData({ username, userId })
+    }
+  }
+
+  retrieveLoginData() {
+    const loginData = JSON.parse(localStorage.getItem('loginData'))
+    if (loginData && loginData.username) {
+      const { username, userId } = loginData;
+      this.changeLoginState({ username, userId })
+    }
   }
 }
 

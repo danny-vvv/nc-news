@@ -12,7 +12,6 @@ class Article extends Component {
   render() {
     const { article, userIsAuthor } = this.state;
     const { title, body, author, created_at } = article;
-    console.log(userIsAuthor)
     return (
       <div className='article'>
         <h2>{title}</h2>
@@ -40,7 +39,6 @@ class Article extends Component {
   }
 
   setUserIsAuthor = () => {
-    console.log('invoked')
     const { author } = this.state.article;
     const { username } = this.props;
     if (username === author) {

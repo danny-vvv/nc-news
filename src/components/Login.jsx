@@ -44,12 +44,8 @@ class Login extends Component {
     const { changeLoginState } = this.props;
     api.fetchUser(username)
       .then(({ user }) => {
-        changeLoginState(username, user.user_id)
-        const loginData = {
-          loggedIn: true,
-          username: username
-        }
-        localStorage.setItem('loginData', JSON.stringify(loginData))
+        const userId = user.user_id;
+        changeLoginState({ username, userId })
         this.updateCurrState(true, false)
       })
       .catch(err => {

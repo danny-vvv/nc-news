@@ -40,6 +40,5 @@ export const postArticle = async (topic, title, body, user_id) => {
     body,
     user_id
   })
-  console.log(data)
   return data;
 }
