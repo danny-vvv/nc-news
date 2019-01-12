@@ -11,7 +11,8 @@ class Form extends Component {
     }
     render() {
         const { success, fail, apiRejected } = this.state;
-        const { textInputs, rejectMessage } = this.props.inputs;
+        const { inputs, rejectMessage } = this.props;
+        const { textInputs } = inputs;
         return (
             <React.Fragment>
                 <form onSubmit={(e) => this.handleSubmit(e)}>
