@@ -9,9 +9,8 @@ import Login from './components/Login';
 import Articles from './components/Articles';
 import Article from './components/Article';
 import User from './components/User';
-import Submit from './components/Submit';
 import * as api from './api';
-import TextForm from './components/TextForm';
+import Form from './components/Form';
 
 class App extends Component {
   state = {
@@ -35,8 +34,40 @@ class App extends Component {
           <Articles path='/topics/:topic' setHeading={setHeading} />
           <Article path='/articles/:article_id' username={username} userId={userId} setHeading={setHeading} />
           <User path='/users/:username' setHeading={setHeading} />
-          <Submit path='/submit' username={username} userId={userId} changeLoginState={changeLoginState} setHeading={setHeading} />
-          <TextForm path='/newtopic' inputs={{ textInputs: ['slug', 'description'] }} apiMethod={api.postTopic} successUrl={'/topics'} successEndpoint={'slug'} rejectMessage='Topic already exists!' />
+          <Form // Post Article
+            path='/submit'
+            heading='Submit an Article'
+            setHeading={setHeading}
+            requireLoggedIn={true}
+            username={username}
+            changeLoginState={changeLoginState}
+            inputs={[
+              { id: 'topic', type: 'select', options: topics.map(topic => topic.slug) },
+              { id: 'title', type: 'text' },
+              { id: 'body', type: 'text' }
+            ]}
+            apiMethod={api.postArticle}
+            apiArgs={{ user_id: userId }}
+            successUrl={'/articles'}
+            successEndpoint={'article_id'}
+            rejectMessage='Oops! An error occurred...'
+          />
+          <Form // Add Topic
+            path='/newtopic'
+            heading='Create a New Topic'
+            setHeading={setHeading}
+            requireLoggedIn={true}
+            username={username}
+            changeLoginState={changeLoginState}
+            inputs={[
+              { id: 'slug', type: 'text' },
+              { id: 'description', type: 'text' }
+            ]}
+            apiMethod={api.postTopic}
+            successUrl={'/topics'}
+            successEndpoint={'slug'}
+            rejectMessage='Topic already exists!'
+          />
         </Router>
         <Sidebar />
         <Footer />
@@ -63,11 +94,13 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { username, userId } = this.state;
+    const { username, userId, topics } = this.state;
     if (prevState.username !== username) {
       this.cacheLoginData({ username, userId })
     }
-    this.fetchTopics()
+    if (JSON.stringify(topics) !== JSON.stringify(prevState.topics)) {
+      this.fetchTopics()
+    }
   }
 
   retrieveLoginData() {

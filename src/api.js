@@ -34,13 +34,14 @@ export const fetchTopics = async () => {
   return data;
 }
 
-export const postArticle = async (topic, title, body, user_id) => {
+export const postArticle = async (requestBody) => {
+  const { topic, title, body, user_id } = requestBody;
   const { data } = await axios.post(`${BASE_URL}/topics/${topic}/articles`, {
     title,
     body,
     user_id
   })
-  return data;
+  return data.article;
 }
 
 export const deleteArticle = async (articleId) => {
