@@ -10,20 +10,23 @@ import Articles from './components/Articles';
 import Article from './components/Article';
 import User from './components/User';
 import Submit from './components/Submit';
+import * as api from './api';
 
 class App extends Component {
   state = {
     username: '',
     userId: '',
-    heading: ''
+    heading: '',
+    topics: []
   }
 
   render() {
+    console.log(this.state)
     const { changeLoginState, setHeading } = this;
-    const { username, userId, heading } = this.state;
+    const { username, userId, heading, topics } = this.state;
     return (
       <div className="App">
-        <Nav username={username} changeLoginState={changeLoginState} />
+        <Nav username={username} changeLoginState={changeLoginState} topics={topics} />
         <Header heading={heading} />
         <Router>
           <Login path='/login' changeLoginState={changeLoginState} />
@@ -54,6 +57,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchTopics()
     this.retrieveLoginData()
   }
 
@@ -74,6 +78,13 @@ class App extends Component {
 
   setHeading = (heading) => {
     this.setState({heading})
+  }
+
+  fetchTopics() {
+    api.fetchTopics()
+    .then(({topics}) => {
+      this.setState({topics})
+    })
   }
 }
 

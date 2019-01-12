@@ -6,13 +6,16 @@ import Login from './Login';
 
 class Nav extends Component {
   render() {
-    const { username, changeLoginState } = this.props;
+    const { username, changeLoginState, topics } = this.props;
     return (
       <nav>
         <Link to='/'>NC NEWS</Link>
-        <Link to='/topics/cooking'>Cooking</Link>
-        <Link to='/topics/coding'>Coding</Link>
-        <Link to='/topics/football'>Football</Link>
+        {topics.map(topic => (
+          <Link to={`/topics/${topic.slug}`} key={topic.slug}>
+            {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+          </Link>
+          )
+        )}
         {!username && <Login changeLoginState={changeLoginState} />}
         {username && <Logout changeLoginState={changeLoginState} username={username} />}
       </nav>
