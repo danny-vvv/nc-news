@@ -21,7 +21,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     const { changeLoginState, setHeading } = this;
     const { username, userId, heading, topics } = this.state;
     return (
@@ -77,14 +76,14 @@ class App extends Component {
   }
 
   setHeading = (heading) => {
-    this.setState({heading})
+    this.setState({ heading })
   }
 
   fetchTopics() {
     api.fetchTopics()
-    .then(({topics}) => {
-      this.setState({topics})
-    })
+      .then(({ topics }) => {
+        this.setState({ topics })
+      })
   }
 }
 
