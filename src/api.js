@@ -55,3 +55,13 @@ export const postComment = async (user_id, body, articleId) => {
   });
   return data;
 }
+
+export const postTopic = async (body) => {
+  const { description } = body;
+  const slug = body.slug.toLowerCase();
+  const { data } = await axios.post(`${BASE_URL}/topics`, {
+    slug,
+    description
+  });
+  return data.topic;
+}
