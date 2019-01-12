@@ -19,19 +19,20 @@ class App extends Component {
   }
 
   render() {
+    const { changeLoginState, setHeading } = this;
     const { username, userId, heading } = this.state;
     return (
       <div className="App">
-        <Nav username={username} changeLoginState={this.changeLoginState} />
+        <Nav username={username} changeLoginState={changeLoginState} />
         <Header heading={heading} />
         <Router>
-          <Login path='/login' changeLoginState={this.changeLoginState} />
-          <Articles path='/*' setHeadingInAppState={this.setHeadingInAppState} />
-          <Articles path='/' setHeadingInAppState={this.setHeadingInAppState} />
-          <Articles path='/topics/:topic' setHeadingInAppState={this.setHeadingInAppState} />
-          <Article path='/articles/:article_id' username={username} userId={this.userId} setHeadingInAppState={this.setHeadingInAppState} />
-          <User path='/users/:username' setHeadingInAppState={this.setHeadingInAppState} />
-          <Submit path='/submit' username={username} userId={userId} changeLoginState={this.changeLoginState} setHeadingInAppState={this.setHeadingInAppState} />
+          <Login path='/login' changeLoginState={changeLoginState} />
+          <Articles path='/*' setHeading={setHeading} />
+          <Articles path='/' setHeading={setHeading} />
+          <Articles path='/topics/:topic' setHeading={setHeading} />
+          <Article path='/articles/:article_id' username={username} userId={userId} setHeading={setHeading} />
+          <User path='/users/:username' setHeading={setHeading} />
+          <Submit path='/submit' username={username} userId={userId} changeLoginState={changeLoginState} setHeading={setHeading} />
         </Router>
         <Sidebar />
         <Footer />
@@ -71,7 +72,7 @@ class App extends Component {
     }
   }
 
-  setHeadingInAppState = (heading) => {
+  setHeading = (heading) => {
     this.setState({heading})
   }
 }

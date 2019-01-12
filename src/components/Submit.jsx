@@ -26,7 +26,7 @@ class Submit extends Component {
   }
 
   componentDidMount() {
-      this.props.setHeadingInAppState('Submit New Article')
+      this.props.setHeading('Submit New Article')
   }
 }
 

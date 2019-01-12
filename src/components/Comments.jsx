@@ -11,10 +11,11 @@ class Comments extends Component {
 
   render() {
     const { comments } = this.state;
+    const { username, userId, articleId } = this.props; 
     return (
       <div>
         <h3>Comments:</h3>
-        {this.props.username && <AddCommentForm username={this.props.username} userId={this.props.userId} articleId={this.props.articleId} />}
+        {this.props.username && <AddCommentForm username={username} userId={userId} articleId={articleId} />}
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
             <p>{comment.votes} votes | <Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>

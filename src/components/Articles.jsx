@@ -31,13 +31,13 @@ class Articles extends Component {
 
   componentDidMount() {
     this.fetchArticles()
-    this.props.setHeadingInAppState(this.props.topic)
+    this.props.setHeading(this.props.topic)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.topic !== this.props.topic || this.state.page !== prevState.page) {
       this.fetchArticles()
-      this.props.setHeadingInAppState(this.props.topic)
+      this.props.setHeading(this.props.topic)
     }
     if (prevProps.topic !== this.props.topic) {
       this.setState({ page: 1 })

@@ -21,6 +21,7 @@ class Article extends Component {
   }
   render() {
     const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
+    const {article_id, username, userId } = this.props;
     return (
       <div className='Article'>
         {!deleted && title &&
@@ -29,7 +30,7 @@ class Article extends Component {
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>
             {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
-            <Comments articleId={this.props.article_id} username={this.props.username} userId={this.props.userId} />
+            <Comments articleId={article_id} username={username} userId={userId} />
           </article>
         }
         {deleted &&
@@ -58,7 +59,7 @@ class Article extends Component {
     }
 
     if (prevState.topic !== this.state.topic) {
-      this.props.setHeadingInAppState(this.state.topic)
+      this.props.setHeading(this.state.topic)
     }
   }
 

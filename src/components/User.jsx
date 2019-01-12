@@ -21,7 +21,7 @@ class User extends Component {
   componentDidMount() {
     const { username } = this.props;
     this.fetchUser(username)
-    this.props.setHeadingInAppState(`User: ${username}`)
+    this.props.setHeading(`User: ${username}`)
   }
 
   fetchUser(username) {
