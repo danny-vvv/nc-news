@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
-import './Form.css';
+import './TextForm.css';
 
-class Form extends Component {
+class TextForm extends Component {
     state = {
         success: false,
         fail: false,
@@ -77,7 +77,7 @@ class Form extends Component {
     }
 }
 
-Form.propTypes = {
+TextForm.propTypes = {
     inputs: PropTypes.object.isRequired,
     apiMethod: PropTypes.func.isRequired,
     successUrl: PropTypes.string,
@@ -85,4 +85,4 @@ Form.propTypes = {
     successEndpoint: PropTypes.string.isRequired,
 };
 
-export default Form;
+export default TextForm;

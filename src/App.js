@@ -11,7 +11,7 @@ import Article from './components/Article';
 import User from './components/User';
 import Submit from './components/Submit';
 import * as api from './api';
-import Form from './components/Form';
+import TextForm from './components/TextForm';
 
 class App extends Component {
   state = {
@@ -36,7 +36,7 @@ class App extends Component {
           <Article path='/articles/:article_id' username={username} userId={userId} setHeading={setHeading} />
           <User path='/users/:username' setHeading={setHeading} />
           <Submit path='/submit' username={username} userId={userId} changeLoginState={changeLoginState} setHeading={setHeading} />
-          <Form path='/newtopic' inputs={{ textInputs: ['slug', 'description'] }} apiMethod={api.postTopic} successUrl={'/topics'} successEndpoint={'slug'} rejectMessage='Topic already exists!' />
+          <TextForm path='/newtopic' inputs={{ textInputs: ['slug', 'description'] }} apiMethod={api.postTopic} successUrl={'/topics'} successEndpoint={'slug'} rejectMessage='Topic already exists!' />
         </Router>
         <Sidebar />
         <Footer />
