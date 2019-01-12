@@ -74,17 +74,6 @@ class App extends Component {
   setHeadingInAppState = (heading) => {
     this.setState({heading})
   }
-
-  // setHeadingInAppState = (prevProps, prevState) => {
-  //   if (prevState.currentTopic !== this.props.topic) {
-  //     if (this.props.topic) { this.setState({ currentTopic: this.props.topic }) }
-  //     else {
-  //       if (this.props['*'] === '' && this.state.currentTopic !== 'Home') {
-  //         this.setState({ currentTopic: 'Home' })
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 export default App;
