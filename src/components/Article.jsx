@@ -56,6 +56,10 @@ class Article extends Component {
     if (prevProps.articleId !== this.props.articleId) {
       this.fetchArticle(this.props.articleId)
     }
+
+    if (prevState.topic !== this.state.topic) {
+      this.props.setHeadingInAppState(this.state.topic)
+    }
   }
 
   setUserIsAuthor = () => {

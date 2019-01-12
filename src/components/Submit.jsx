@@ -24,6 +24,10 @@ class Submit extends Component {
   setSubmitState = (success, fail) => {
     this.setState({ success, fail })
   }
+
+  componentDidMount() {
+      this.props.setHeadingInAppState('Submit New Article')
+  }
 }
 
 export default Submit;

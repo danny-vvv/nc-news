@@ -25,13 +25,13 @@ class App extends Component {
         <Nav username={username} changeLoginState={this.changeLoginState} />
         <Header heading={heading} />
         <Router>
-          <Login path='/login' changeLoginState={this.props.changeLoginState} />
+          <Login path='/login' changeLoginState={this.changeLoginState} />
           <Articles path='/*' setHeadingInAppState={this.setHeadingInAppState} />
           <Articles path='/' setHeadingInAppState={this.setHeadingInAppState} />
           <Articles path='/topics/:topic' setHeadingInAppState={this.setHeadingInAppState} />
-          <Article path='/articles/:article_id' username={username} userId={this.props.userId} />
+          <Article path='/articles/:article_id' username={username} userId={this.userId} setHeadingInAppState={this.setHeadingInAppState} />
           <User path='/users/:username' setHeadingInAppState={this.setHeadingInAppState} />
-          <Submit path='/submit' username={username} userId={userId} changeLoginState={this.props.changeLoginState} />
+          <Submit path='/submit' username={username} userId={userId} changeLoginState={this.changeLoginState} setHeadingInAppState={this.setHeadingInAppState} />
         </Router>
         <Sidebar />
         <Footer />
