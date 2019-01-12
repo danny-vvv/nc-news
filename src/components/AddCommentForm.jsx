@@ -9,7 +9,7 @@ class AddCommentForm extends Component {
     success: false
   }
   render() {
-    const { validComment, invalidComment, success } = this.state;
+    const { invalidComment, success } = this.state;
     return (
       <div>
         {!success &&

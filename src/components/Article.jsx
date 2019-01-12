@@ -20,9 +20,9 @@ class Article extends Component {
     deleted: false
   }
   render() {
-    const { articleId, title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
+    const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
     return (
-      <div className='article'>
+      <div className='Article'>
         {!deleted && title &&
           <article>
             <h2>{title}</h2>

@@ -1,4 +1,5 @@
-.head {
+.Header {
+  grid-area: header;
   border: 1px solid rgba(0, 0, 255, 1);
-  background-color: rgba(0, 0, 255, 0.1)
+  background-color: rgba(0, 0, 255, 0.1);
 }

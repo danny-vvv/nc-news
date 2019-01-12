@@ -10,7 +10,7 @@ class User extends Component {
     const { user } = this.state;
     const { username, avatar_url, name } = user;
     return (
-      <div>
+      <div className='User'>
         <img src={avatar_url} alt={`${username}'s avatar`}></img>
         <p>Username: {username}</p>
         <p>Real name: {name}</p>
@@ -19,12 +19,14 @@ class User extends Component {
   }
 
   componentDidMount() {
-    this.fetchUser(this.props.username)
+    const { username } = this.props;
+    this.fetchUser(username)
+    this.props.setHeadingInAppState(`User: ${username}`)
   }
 
   fetchUser(username) {
     api.fetchUser(username)
-      .then(user => this.setState({ user: user }))
+      .then(({user}) => this.setState({ user: user }))
   }
 }
 

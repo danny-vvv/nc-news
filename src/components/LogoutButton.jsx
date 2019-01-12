@@ -15,7 +15,4 @@ const LogoutButton = props => {
   );
 };
 
-// const { changeLoginState } = LogoutButton.props;
-
-
 export default LogoutButton;

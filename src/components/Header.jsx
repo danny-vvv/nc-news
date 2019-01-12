@@ -1,4 +1,5 @@
 import React from 'react';
+import './Header.css';
 
 const Header = (props) => {
 
@@ -7,7 +8,7 @@ const Header = (props) => {
     : 'Home';
 
   return (
-    <div className="head">
+    <div className='Header'>
       <header>
         <h1>{heading}</h1>
       </header>

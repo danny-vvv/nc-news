@@ -14,7 +14,7 @@ class Articles extends Component {
     const { articles } = this.state;
     return (
       <React.Fragment>
-        <div>
+        <div className='Articles'>
           {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
           {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
           {articles.map(article =>
@@ -31,11 +31,13 @@ class Articles extends Component {
 
   componentDidMount() {
     this.fetchArticles()
+    this.props.setHeadingInAppState(this.props.topic)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.topic !== this.props.topic || this.state.page !== prevState.page) {
       this.fetchArticles()
+      this.props.setHeadingInAppState(this.props.topic)
     }
     if (prevProps.topic !== this.props.topic) {
       this.setState({ page: 1 })

@@ -59,9 +59,7 @@ class SubmitForm extends Component {
     const { topic, title, body } = this.state;
     api.postArticle(topic, title, body, this.props.userId)
       .then(({ article }) => {
-        console.log('data >>>>', article)
         const { article_id } = article;
-        console.log(`/articles/${article_id}`)
         navigate(`/articles/${article_id}`)
       })
       .catch((err) => console.log(err))

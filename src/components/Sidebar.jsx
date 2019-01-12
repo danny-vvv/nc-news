@@ -4,7 +4,7 @@ import { Link } from '@reach/router';
 
 const Sidebar = () => {
   return (
-    <div className="sidebar">
+    <div className="Sidebar">
       <Link to='/submit'><button>Create Post</button></Link>
     </div>
   );
