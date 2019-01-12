@@ -111,8 +111,8 @@ Form.propTypes = {
     successEndpoint: PropTypes.string.isRequired,
     apiArgs: PropTypes.object,
     requireLoggedIn: PropTypes.bool,
-    setHeading: PropTypes.func.isRequired,
-    heading: PropTypes.string.isRequired,
+    setHeading: PropTypes.func,
+    heading: PropTypes.string
 };
 
 export default Form;
