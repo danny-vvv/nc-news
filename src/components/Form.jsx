@@ -17,7 +17,7 @@ class Form extends Component {
             <React.Fragment>
                 {requireLoggedIn && !username && <Login changeLoginState={changeLoginState} />}
 
-                {((requireLoggedIn && username) || !requireLoggedIn) &&
+                {((requireLoggedIn && username) || !requireLoggedIn) && !success &&
                     <form onSubmit={(e) => this.handleSubmit(e)}>
                         {
                             inputs.map((input, i) => (
@@ -38,12 +38,11 @@ class Form extends Component {
                                 </React.Fragment>
                             ))
                         }
-                        <button type='submit' className='btn-submit'>Submit</button>
+                        {<button type='submit' className='btn-submit'>Submit</button>}
                     </form>
                 }
-                {success && <p>Please wait...</p>}
                 {fail && <p>Please complete all fields.</p>}
-                {apiRejected && <p>{rejectMessage}</p>}
+                {apiRejected && rejectMessage && <p>{rejectMessage}</p>}
             </React.Fragment>
         );
     }
@@ -80,9 +79,10 @@ class Form extends Component {
 
     handleApiRequest(requestBody) {
         const { apiMethod, successUrl, successEndpoint } = this.props;
+        console.log(requestBody)
         apiMethod(requestBody)
             .then((res) => {
-                navigate(`${successUrl}/${res[successEndpoint]}`)
+                if (successUrl) navigate(`${successUrl}/${res[successEndpoint]}`)
             })
             .catch((err) => {
                 console.log(err)
@@ -92,7 +92,7 @@ class Form extends Component {
 
     componentDidMount() {
         const { setHeading, heading } = this.props;
-        setHeading(heading);
+        if (setHeading) { setHeading(heading); }
     }
 
     componentDidUpdate(prevProps) {
@@ -107,12 +107,13 @@ Form.propTypes = {
     inputs: PropTypes.array.isRequired,
     apiMethod: PropTypes.func.isRequired,
     successUrl: PropTypes.string,
-    rejectMessage: PropTypes.string.isRequired,
-    successEndpoint: PropTypes.string.isRequired,
+    rejectMessage: PropTypes.string,
+    successEndpoint: PropTypes.string,
     apiArgs: PropTypes.object,
     requireLoggedIn: PropTypes.bool,
     setHeading: PropTypes.func,
-    heading: PropTypes.string
+    heading: PropTypes.string,
+    path: PropTypes.string
 };
 
 export default Form;

@@ -21,7 +21,7 @@ class Article extends Component {
   }
   render() {
     const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
-    const {article_id, username, userId } = this.props;
+    const { article_id, username, user_id } = this.props;
     return (
       <div className='Article'>
         {!deleted && title &&
@@ -30,7 +30,7 @@ class Article extends Component {
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>
             {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
-            <Comments articleId={article_id} username={username} userId={userId} />
+            <Comments article_id={article_id} username={username} user_id={user_id} />
           </article>
         }
         {deleted &&

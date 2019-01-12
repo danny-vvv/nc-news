@@ -32,7 +32,7 @@ class App extends Component {
           <Articles path='/*' setHeading={setHeading} />
           <Articles path='/' setHeading={setHeading} />
           <Articles path='/topics/:topic' setHeading={setHeading} />
-          <Article path='/articles/:article_id' username={username} userId={userId} setHeading={setHeading} />
+          <Article path='/articles/:article_id' username={username} user_id={userId} setHeading={setHeading} />
           <User path='/users/:username' setHeading={setHeading} />
           <Form // Post Article
             path='/submit'
