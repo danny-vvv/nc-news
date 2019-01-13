@@ -73,6 +73,14 @@ export const deleteComment = async (requestBody) => {
   return data;
 }
 
+export const voteComment = async (requestBody) => {
+  const { inc_votes, article_id, comment_id } = requestBody;
+  const { data } = await axios.patch(`${BASE_URL}/articles/${article_id}/comments/${comment_id}`, {
+    inc_votes
+  });
+  return data;
+}
+
 export const postTopic = async (body) => {
   const { description } = body;
   const slug = body.slug.toLowerCase();

@@ -4,6 +4,7 @@ import * as api from '../api';
 import { Link } from '@reach/router';
 import Form from './Form';
 import Delete from './Delete';
+import Vote from './Vote';
 
 class Comments extends Component {
   state = {
@@ -29,7 +30,8 @@ class Comments extends Component {
         }
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
-            <p>{comment.votes} votes | <Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>
+            <Vote votes={comment.votes} apiMethod={api.voteComment} apiArgs={{ article_id, comment_id: comment.comment_id }} />
+            <p><Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>
             {comment.author === username &&
               <Delete
                 apiMethod={api.deleteComment}

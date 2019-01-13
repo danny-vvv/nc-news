@@ -13,9 +13,9 @@ class Vote extends Component {
         const { votes } = this.props;
         return (
             <div>
-                <button onClick={() => handleClick(1)}>Upvote</button>
-                <span>{votes + voteChange}</span>
                 <button onClick={() => handleClick(-1)}>Downvote</button>
+                <span>{votes + voteChange}</span>
+                <button onClick={() => handleClick(1)}>Upvote</button>
                 {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
             </div>
         );
