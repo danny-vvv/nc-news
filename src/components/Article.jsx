@@ -4,6 +4,7 @@ import './Article.css';
 import Comments from './Comments';
 import { Link } from '@reach/router';
 import Delete from './Delete';
+import Vote from './Vote';
 
 class Article extends Component {
   state = {
@@ -20,12 +21,13 @@ class Article extends Component {
     deleted: false
   }
   render() {
-    const { title, body, author, created_at, userIsAuthor, deleted, topic } = this.state;
+    const { title, body, author, created_at, votes, userIsAuthor, deleted, topic } = this.state;
     const { article_id, username, user_id } = this.props;
     return (
       <div className='Article'>
         {!deleted && title &&
           <article>
+            <Vote votes={votes} apiMethod={api.voteArticle} apiArgs={{ article_id }} />
             <h2>{title}</h2>
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>
