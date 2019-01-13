@@ -8,17 +8,22 @@ class Vote extends Component {
         apiRejected: false
     }
     render() {
-        const { handleClick } = this;
+        const { handleClick, disable } = this;
         const { voteChange, apiRejected } = this.state;
         const { votes } = this.props;
         return (
             <div>
-                <button onClick={() => handleClick(-1)}>Downvote</button>
+                <button onClick={() => handleClick(-1)} disabled={disable(-1)}>Downvote</button>
                 <span>{votes + voteChange}</span>
-                <button onClick={() => handleClick(1)}>Upvote</button>
+                <button onClick={() => handleClick(1)} disabled={disable(1)}>Upvote</button>
                 {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
             </div>
         );
+    }
+
+    disable = (num) => {
+        const { voteChange } = this.state;
+        return num === voteChange ? true : false;
     }
 
     handleClick = (increment) => {
