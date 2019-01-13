@@ -79,7 +79,6 @@ class Form extends Component {
 
     handleApiRequest(requestBody) {
         const { apiMethod, successUrl, successEndpoint } = this.props;
-        console.log(requestBody)
         apiMethod(requestBody)
             .then((res) => {
                 if (successUrl) navigate(`${successUrl}/${res[successEndpoint]}`)

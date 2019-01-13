@@ -29,7 +29,6 @@ class App extends Component {
         <Header heading={heading} />
         <Router>
           <Login path='/login' changeLoginState={changeLoginState} />
-          <Articles path='/*' setHeading={setHeading} />
           <Articles path='/' setHeading={setHeading} />
           <Articles path='/topics/:topic' setHeading={setHeading} />
           <Article path='/articles/:article_id' username={username} user_id={userId} setHeading={setHeading} />

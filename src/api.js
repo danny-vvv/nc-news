@@ -44,8 +44,9 @@ export const postArticle = async (requestBody) => {
   return data.article;
 }
 
-export const deleteArticle = async (articleId) => {
-  const { data } = await axios.delete(`${BASE_URL}/articles/${articleId}`);
+export const deleteArticle = async (requestBody) => {
+  const { article_id } = requestBody;
+  const { data } = await axios.delete(`${BASE_URL}/articles/${article_id}`);
   return data;
 }
 
@@ -55,7 +56,6 @@ export const postComment = async (requestBody) => {
     user_id,
     body
   });
-  console.log('success! data: ', data.comment)
   return data.comment;
 }
 

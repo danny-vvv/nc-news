@@ -3,11 +3,11 @@ import * as api from '../api';
 import './Article.css';
 import Comments from './Comments';
 import { Link } from '@reach/router';
-import DeleteArticleButton from './DeleteArticleButton';
+import Delete from './Delete';
 
 class Article extends Component {
   state = {
-    articleId: 0,
+    article_id: 0,
     author: '',
     body: '',
     comment_count: 0,
@@ -29,7 +29,16 @@ class Article extends Component {
             <h2>{title}</h2>
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>
-            {userIsAuthor && <DeleteArticleButton deleteArticle={this.deleteArticle} />}
+            {userIsAuthor &&
+              <Delete
+                apiMethod={api.deleteArticle}
+                apiArgs={{ article_id }}
+                targetItem='article'
+                redirectUrl={`/topics/${topic}`}
+                redirectTarget={topic}
+                updateParent={this.setDeleted}
+              />
+            }
             <Comments article_id={article_id} username={username} user_id={user_id} />
           </article>
         }
@@ -54,8 +63,8 @@ class Article extends Component {
       this.setUserIsAuthor();
     }
 
-    if (prevProps.articleId !== this.props.articleId) {
-      this.fetchArticle(this.props.articleId)
+    if (prevProps.article_id !== this.props.article_id) {
+      this.fetchArticle(this.props.article_id)
     }
 
     if (prevState.topic !== this.state.topic) {
@@ -88,7 +97,7 @@ class Article extends Component {
           votes
         } = article;
         this.setState({
-          articleId: article_id,
+          article_id,
           author,
           body,
           comment_count,
@@ -101,10 +110,10 @@ class Article extends Component {
       })
   }
 
-  deleteArticle = () => {
-    api.deleteArticle(this.state.articleId)
+  setDeleted = () => {
     this.setState({ deleted: true })
   }
+
 }
 
 export default Article;

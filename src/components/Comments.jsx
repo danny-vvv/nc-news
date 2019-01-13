@@ -37,12 +37,17 @@ class Comments extends Component {
   }
 
   componentDidMount() {
-    this.fetchComments(this.props.article_id)
+    this.fetchComments()
   }
 
-  fetchComments(article_id) {
+  fetchComments() {
+    const { article_id } = this.props;
     api.fetchComments(article_id)
       .then(({ comments }) => this.setState({ comments: comments }))
+  }
+
+  refreshComments = () => {
+    this.fetchComments()
   }
 }
 
