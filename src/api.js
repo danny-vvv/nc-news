@@ -50,6 +50,14 @@ export const deleteArticle = async (requestBody) => {
   return data;
 }
 
+export const voteArticle = async (requestBody) => {
+  const { inc_votes, article_id } = requestBody;
+  const { data } = await axios.patch(`${BASE_URL}/articles/${article_id}`, {
+    inc_votes
+  });
+  return data;
+}
+
 export const postComment = async (requestBody) => {
   const { user_id, body, article_id } = requestBody;
   const { data } = await axios.post(`${BASE_URL}/articles/${article_id}/comments`, {
@@ -60,7 +68,6 @@ export const postComment = async (requestBody) => {
 }
 
 export const deleteComment = async (requestBody) => {
-  console.log('in api!')
   const { comment_id, article_id } = requestBody;
   const { data } = await axios.delete(`${BASE_URL}/articles/${article_id}/comments/${comment_id}`)
   return data;

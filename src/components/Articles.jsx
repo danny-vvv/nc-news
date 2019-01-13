@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Articles.css';
 import { Link } from '@reach/router';
 import * as api from '../api';
+import Vote from './Vote';
 
 class Articles extends Component {
   state = {
@@ -13,19 +14,22 @@ class Articles extends Component {
   render() {
     const { articles } = this.state;
     return (
-      <React.Fragment>
-        <div className='Articles'>
-          {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
-          {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
+      <div className='Articles'>
+        {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
+        {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
+        <ul>
           {articles.map(article =>
-            <p key={article.article_id}>
-              <Link to={`/articles/${article.article_id}`}>
-                {article.title}
-              </Link>
-            </p>
+            <li key={article.article_id}>
+              <React.Fragment >
+                <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} />
+                <Link to={`/articles/${article.article_id}`}>
+                  {article.title}
+                </Link>
+              </React.Fragment>
+            </li>
           )}
-        </div>
-      </React.Fragment>
+        </ul>
+      </div>
     );
   }
 
