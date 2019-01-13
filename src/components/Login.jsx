@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as api from '../api';
+import { Button, Input } from '@material-ui/core';
 
 class Login extends Component {
   state = {
@@ -7,16 +8,30 @@ class Login extends Component {
     failedLoginAttempt: false,
   }
 
+  styles = theme => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    input: {
+      margin: theme.spacing.unit
+    },
+  });
+
   render() {
     const { usernameInput, failedLoginAttempt } = this.state;
     return (
-      <div>
+      <div styles={this.styles.container}>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Username:
-            <input type='text' value={usernameInput} onChange={this.handleChange} id='usernameInput' />
-          </label>
-          <button type='submit'>Login</button>
+          <Input
+            styles={this.styles.input}
+            type='text'
+            value={usernameInput}
+            placeholder='Username'
+            onChange={this.handleChange}
+            id='usernameInput' />
+          <br />
+          <Button type='submit' color='inherit'>Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>

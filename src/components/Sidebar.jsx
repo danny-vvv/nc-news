@@ -1,14 +1,25 @@
 import React from 'react';
-import './Sidebar.css';
 import { Link } from '@reach/router';
+import { Button } from '@material-ui/core';
+import Login from './Login';
+import Logout from './Logout';
 
-const Sidebar = () => {
+const styles = {
+  root: {
+    flexGrow: 1,
+  }
+};
+
+const Sidebar = props => {
+  const { username, changeLoginState } = props;
   return (
-    <div className="Sidebar">
-      <Link to='/submit'><button>Create Post</button></Link>
+    <div styles={styles.root}>
+      {!username && <Login changeLoginState={changeLoginState} />}
+      {username && <Logout changeLoginState={changeLoginState} username={username} />}
+      <Button component={Link} to='/submit' color='inherit'> Create Post</Button>
       <br />
-      <Link to='/newtopic'><button>Add a new Topic</button></Link>
-    </div>
+      <Button component={Link} to='/newtopic' color='inherit'>New Topic</Button>
+    </div >
   );
 };
 

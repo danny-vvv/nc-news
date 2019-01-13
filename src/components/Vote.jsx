@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Login from './Login';
 
 class Vote extends Component {
     state = {

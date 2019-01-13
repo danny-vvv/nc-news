@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Articles.css';
 import { Link } from '@reach/router';
 import * as api from '../api';
 import Vote from './Vote';

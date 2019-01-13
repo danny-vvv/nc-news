@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as api from '../api';
-import './Article.css';
 import Comments from './Comments';
 import { Link } from '@reach/router';
 import Delete from './Delete';

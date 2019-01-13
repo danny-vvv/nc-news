@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './Comments.css';
 import * as api from '../api';
 import { Link } from '@reach/router';
 import Form from './Form';

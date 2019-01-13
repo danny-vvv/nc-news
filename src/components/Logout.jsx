@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
+import { Button } from '@material-ui/core';
 
 const Logout = props => {
   const { username, changeLoginState } = props;
@@ -12,8 +13,10 @@ const Logout = props => {
 
   return (
     <div className='Logout'>
-      <span>Hello, <Link to={`/users/${username}`}>{username}</Link>!</span>
-      <button onClick={handleClick}>Logout</button>
+      <p>Welcome, {username}</p>
+      <Button onClick={handleClick}>Logout</Button>
+      <br />
+      <Button component={Link} to={`/users/${username}`}>Profile</Button>
     </div>
   );
 };

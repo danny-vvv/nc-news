@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as api from '../api';
-import './User.css';
 
 class User extends Component {
   state = {
@@ -26,7 +25,7 @@ class User extends Component {
 
   fetchUser(username) {
     api.fetchUser(username)
-      .then(({user}) => this.setState({ user: user }))
+      .then(({ user }) => this.setState({ user: user }))
   }
 }
 

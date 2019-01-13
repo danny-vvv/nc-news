@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
-import './Form.css';
 import Login from './Login';
 
 class Form extends Component {

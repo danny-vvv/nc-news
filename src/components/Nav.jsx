@@ -1,30 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Nav.css';
 import { Link } from '@reach/router';
-import Logout from './Logout';
-import Login from './Login';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+};
 
 const Nav = props => {
-  const { username, changeLoginState, topics } = props;
+  const { topics } = props;
   return (
-    <nav>
-      <Link to='/'>NC NEWS</Link>
-      {topics.map(topic => (
-        <Link to={`/topics/${topic.slug}`} key={topic.slug}>
-          {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-        </Link>
-      )
-      )}
-      {!username && <Login changeLoginState={changeLoginState} />}
-      {username && <Logout changeLoginState={changeLoginState} username={username} />}
-    </nav>
+    <div styles={styles.root}>
+      <AppBar position="static" color='default'>
+        <Toolbar>
+          <Typography variant="h6" color="inherit" style={styles.grow}>
+            NC News
+          </Typography>
+          <Button component={Link} to='/' color='inherit'>
+            All
+          </Button>
+          {topics.map(topic => (
+            <Button component={Link} to={`/topics/${topic.slug}`} color='inherit' key={topic.slug}>
+              {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+            </Button>
+          ))}
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
 Nav.propTypes = {
-  username: PropTypes.string.isRequired,
-  changeLoginState: PropTypes.func.isRequired,
   topics: PropTypes.array.isRequired
 };
 
