@@ -18,7 +18,7 @@ class Delete extends Component {
                     <React.Fragment>
                         <p>Permanently delete this {targetItem}?</p>
                         <button onClick={handleApiRequest}>Yes</button>
-                        <button onClick={handleClick}>No</button>
+                        <button onClick={() => handleClick('clicked')}>No</button>
                     </React.Fragment>
                 }
                 {deleted && <p> Successfully deleted {targetItem} </p>}

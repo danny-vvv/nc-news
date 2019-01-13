@@ -3,6 +3,7 @@ import './Comments.css';
 import * as api from '../api';
 import { Link } from '@reach/router';
 import Form from './Form';
+import Delete from './Delete';
 
 class Comments extends Component {
   state = {
@@ -28,6 +29,14 @@ class Comments extends Component {
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
             <p>{comment.votes} votes | <Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>
+            {comment.author === username &&
+              <Delete
+                apiMethod={api.deleteComment}
+                apiArgs={{ comment_id: comment.comment_id, article_id }}
+                targetItem='comment'
+                updateParent={this.refreshComments}
+              />
+            }
             <p>{comment.body}</p>
             <p>---</p>
           </React.Fragment>

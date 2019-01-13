@@ -59,6 +59,13 @@ export const postComment = async (requestBody) => {
   return data.comment;
 }
 
+export const deleteComment = async (requestBody) => {
+  console.log('in api!')
+  const { comment_id, article_id } = requestBody;
+  const { data } = await axios.delete(`${BASE_URL}/articles/${article_id}/comments/${comment_id}`)
+  return data;
+}
+
 export const postTopic = async (body) => {
   const { description } = body;
   const slug = body.slug.toLowerCase();
