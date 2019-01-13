@@ -3,14 +3,14 @@ import './Articles.css';
 import { Link } from '@reach/router';
 import * as api from '../api';
 import Vote from './Vote';
+import Sort from './Sort';
 
 class Articles extends Component {
   state = {
     articles: [],
     page: 1,
     onLastPage: false,
-    sort_by: 'comment_count',
-    sort_ascending: false
+    sort_by: 'comment_count'
   }
 
   render() {
@@ -19,16 +19,7 @@ class Articles extends Component {
       <div className='Articles'>
         {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
         {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
-
-        <form onChange={(event) => this.changeSortBy(event)}>
-          <label for='sort_by'>SORT </label>
-          <select id='sort_by'>
-            <option value='comment_count'>Popular</option>
-            <option value='created_at'>New</option>
-            <option value='votes'>Top</option>
-          </select>
-        </form>
-
+        <Sort updateParentState={this.updateState} />
         <ul>
           {articles.map(article =>
             <li key={article.article_id}>
@@ -83,12 +74,13 @@ class Articles extends Component {
     this.setState({ page: Math.max(this.state.page + increment, 1) })
   }
 
-  changeSortBy = (event) => {
-    const sort_by = event.target.value;
+  updateState = (newState) => {
+    const { sort_by } = newState;
     this.setState({
       sort_by
     })
   }
+
 }
 
 export default Articles;
