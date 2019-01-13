@@ -7,10 +7,12 @@ export const fetchArticle = async (articleId) => {
   return data;
 }
 
-export const fetchArticles = async (topic, page) => {
+export const fetchArticles = async (requestBody) => {
+  const { topic, page, sort_by } = requestBody;
+  const sortByQuery = `&sort_by=${sort_by}`
   const { data } = topic
-    ? await axios.get(`${BASE_URL}/topics/${topic}/articles?p=${page}`)
-    : await axios.get(`${BASE_URL}/articles?p=${page}`);
+    ? await axios.get(`${BASE_URL}/topics/${topic}/articles?p=${page}${sortByQuery}`)
+    : await axios.get(`${BASE_URL}/articles?p=${page}${sortByQuery}`);
   return data;
 }
 

@@ -9,6 +9,8 @@ class Articles extends Component {
     articles: [],
     page: 1,
     onLastPage: false,
+    sort_by: 'comment_count',
+    sort_ascending: false
   }
 
   render() {
@@ -17,6 +19,16 @@ class Articles extends Component {
       <div className='Articles'>
         {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
         {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
+
+        <form onChange={(event) => this.changeSortBy(event)}>
+          <label for='sort_by'>SORT </label>
+          <select id='sort_by'>
+            <option value='comment_count'>Popular</option>
+            <option value='created_at'>New</option>
+            <option value='votes'>Top</option>
+          </select>
+        </form>
+
         <ul>
           {articles.map(article =>
             <li key={article.article_id}>
@@ -39,28 +51,43 @@ class Articles extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.topic !== this.props.topic || this.state.page !== prevState.page) {
+    const { page, sort_by } = this.state;
+    const { topic, setHeading } = this.props;
+    if (topic !== prevProps.topic || page !== prevState.page) {
       this.fetchArticles()
-      this.props.setHeading(this.props.topic)
+      setHeading(topic)
     }
-    if (prevProps.topic !== this.props.topic) {
+    if (topic !== prevProps.topic) {
       this.setState({ page: 1 })
+    }
+    if (sort_by !== prevState.sort_by) {
+      this.fetchArticles()
     }
   }
 
   fetchArticles() {
-    api.fetchArticles(this.props.topic, this.state.page)
+    const { page, sort_by } = this.state;
+    const { topic } = this.props;
+    const requestBody = { topic, page, sort_by };
+    api.fetchArticles(requestBody)
       .then(({ articles }) => {
         this.setState({ articles: articles })
-
         articles.length < 10
           ? this.setState({ onLastPage: true })
           : this.setState({ onLastPage: false })
       })
+      .catch((err) => console.log(err))
   }
 
   changePage(increment) {
     this.setState({ page: Math.max(this.state.page + increment, 1) })
+  }
+
+  changeSortBy = (event) => {
+    const sort_by = event.target.value;
+    this.setState({
+      sort_by
+    })
   }
 }
 
