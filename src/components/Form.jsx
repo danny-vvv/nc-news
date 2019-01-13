@@ -78,10 +78,11 @@ class Form extends Component {
     }
 
     handleApiRequest(requestBody) {
-        const { apiMethod, successUrl, successEndpoint } = this.props;
+        const { apiMethod, successUrl, successEndpoint, updateParent } = this.props;
         apiMethod(requestBody)
             .then((res) => {
                 if (successUrl) navigate(`${successUrl}/${res[successEndpoint]}`)
+                else if (updateParent) updateParent()
             })
             .catch((err) => {
                 console.log(err)
@@ -112,7 +113,8 @@ Form.propTypes = {
     requireLoggedIn: PropTypes.bool,
     setHeading: PropTypes.func,
     heading: PropTypes.string,
-    path: PropTypes.string
+    path: PropTypes.string,
+    updateParent: PropTypes.func
 };
 
 export default Form;

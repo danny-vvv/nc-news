@@ -24,6 +24,7 @@ class Comments extends Component {
             apiMethod={api.postComment}
             apiArgs={{ user_id, article_id }}
             rejectMessage={'Unexpected error. Comment could not be posted.'}
+            updateParent={this.refreshComments}
           />
         }
         {comments.map(comment => (
