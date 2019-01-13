@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 class Vote extends Component {
     state = {
         voteChange: 0,
-        lastIncrement: 0
+        lastIncrement: 0,
+        apiRejected: false
     }
     render() {
         const { handleClick } = this;
-        const { voteChange } = this.state;
+        const { voteChange, apiRejected } = this.state;
         const { votes } = this.props;
         return (
             <div>
                 <button onClick={() => handleClick(1)}>Upvote</button>
                 <span>{votes + voteChange}</span>
                 <button onClick={() => handleClick(-1)}>Downvote</button>
+                {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
             </div>
         );
     }
@@ -44,9 +46,7 @@ class Vote extends Component {
             inc_votes: lastIncrement,
             ...apiArgs
         }
-        apiMethod(requestBody)
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err))
+        apiMethod(requestBody).catch(() => this.setState({ apiRejected: true }))
     }
 }
 
