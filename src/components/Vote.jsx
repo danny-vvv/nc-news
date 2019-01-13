@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Login from './Login';
 
 class Vote extends Component {
     state = {
         voteChange: 0,
         lastIncrement: 0,
-        apiRejected: false
+        apiRejected: false,
+        promptLogin: false
     }
     render() {
         const { handleClick, disable } = this;
-        const { voteChange, apiRejected } = this.state;
+        const { voteChange, apiRejected, promptLogin } = this.state;
         const { votes } = this.props;
         return (
             <div>
@@ -17,6 +19,7 @@ class Vote extends Component {
                 <span>{votes + voteChange}</span>
                 <button onClick={() => handleClick(1)} disabled={disable(1)}>Upvote</button>
                 {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
+                {promptLogin && <span>Please login to vote.</span>}
             </div>
         );
     }
@@ -27,7 +30,11 @@ class Vote extends Component {
     }
 
     handleClick = (increment) => {
-        this.incrementVote(increment)
+        const { username } = this.props;
+        if (username) this.incrementVote(increment)
+        else this.setState({
+            promptLogin: true
+        })
     }
 
     incrementVote(increment) {
@@ -39,7 +46,12 @@ class Vote extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.voteChange !== prevState.voteChange) {
+        const voteChange = this.state;
+        const { username } = this.props;
+        if (username !== prevProps.username) {
+            this.setState({ promptLogin: false })
+        }
+        if (voteChange !== prevState.voteChange) {
             this.handleApiRequest()
         }
     }
@@ -58,7 +70,8 @@ class Vote extends Component {
 Vote.propTypes = {
     votes: PropTypes.number.isRequired,
     apiMethod: PropTypes.func.isRequired,
-    apiArgs: PropTypes.object.isRequired
+    apiArgs: PropTypes.object.isRequired,
+    username: PropTypes.string.isRequired
 };
 
 export default Vote;

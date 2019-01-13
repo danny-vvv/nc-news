@@ -29,8 +29,8 @@ class App extends Component {
         <Header heading={heading} />
         <Router>
           <Login path='/login' changeLoginState={changeLoginState} />
-          <Articles path='/' setHeading={setHeading} />
-          <Articles path='/topics/:topic' setHeading={setHeading} />
+          <Articles path='/' setHeading={setHeading} username={username} />
+          <Articles path='/topics/:topic' setHeading={setHeading} username={username} />
           <Article path='/articles/:article_id' username={username} user_id={userId} setHeading={setHeading} />
           <User path='/users/:username' setHeading={setHeading} />
           <Form // Post Article

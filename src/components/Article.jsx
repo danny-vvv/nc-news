@@ -27,7 +27,7 @@ class Article extends Component {
       <div className='Article'>
         {!deleted && title &&
           <article>
-            <Vote votes={votes} apiMethod={api.voteArticle} apiArgs={{ article_id }} />
+            <Vote votes={votes} apiMethod={api.voteArticle} apiArgs={{ article_id }} username={username} />
             <h2>{title}</h2>
             <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
             <p>{body}</p>

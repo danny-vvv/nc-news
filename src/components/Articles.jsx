@@ -15,6 +15,7 @@ class Articles extends Component {
 
   render() {
     const { articles } = this.state;
+    const { username } = this.props;
     return (
       <div className='Articles'>
         {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
@@ -31,7 +32,7 @@ class Articles extends Component {
           {articles.map(article =>
             <li key={article.article_id}>
               <React.Fragment >
-                <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} />
+                <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
                 <Link to={`/articles/${article.article_id}`}>
                   {article.title}
                 </Link>

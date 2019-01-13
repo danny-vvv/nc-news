@@ -39,7 +39,7 @@ class Comments extends Component {
         />
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
-            <Vote votes={comment.votes} apiMethod={api.voteComment} apiArgs={{ article_id, comment_id: comment.comment_id }} />
+            <Vote votes={comment.votes} apiMethod={api.voteComment} apiArgs={{ article_id, comment_id: comment.comment_id }} username={username} />
             <p><Link to={`/users/${comment.author}`}>{comment.author}</Link> | <i>{comment.created_at}</i></p>
             {comment.author === username &&
               <Delete
