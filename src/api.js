@@ -16,8 +16,10 @@ export const fetchArticles = async (requestBody) => {
   return data;
 }
 
-export const fetchComments = async (articleId) => {
-  const { data } = await axios.get(`${BASE_URL}/articles/${articleId}/comments`)
+export const fetchComments = async (requestBody) => {
+  const { article_id, sort_by } = requestBody;
+  const sortByQuery = `?sort_by=${sort_by}`
+  const { data } = await axios.get(`${BASE_URL}/articles/${article_id}/comments${sortByQuery}`)
   return data;
 }
 

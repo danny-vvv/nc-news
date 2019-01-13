@@ -5,10 +5,12 @@ import { Link } from '@reach/router';
 import Form from './Form';
 import Delete from './Delete';
 import Vote from './Vote';
+import Sort from './Sort';
 
 class Comments extends Component {
   state = {
-    comments: []
+    comments: [],
+    sort_by: 'votes'
   }
 
   render() {
@@ -28,6 +30,13 @@ class Comments extends Component {
             updateParent={this.refreshComments}
           />
         }
+        <Sort
+          updateParentState={this.updateState}
+          options={[
+            { name: 'Top', value: 'votes' },
+            { name: 'New', value: 'created_at' }
+          ]}
+        />
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
             <Vote votes={comment.votes} apiMethod={api.voteComment} apiArgs={{ article_id, comment_id: comment.comment_id }} />
@@ -52,15 +61,32 @@ class Comments extends Component {
     this.fetchComments()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { sort_by } = this.state;
+    if (sort_by !== prevState.sort_by) {
+      this.fetchComments()
+    }
+  }
+
   fetchComments() {
+    const { sort_by } = this.state;
     const { article_id } = this.props;
-    api.fetchComments(article_id)
+    const requestBody = { article_id, sort_by };
+    api.fetchComments(requestBody)
       .then(({ comments }) => this.setState({ comments: comments }))
   }
 
   refreshComments = () => {
     this.fetchComments()
   }
+
+  updateState = (newState) => {
+    const { sort_by } = newState;
+    this.setState({
+      sort_by
+    })
+  }
+
 }
 
 export default Comments;

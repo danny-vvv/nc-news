@@ -19,7 +19,14 @@ class Articles extends Component {
       <div className='Articles'>
         {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
         {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
-        <Sort updateParentState={this.updateState} />
+        <Sort
+          updateParentState={this.updateState}
+          options={[
+            { name: 'Popular', value: 'comment_count' },
+            { name: 'Top', value: 'votes' },
+            { name: 'New', value: 'created_at' }
+          ]}
+        />
         <ul>
           {articles.map(article =>
             <li key={article.article_id}>
