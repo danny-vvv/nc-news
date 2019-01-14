@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Icon, Button } from '@material-ui/core';
 
 class Vote extends Component {
     state = {
@@ -14,9 +15,9 @@ class Vote extends Component {
         const { votes } = this.props;
         return (
             <div>
-                <button onClick={() => handleClick(-1)} disabled={disable(-1)}>Downvote</button>
+                <Button onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
                 <span>{votes + voteChange}</span>
-                <button onClick={() => handleClick(1)} disabled={disable(1)}>Upvote</button>
+                <Button onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
                 {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
                 {promptLogin && <span>Please login to vote.</span>}
             </div>
