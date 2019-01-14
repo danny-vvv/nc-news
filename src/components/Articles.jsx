@@ -34,7 +34,7 @@ class Articles extends Component {
     const { username, classes } = this.props;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={8}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
