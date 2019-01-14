@@ -1,4 +1,5 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 
 const Header = (props) => {
 
@@ -7,9 +8,11 @@ const Header = (props) => {
     : 'Home';
 
   return (
-    <div className='Header'>
+    <div className='Header' >
       <header>
-        <h1>{heading}</h1>
+        <Typography variant='h2' color='inherit'>
+          {heading}
+        </Typography>
       </header>
     </div>
   );

@@ -16,9 +16,9 @@ const Sidebar = props => {
     <div styles={styles.root}>
       {!username && <Login changeLoginState={changeLoginState} />}
       {username && <Logout changeLoginState={changeLoginState} username={username} />}
-      <Button component={Link} to='/submit' color='inherit'> Create Post</Button>
+      <Button component={Link} to='/submit' color='primary'> Create Post</Button>
       <br />
-      <Button component={Link} to='/newtopic' color='inherit'>New Topic</Button>
+      <Button component={Link} to='/newtopic' color='primary'>New Topic</Button>
     </div >
   );
 };

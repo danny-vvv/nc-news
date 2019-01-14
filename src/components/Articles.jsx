@@ -3,6 +3,23 @@ import { Link } from '@reach/router';
 import * as api from '../api';
 import Vote from './Vote';
 import Sort from './Sort';
+import { Grid, Typography, withStyles, Paper } from '@material-ui/core';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing.unit
+  },
+  paper: {
+    padding: theme.spacing.unit,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  title: {
+    fontSize: 14,
+    textDecoration: 'none'
+  },
+});
 
 class Articles extends Component {
   state = {
@@ -14,32 +31,41 @@ class Articles extends Component {
 
   render() {
     const { articles } = this.state;
-    const { username } = this.props;
+    const { username, classes } = this.props;
     return (
-      <div className='Articles'>
-        {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
-        {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
-        <Sort
-          updateParentState={this.updateState}
-          options={[
-            { name: 'Popular', value: 'comment_count' },
-            { name: 'Top', value: 'votes' },
-            { name: 'New', value: 'created_at' }
-          ]}
-        />
-        <ul>
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
+              {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
+              <Sort
+                updateParentState={this.updateState}
+                options={[
+                  { name: 'Popular', value: 'comment_count' },
+                  { name: 'Top', value: 'votes' },
+                  { name: 'New', value: 'created_at' }
+                ]}
+              />
+            </Paper>
+          </Grid>
           {articles.map(article =>
-            <li key={article.article_id}>
-              <React.Fragment >
-                <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
-                <Link to={`/articles/${article.article_id}`}>
-                  {article.title}
-                </Link>
-              </React.Fragment>
-            </li>
+            <React.Fragment key={article.article_id}>
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
+                  <Typography component={Link} to={`/articles/${article.article_id}`} className={classes.title} color="inherit">
+                    {article.title}
+                  </Typography>
+                </Paper>
+              </Grid>
+            </React.Fragment>
           )}
-        </ul>
+        </Grid>
       </div>
+
+
+
     );
   }
 
@@ -90,4 +116,4 @@ class Articles extends Component {
 
 }
 
-export default Articles;
+export default withStyles(styles)(Articles);

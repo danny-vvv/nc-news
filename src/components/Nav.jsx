@@ -24,11 +24,11 @@ const Nav = props => {
           <Typography variant="h6" color="inherit" style={styles.grow}>
             NC News
           </Typography>
-          <Button component={Link} to='/' color='inherit'>
+          <Button component={Link} to='/' color='primary'>
             All
           </Button>
           {topics.map(topic => (
-            <Button component={Link} to={`/topics/${topic.slug}`} color='inherit' key={topic.slug}>
+            <Button component={Link} to={`/topics/${topic.slug}`} color='primary' key={topic.slug}>
               {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
             </Button>
           ))}

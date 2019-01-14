@@ -31,7 +31,7 @@ class Login extends Component {
             onChange={this.handleChange}
             id='usernameInput' />
           <br />
-          <Button type='submit' color='inherit'>Sign In</Button>
+          <Button type='submit' color='primary'>Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>
