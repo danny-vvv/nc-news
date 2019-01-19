@@ -7,8 +7,7 @@ export const fetchArticle = async (articleId) => {
   return data;
 };
 
-export const fetchArticles = async (requestBody) => {
-  const { topic, page, sort_by } = requestBody;
+export const fetchArticles = async ({ topic, page, sort_by }) => {
   const sortByQuery = `&sort_by=${sort_by}`;
   const { data } = topic
     ? await axios.get(`${BASE_URL}/topics/${topic}/articles?p=${page}${sortByQuery}`)
@@ -16,8 +15,7 @@ export const fetchArticles = async (requestBody) => {
   return data;
 };
 
-export const fetchComments = async (requestBody) => {
-  const { article_id, sort_by } = requestBody;
+export const fetchComments = async ({ article_id, sort_by }) => {
   const sortByQuery = `?sort_by=${sort_by}`;
   const { data } = await axios.get(`${BASE_URL}/articles/${article_id}/comments${sortByQuery}`);
   return data;
@@ -38,10 +36,9 @@ export const fetchTopics = async () => {
   return data;
 };
 
-export const postArticle = async (requestBody) => {
-  const {
-    topic, title, body, user_id,
-  } = requestBody;
+export const postArticle = async ({
+  topic, title, body, user_id,
+}) => {
   const { data } = await axios.post(`${BASE_URL}/topics/${topic}/articles`, {
     title,
     body,
@@ -50,22 +47,19 @@ export const postArticle = async (requestBody) => {
   return data.article;
 };
 
-export const deleteArticle = async (requestBody) => {
-  const { article_id } = requestBody;
+export const deleteArticle = async ({ article_id }) => {
   const { data } = await axios.delete(`${BASE_URL}/articles/${article_id}`);
   return data;
 };
 
-export const voteArticle = async (requestBody) => {
-  const { inc_votes, article_id } = requestBody;
+export const voteArticle = async ({ inc_votes, article_id }) => {
   const { data } = await axios.patch(`${BASE_URL}/articles/${article_id}`, {
     inc_votes,
   });
   return data;
 };
 
-export const postComment = async (requestBody) => {
-  const { user_id, body, article_id } = requestBody;
+export const postComment = async ({ user_id, body, article_id }) => {
   const { data } = await axios.post(`${BASE_URL}/articles/${article_id}/comments`, {
     user_id,
     body,
@@ -73,25 +67,21 @@ export const postComment = async (requestBody) => {
   return data.comment;
 };
 
-export const deleteComment = async (requestBody) => {
-  const { comment_id, article_id } = requestBody;
+export const deleteComment = async ({ comment_id, article_id }) => {
   const { data } = await axios.delete(`${BASE_URL}/articles/${article_id}/comments/${comment_id}`);
   return data;
 };
 
-export const voteComment = async (requestBody) => {
-  const { inc_votes, article_id, comment_id } = requestBody;
+export const voteComment = async ({ inc_votes, article_id, comment_id }) => {
   const { data } = await axios.patch(`${BASE_URL}/articles/${article_id}/comments/${comment_id}`, {
     inc_votes,
   });
   return data;
 };
 
-export const postTopic = async (body) => {
-  const { description } = body;
-  const slug = body.slug.toLowerCase();
+export const postTopic = async ({ description, slug }) => {
   const { data } = await axios.post(`${BASE_URL}/topics`, {
-    slug,
+    slug: slug.toLowerCase(),
     description,
   });
   return data.topic;
