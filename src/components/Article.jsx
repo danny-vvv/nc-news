@@ -1,75 +1,40 @@
 import React, { Component } from 'react';
+import { Link } from '@reach/router';
+import PropTypes from 'prop-types';
 import * as api from '../api';
 import Comments from './Comments';
-import { Link } from '@reach/router';
 import Delete from './Delete';
 import Vote from './Vote';
 
 class Article extends Component {
   state = {
-    article_id: 0,
     author: '',
     body: '',
     comment_count: 0,
     created_at: '',
     title: '',
     topic: '',
-    user_id: 6,
     votes: 0,
     userIsAuthor: false,
-    deleted: false
-  }
-  render() {
-    const { title, body, author, created_at, votes, userIsAuthor, deleted, topic } = this.state;
-    const { article_id, username, user_id } = this.props;
-    return (
-      <div className='Article'>
-        {!deleted && title &&
-          <article>
-            <Vote votes={votes} apiMethod={api.voteArticle} apiArgs={{ article_id }} username={username} />
-            <h2>{title}</h2>
-            <p>by <Link to={`/users/${author}`}>{author}</Link> {userIsAuthor && <i>(you)</i>} | <i>{created_at}</i></p>
-            <p>{body}</p>
-            {userIsAuthor &&
-              <Delete
-                apiMethod={api.deleteArticle}
-                apiArgs={{ article_id }}
-                targetItem='article'
-                redirectUrl={`/topics/${topic}`}
-                redirectTarget={topic}
-                updateParent={this.setDeleted}
-              />
-            }
-            <Comments article_id={article_id} username={username} user_id={user_id} />
-          </article>
-        }
-        {deleted &&
-          <React.Fragment>
-            <p>Your post has been successfully deleted.</p>
-            <Link to={`/topics/${topic}`}>Return to {topic}</Link>
-          </React.Fragment>
-        }
-      </div>
-    );
   }
 
   componentDidMount() {
-    this.fetchArticle(this.props.article_id)
+    const { article_id } = this.props;
+    this.fetchArticle(article_id);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.username !== prevProps.username
-      || this.state.author !== prevState.author
-    ) {
+    const { author, topic } = this.state;
+    const { username, article_id, setHeading } = this.props;
+    if (username !== prevProps.username || author !== prevState.author) {
       this.setUserIsAuthor();
     }
-
-    if (prevProps.article_id !== this.props.article_id) {
-      this.fetchArticle(this.props.article_id)
+    if (article_id !== prevProps.article_id) {
+      this.fetchArticle(article_id);
     }
 
-    if (prevState.topic !== this.state.topic) {
-      this.props.setHeading(this.state.topic)
+    if (prevState.topic !== topic) {
+      setHeading(topic);
     }
   }
 
@@ -77,44 +42,107 @@ class Article extends Component {
     const { author } = this.state;
     const { username } = this.props;
     if (username === author) {
-      this.setState({ userIsAuthor: true })
+      this.setState({ userIsAuthor: true });
     } else {
-      this.setState({ userIsAuthor: false })
+      this.setState({ userIsAuthor: false });
     }
+  }
+
+  setDeleted = () => {
+    this.setState({ deleted: true });
   }
 
   fetchArticle(topic) {
     api.fetchArticle(topic)
       .then((article) => {
         const {
-          article_id,
           author,
           body,
           comment_count,
           created_at,
           title,
-          topic,
-          user_id,
-          votes
+          votes,
         } = article;
         this.setState({
-          article_id,
           author,
           body,
           comment_count,
           created_at,
           title,
-          topic,
-          user_id,
-          votes
-        })
-      })
+          votes,
+        });
+      });
   }
 
-  setDeleted = () => {
-    this.setState({ deleted: true })
+  render() {
+    const {
+      title, body, author, created_at, votes, userIsAuthor, deleted, topic, comment_count,
+    } = this.state;
+    const { article_id, username, user_id } = this.props;
+    return (
+      <div className="Article">
+        {!deleted && title
+          && (
+          <article>
+            <Vote
+              votes={votes}
+              apiMethod={api.voteArticle}
+              apiArgs={{ article_id }}
+              username={username}
+            />
+            <h2>{title}</h2>
+            <p>
+by
+              {' '}
+              <Link to={`/users/${author}`}>{author}</Link>
+              {' '}
+              {userIsAuthor && <i>(you)</i>}
+              {' '}
+|
+              {' '}
+              <i>{created_at}</i>
+            </p>
+            <p>{body}</p>
+            {userIsAuthor
+              && (
+              <Delete
+                apiMethod={api.deleteArticle}
+                apiArgs={{ article_id }}
+                targetItem="article"
+                redirectUrl={`/topics/${topic}`}
+                redirectTarget={topic}
+                updateParent={this.setDeleted}
+              />
+              )
+            }
+            <Comments
+              article_id={article_id}
+              username={username}
+              user_id={user_id}
+              comment_count={comment_count}
+            />
+          </article>
+          )}
+        {deleted
+          && (
+          <React.Fragment>
+            <p>Your post has been successfully deleted.</p>
+            <Link to={`/topics/${topic}`}>
+Return to
+              {' '}
+              {topic}
+            </Link>
+          </React.Fragment>
+          )
+        }
+      </div>
+    );
   }
-
 }
+
+Article.propTypes = {
+  article_id: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
+};
 
 export default Article;
