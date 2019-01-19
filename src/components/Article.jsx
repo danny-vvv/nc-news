@@ -83,56 +83,56 @@ class Article extends Component {
       <div className="Article">
         {!deleted && title
           && (
-          <article>
-            <Vote
-              votes={votes}
-              apiMethod={api.voteArticle}
-              apiArgs={{ article_id }}
-              username={username}
-            />
-            <h2>{title}</h2>
-            <p>
-by
-              {' '}
-              <Link to={`/users/${author}`}>{author}</Link>
-              {' '}
-              {userIsAuthor && <i>(you)</i>}
-              {' '}
-|
-              {' '}
-              <i>{created_at}</i>
-            </p>
-            <p>{body}</p>
-            {userIsAuthor
-              && (
-              <Delete
-                apiMethod={api.deleteArticle}
+            <article>
+              <Vote
+                votes={votes}
+                apiMethod={api.voteArticle}
                 apiArgs={{ article_id }}
-                targetItem="article"
-                redirectUrl={`/topics/${topic}`}
-                redirectTarget={topic}
-                updateParent={this.setDeleted}
+                username={username}
               />
-              )
-            }
-            <Comments
-              article_id={article_id}
-              username={username}
-              user_id={user_id}
-              comment_count={comment_count}
-            />
-          </article>
+              <h2>{title}</h2>
+              <p>
+                by
+                {' '}
+                <Link to={`/users/${author}`}>{author}</Link>
+                {' '}
+                {userIsAuthor && <i>(you)</i>}
+                {' '}
+                |
+                {' '}
+                <i>{created_at}</i>
+              </p>
+              <p>{body}</p>
+              {userIsAuthor
+                && (
+                  <Delete
+                    apiMethod={api.deleteArticle}
+                    apiArgs={{ article_id }}
+                    targetItem="article"
+                    redirectUrl={`/topics/${topic}`}
+                    redirectTarget={topic}
+                    updateParent={this.setDeleted}
+                  />
+                )
+              }
+              <Comments
+                article_id={article_id}
+                username={username}
+                user_id={user_id}
+                comment_count={comment_count}
+              />
+            </article>
           )}
         {deleted
           && (
-          <React.Fragment>
-            <p>Your post has been successfully deleted.</p>
-            <Link to={`/topics/${topic}`}>
-Return to
-              {' '}
-              {topic}
-            </Link>
-          </React.Fragment>
+            <React.Fragment>
+              <p>Your post has been successfully deleted.</p>
+              <Link to={`/topics/${topic}`}>
+                Return to
+                {' '}
+                {topic}
+              </Link>
+            </React.Fragment>
           )
         }
       </div>
@@ -141,8 +141,13 @@ Return to
 }
 
 Article.propTypes = {
-  article_id: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  article_id: PropTypes.string,
+  username: PropTypes.string,
+};
+
+Article.defaultProps = {
+  article_id: undefined,
+  username: '',
 };
 
 export default Article;

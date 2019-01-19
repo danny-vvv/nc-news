@@ -44,7 +44,6 @@ class App extends Component {
     const {
       username, userId, heading, topics,
     } = this.state;
-    console.log(topics);
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>

@@ -110,7 +110,11 @@ class Articles extends Component {
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
                   <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
-                  <Typography component={Link} to={`/articles/${article.article_id}`} className={classes.title} color="inherit">
+                  <Typography
+                    component={Link}
+                    to={`/articles/${article.article_id}`}
+                    className={classes.title}
+                    color="inherit">
                     {article.title}
                   </Typography>
                 </Paper>
