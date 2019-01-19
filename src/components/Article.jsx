@@ -141,7 +141,7 @@ Return to
 }
 
 Article.propTypes = {
-  article_id: PropTypes.number.isRequired,
+  article_id: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
 };
 
