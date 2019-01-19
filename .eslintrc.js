@@ -3,5 +3,5 @@ module.exports = {
     "parser": "babel-eslint",
     "rules": {
         "camelcase": 0
-    }
+    },
 };

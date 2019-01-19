@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
-import * as api from '../api';
+import {
+  Grid, Typography, withStyles, Paper,
+} from '@material-ui/core';
+import PropTypes from 'prop-types';
 import Vote from './Vote';
 import Sort from './Sort';
-import { Grid, Typography, withStyles, Paper } from '@material-ui/core';
+import * as api from '../api';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing.unit
+    padding: theme.spacing.unit,
   },
   paper: {
     padding: theme.spacing.unit,
@@ -17,7 +20,7 @@ const styles = theme => ({
   },
   title: {
     fontSize: 14,
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
 });
 
@@ -26,30 +29,83 @@ class Articles extends Component {
     articles: [],
     page: 1,
     onLastPage: false,
-    sort_by: 'comment_count'
+    sort_by: 'comment_count',
+  }
+
+  componentDidMount() {
+    const { setHeading, topic } = this.props;
+    this.fetchArticles();
+    setHeading(topic);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { page, sort_by } = this.state;
+    const { topic, setHeading } = this.props;
+    if (topic !== prevProps.topic || page !== prevState.page) {
+      this.fetchArticles();
+      setHeading(topic);
+    }
+    if (topic !== prevProps.topic) {
+      this.resetPage();
+    }
+    if (sort_by !== prevState.sort_by) {
+      this.fetchArticles();
+    }
+  }
+
+  updateState = (newState) => {
+    const { sort_by } = newState;
+    this.setState({
+      sort_by,
+    });
+  }
+
+  resetPage() {
+    this.setState({ page: 1 });
+  }
+
+  fetchArticles() {
+    const { page, sort_by } = this.state;
+    const { topic } = this.props;
+    const requestBody = { topic, page, sort_by };
+    api.fetchArticles(requestBody)
+      .then(({ articles }) => {
+        this.setState({ articles });
+        if (articles.length < 10) {
+          this.setState({ onLastPage: true });
+        } else {
+          this.setState({ onLastPage: false });
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  changePage(increment) {
+    const { page } = this.state;
+    this.setState({ page: Math.max(page + increment, 1) });
   }
 
   render() {
-    const { articles } = this.state;
+    const { articles, page, onLastPage } = this.state;
     const { username, classes } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              {this.state.page > 1 && <button onClick={() => this.changePage(-1)}>Previous</button>}
-              {!this.state.onLastPage && <button onClick={() => this.changePage(1)}>Next</button>}
+              {page > 1 && <button type="button" onClick={() => this.changePage(-1)}>Previous</button>}
+              {!onLastPage && <button type="button" onClick={() => this.changePage(1)}>Next</button>}
               <Sort
                 updateParentState={this.updateState}
                 options={[
                   { name: 'Popular', value: 'comment_count' },
                   { name: 'Top', value: 'votes' },
-                  { name: 'New', value: 'created_at' }
+                  { name: 'New', value: 'created_at' },
                 ]}
               />
             </Paper>
           </Grid>
-          {articles.map(article =>
+          {articles.map(article => (
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>
                 <Paper className={classes.paper}>
@@ -60,60 +116,30 @@ class Articles extends Component {
                 </Paper>
               </Grid>
             </React.Fragment>
-          )}
+          ))}
         </Grid>
       </div>
 
 
-
     );
   }
-
-  componentDidMount() {
-    this.fetchArticles()
-    this.props.setHeading(this.props.topic)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { page, sort_by } = this.state;
-    const { topic, setHeading } = this.props;
-    if (topic !== prevProps.topic || page !== prevState.page) {
-      this.fetchArticles()
-      setHeading(topic)
-    }
-    if (topic !== prevProps.topic) {
-      this.setState({ page: 1 })
-    }
-    if (sort_by !== prevState.sort_by) {
-      this.fetchArticles()
-    }
-  }
-
-  fetchArticles() {
-    const { page, sort_by } = this.state;
-    const { topic } = this.props;
-    const requestBody = { topic, page, sort_by };
-    api.fetchArticles(requestBody)
-      .then(({ articles }) => {
-        this.setState({ articles: articles })
-        articles.length < 10
-          ? this.setState({ onLastPage: true })
-          : this.setState({ onLastPage: false })
-      })
-      .catch((err) => console.log(err))
-  }
-
-  changePage(increment) {
-    this.setState({ page: Math.max(this.state.page + increment, 1) })
-  }
-
-  updateState = (newState) => {
-    const { sort_by } = newState;
-    this.setState({
-      sort_by
-    })
-  }
-
 }
+
+Articles.propTypes = {
+  topic: PropTypes.string,
+  setHeading: PropTypes.func,
+  username: PropTypes.string,
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    paper: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+};
+
+Articles.defaultProps = {
+  topic: 'NC News',
+  setHeading: undefined,
+  username: undefined,
+};
 
 export default withStyles(styles)(Articles);
