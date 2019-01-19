@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import * as api from '../api';
 import { Button, Input } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import * as api from '../api';
 
 class Login extends Component {
   state = {
@@ -14,9 +15,33 @@ class Login extends Component {
       flexWrap: 'wrap',
     },
     input: {
-      margin: theme.spacing.unit
+      margin: theme.spacing.unit,
     },
   });
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { usernameInput } = this.state;
+    this.login(usernameInput);
+  }
+
+  handleChange = (event) => {
+    this.setState(({ [event.target.id]: event.target.value }));
+  }
+
+  updateCurrState = (failedLoginAttempt) => {
+    this.setState(() => ({ failedLoginAttempt }));
+  }
+
+  login = (username) => {
+    const { changeLoginState } = this.props;
+    api.fetchUser(username)
+      .then(({ user }) => {
+        const userId = user.user_id;
+        changeLoginState({ username, userId });
+      })
+      .catch(this.updateCurrState(true));
+  }
 
   render() {
     const { usernameInput, failedLoginAttempt } = this.state;
@@ -25,46 +50,23 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
           <Input
             styles={this.styles.input}
-            type='text'
+            type="text"
             value={usernameInput}
-            placeholder='Username'
+            placeholder="Username"
             onChange={this.handleChange}
-            id='usernameInput' />
+            id="usernameInput"
+          />
           <br />
-          <Button type='submit' color='primary'>Sign In</Button>
+          <Button type="submit" color="primary">Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>
     );
   }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.login(this.state.usernameInput)
-  }
-
-  handleChange = (event) => {
-    this.setState(({ [event.target.id]: event.target.value }))
-  }
-
-  updateCurrState = (failedLoginAttempt) => {
-    this.setState(() => {
-      return { failedLoginAttempt };
-    })
-  }
-
-  login = (username) => {
-    const { changeLoginState } = this.props;
-    api.fetchUser(username)
-      .then(({ user }) => {
-        const userId = user.user_id;
-        changeLoginState({ username, userId })
-        this.updateCurrState(false)
-      })
-      .catch(err => {
-        this.updateCurrState(true)
-      })
-  }
 }
+
+Login.propTypes = {
+  changeLoginState: PropTypes.func.isRequired,
+};
 
 export default Login;
