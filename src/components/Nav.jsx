@@ -16,20 +16,20 @@ const styles = {
   },
 };
 
-const Nav = props => {
+const Nav = (props) => {
   const { topics, classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static" color='primary'>
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" color="inherit" classes={classes.grow}>
             NC News
           </Typography>
-          <Button component={Link} to='/' color='inherit'>
+          <Button component={Link} to="/" color="inherit">
             All
           </Button>
           {topics.map(topic => (
-            <Button component={Link} to={`/topics/${topic.slug}`} color='inherit' key={topic.slug}>
+            <Button component={Link} to={`/topics/${topic.slug}`} color="inherit" key={topic.slug}>
               {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
             </Button>
           ))}
@@ -40,7 +40,18 @@ const Nav = props => {
 };
 
 Nav.propTypes = {
-  topics: PropTypes.array.isRequired
+  topics: PropTypes.arrayOf(PropTypes.shape(
+    {
+      slug: PropTypes.string,
+      description: PropTypes.string,
+    },
+  )).isRequired,
+  classes: PropTypes.shape(
+    {
+      root: PropTypes.string,
+      grow: PropTypes.string,
+    },
+  ).isRequired,
 };
 
 export default withStyles(styles)(Nav);
