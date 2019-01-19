@@ -11,6 +11,17 @@ import User from './components/User';
 import * as api from './api';
 import Form from './components/Form';
 import { Grid, Paper, withStyles } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: {
+      main: '#f44336',
+    },
+  },
+});
 
 const styles = theme => ({
   root: {

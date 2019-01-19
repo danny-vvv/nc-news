@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core';
 
 const styles = {
   root: {
@@ -16,19 +17,19 @@ const styles = {
 };
 
 const Nav = props => {
-  const { topics } = props;
+  const { topics, classes } = props;
   return (
-    <div styles={styles.root}>
-      <AppBar position="static" color='default'>
+    <div className={classes.root}>
+      <AppBar position="static" color='primary'>
         <Toolbar>
-          <Typography variant="h6" color="inherit" style={styles.grow}>
+          <Typography variant="h6" color="inherit" classes={classes.grow}>
             NC News
           </Typography>
-          <Button component={Link} to='/' color='primary'>
+          <Button component={Link} to='/' color='inherit'>
             All
           </Button>
           {topics.map(topic => (
-            <Button component={Link} to={`/topics/${topic.slug}`} color='primary' key={topic.slug}>
+            <Button component={Link} to={`/topics/${topic.slug}`} color='inherit' key={topic.slug}>
               {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
             </Button>
           ))}
@@ -42,4 +43,4 @@ Nav.propTypes = {
   topics: PropTypes.array.isRequired
 };
 
-export default Nav;
+export default withStyles(styles)(Nav);
