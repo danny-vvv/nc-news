@@ -7,15 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-};
-
 const Nav = (props) => {
   const { topics, classes } = props;
   return (
@@ -46,12 +37,19 @@ Nav.propTypes = {
       description: PropTypes.string,
     },
   )).isRequired,
-  classes: PropTypes.shape(
-    {
-      root: PropTypes.string,
-      grow: PropTypes.string,
-    },
-  ).isRequired,
+  classes: PropTypes.shape({
+    root: PropTypes.string,
+    grow: PropTypes.string,
+  }).isRequired,
+};
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
 };
 
 export default withStyles(styles)(Nav);
