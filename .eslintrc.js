@@ -4,4 +4,7 @@ module.exports = {
     "rules": {
         "camelcase": 0
     },
+    "globals": {
+        "localStorage": true,
+    }
 };
