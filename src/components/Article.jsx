@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
+import moment from 'moment';
 import * as api from '../api';
 import Comments from './Comments';
 import Delete from './Delete';
@@ -92,17 +94,17 @@ class Article extends Component {
                 username={username}
               />
               <h2>{title}</h2>
-              <p>
-                by
-                {' '}
-                <Link to={`/users/${author}`}>{author}</Link>
+              <Typography variant="caption">
+                          Posted by
+                <Link to={`/users/${author}`}>
+                  {' '}
+                  {author}
+                </Link>
                 {' '}
                 {userIsAuthor && <i>(you)</i>}
                 {' '}
-                |
-                {' '}
-                <i>{created_at}</i>
-              </p>
+                {`${moment(created_at).fromNow()}`}
+              </Typography>
               <p>{body}</p>
               {userIsAuthor
                 && (

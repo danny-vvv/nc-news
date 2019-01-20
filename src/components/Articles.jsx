@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import {
-  Grid, Typography, withStyles, Card, ButtonBase, CardActionArea, CardContent, CardMedia,
+  Grid, Typography, withStyles, Card, CardActionArea, CardContent, Icon,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import { navigate } from '@reach/router/lib/history';
 import moment from 'moment';
 import Vote from './Vote';
 import Sort from './Sort';
@@ -18,20 +17,31 @@ const styles = (theme) => {
       padding: theme.spacing.unit,
     },
     card: {
-      diplay: 'flex',
-    },
-    details: {
       display: 'flex',
+      flexDirection: 'column',
+    },
+    vote: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    },
+    titleSection: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    titleText: {
+      fontSize: '14pt',
+      textDecoration: 'none',
     },
     content: {
       flex: '1 0 auto',
     },
-    controls: {
+    details: {
       display: 'flex',
+      flexDirection: 'column',
     },
-    title: {
-      fontSize: '14pt',
-      textDecoration: 'none',
+    articleLink: {
+      all: 'none',
     },
   };
 };
@@ -121,44 +131,49 @@ class Articles extends Component {
           {articles.map(article => (
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>
-
                 <Card className={classes.card}>
                   <Grid container spacing={12}>
-                    <CardActionArea>
-                      <Grid item xs={12}>
-                        <div className={classes.details}>
+
+                    <Grid item xs={1}>
+                      <div className={classes.vote}>
+                        <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
+                      </div>
+                    </Grid>
+                    <Grid item xs={11}>
+                      <CardActionArea component={Link} to={`/articles/${article.article_id}`}>
+                        <div className={classes.titleSection}>
+                          <div className={classes.details}>
+                            <Typography variant="caption">
+                          Posted by
+                              <Link to={`/users/${article.author}`}>
+                                {' '}
+                                {article.author}
+                              </Link>
+                              {' '}
+                              {`${moment(article.created_at).fromNow()}`}
+                            </Typography>
+                          </div>
                           <CardContent>
                             <Typography
-                              component={Link}
-                              to={`/articles/${article.article_id}`}
                               color="inherit"
                               variant="h1"
-                              className={classes.title}
+                              className={classes.titleText}
                             >
                               {article.title}
                             </Typography>
                           </CardContent>
                         </div>
-                      </Grid>
-                    </CardActionArea>
-                    <Grid item xs={12}>
-                      <div className={classes.controls}>
-                        <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
-                        <Typography variant="overline">
-                          Posted by
-                          <Link to={`/users/${article.author}`}>
+                        <div className={classes.details}>
+                          <Typography variant="caption">
+                            <Icon fontSize="small">comment</Icon>
                             {' '}
-                            {article.author}
-                          </Link>
-                          {' '}
-                          {`${moment(article.created_at).fromNow()}`}
-                        </Typography>
-                      </div>
+                            {`${article.comment_count} comments`}
+                          </Typography>
+                        </div>
+                      </CardActionArea>
                     </Grid>
                   </Grid>
                 </Card>
-
-
               </Grid>
             </React.Fragment>
           ))}

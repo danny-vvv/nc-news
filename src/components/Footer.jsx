@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 
 const Footer = () => (
   <div className="Footer">
-    <Button href="https://github.com/danielvarcas/nc-news" color="primary">GitHub</Button>
+    <Button href="https://github.com/danielvarcas/nc-news" color="secondary">GitHub</Button>
   </div>
 );
 

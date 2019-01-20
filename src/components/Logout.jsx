@@ -9,13 +9,12 @@ const Logout = (props) => {
   return (
     <div className="Logout">
       <p>
-Welcome,
+        Welcome,
         {' '}
         {username}
       </p>
-      <Button onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
-      <br />
-      <Button component={Link} to={`/users/${username}`}>Profile</Button>
+      <Button color="secondary" variant="contained" onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
+      <Button color="secondary" variant="contained" component={Link} to={`/users/${username}`}>Profile</Button>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
+import moment from 'moment';
 import Form from './Form';
 import Delete from './Delete';
 import Vote from './Vote';
@@ -77,11 +79,18 @@ class Comments extends Component {
               username={username}
             />
             <p>
-              <Link to={`/users/${comment.author}`}>{comment.author}</Link>
-              {' '}
-|
-              {' '}
-              <i>{comment.created_at}</i>
+              <Typography variant="caption">
+                          Posted by
+                <Link to={`/users/${comment.author}`}>
+                  {' '}
+                  {comment.author}
+
+                </Link>
+                {' '}
+                {comment.author === username && <i>(you)</i>}
+                {' '}
+                {`${moment(comment.created_at).fromNow()}`}
+              </Typography>
             </p>
             {comment.author === username
               && (

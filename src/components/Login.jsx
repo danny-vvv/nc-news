@@ -57,7 +57,7 @@ class Login extends Component {
             id="usernameInput"
           />
           <br />
-          <Button type="submit" color="primary">Sign In</Button>
+          <Button type="submit" color="secondary" variant="contained">Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>

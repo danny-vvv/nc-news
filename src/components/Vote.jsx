@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
- Icon, Button, withStyles, Typography 
+  Icon, Button, withStyles, Typography,
 } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
+    alignItems: 'center',
     display: 'flex',
+    fill: 'inherit',
+    flexDirection: 'column',
   },
 });
 
@@ -72,11 +75,11 @@ class Vote extends Component {
       const { votes, classes } = this.props;
       return (
         <div className={classes.root}>
-          <Button onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
+          <Button variant="text" size="small" onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
           <Typography variant="overline">
             {votes + voteChange}
           </Typography>
-          <Button onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
+          <Button variant="text" size="small" onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
           {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
           {promptLogin && <span>Please login to vote.</span>}
         </div>

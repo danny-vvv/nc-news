@@ -32,7 +32,7 @@ class Delete extends Component {
       const { targetItem } = this.props;
       return (
         <div>
-          {!deleted && <Button color="primary" onClick={() => handleClick('clicked')}>Delete</Button>}
+          {!deleted && <Button color="inherit" variant="contained" onClick={() => handleClick('clicked')}>Delete</Button>}
           {clicked && !deleted
                       && (
                       <React.Fragment>
@@ -42,8 +42,9 @@ class Delete extends Component {
                           {targetItem}
   ?
                         </p>
-                        <Button color="secondary" onClick={handleApiRequest}>Yes</Button>
-                        <Button color="secondary" onClick={() => handleClick('clicked')}>No</Button>
+                        <Button color="secondary" variant="contained" onClick={handleApiRequest}>Yes</Button>
+                        {' '}
+                        <Button color="secondary" variant="contained" onClick={() => handleClick('clicked')}>No</Button>
                       </React.Fragment>
                       )
                   }
