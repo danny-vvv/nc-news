@@ -113,8 +113,9 @@ class Articles extends Component {
                   <Typography
                     component={Link}
                     to={`/articles/${article.article_id}`}
-                    className={classes.title}
                     color="primary"
+                    variant="h4"
+                    className={classes.title}
                   >
                     {article.title}
                   </Typography>
@@ -124,8 +125,6 @@ class Articles extends Component {
           ))}
         </Grid>
       </div>
-
-
     );
   }
 }

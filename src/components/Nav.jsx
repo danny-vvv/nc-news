@@ -13,7 +13,7 @@ const Nav = (props) => {
     <div className={classes.root}>
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="h6" color="inherit" classes={classes.grow}>
+          <Typography variant="h6" color="inherit">
             NC News
           </Typography>
           <Button component={Link} to="/" color="inherit">
@@ -45,9 +45,6 @@ Nav.propTypes = {
 
 const styles = {
   root: {
-    flexGrow: 1,
-  },
-  grow: {
     flexGrow: 1,
   },
 };
