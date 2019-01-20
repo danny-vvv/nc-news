@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-import { Button, withStyles, Paper } from '@material-ui/core';
+import { Button, withStyles, Card } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing.unit,
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
   },
   button: {
     display: 'flex',
@@ -18,10 +22,10 @@ const Sidebar = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Paper>
+      <Card className={classes.card}>
         <Button component={Link} to="/submit" color="secondary" className={classes.button}> Create Post</Button>
         <Button component={Link} to="/newtopic" color="secondary" className={classes.button}>New Topic</Button>
-      </Paper>
+      </Card>
     </div>
   );
 };
