@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Router } from '@reach/router';
 import { Grid, Paper, withStyles } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { purple } from '@material-ui/core/colors/purple';
 import PropTypes from 'prop-types';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
@@ -15,11 +14,13 @@ import User from './components/User';
 import * as api from './api';
 import Form from './components/Form';
 
-const muiTheme = createMuiTheme({
+const theme = createMuiTheme({
   palette: {
-    primary: purple,
+    primary: {
+      main: '#424242',
+    },
     secondary: {
-      main: '#f44336',
+      main: '#80deea',
     },
   },
 });
@@ -29,7 +30,6 @@ const styles = () => ({
     backgroundColor: '#e6e6e6',
   },
 });
-
 
 class App extends Component {
   state = {
@@ -88,7 +88,7 @@ class App extends Component {
       username, userId, heading, topics,
     } = this.state;
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
