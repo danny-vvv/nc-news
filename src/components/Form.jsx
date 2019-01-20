@@ -68,7 +68,6 @@ class Form extends Component {
       .catch(this.setState({ apiRejected: true }));
   }
 
-
   render() {
     const { success, fail, apiRejected } = this.state;
     const {

@@ -18,11 +18,7 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  heading: PropTypes.string,
-};
-
-Header.defaultProps = {
-  heading: 'Home',
+  heading: PropTypes.string.isRequired,
 };
 
 export default Header;

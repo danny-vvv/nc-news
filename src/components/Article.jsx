@@ -32,7 +32,6 @@ class Article extends Component {
     if (article_id !== prevProps.article_id) {
       this.fetchArticle(+article_id);
     }
-
     if (prevState.topic !== topic) {
       setHeading(topic);
     }
@@ -62,6 +61,7 @@ class Article extends Component {
           created_at,
           title,
           votes,
+          topic,
         } = article;
         this.setState({
           author,
@@ -70,6 +70,7 @@ class Article extends Component {
           created_at,
           title,
           votes,
+          topic,
         });
       });
   }
@@ -144,7 +145,6 @@ Article.propTypes = {
   article_id: PropTypes.string,
   username: PropTypes.string,
   user_id: PropTypes.number,
-  setHeading: PropTypes.func.isRequired,
 };
 
 Article.defaultProps = {
