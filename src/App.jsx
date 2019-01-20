@@ -13,20 +13,7 @@ import Article from './components/Article';
 import User from './components/User';
 import * as api from './api';
 import Form from './components/Form';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#424242',
-    },
-    secondary: {
-      main: '#80deea',
-    },
-  },
-  typography: {
-    useNextVariants: true,
-  },
-});
+import withRoot from './withRoot';
 
 const styles = () => ({
   root: {
@@ -91,9 +78,8 @@ class App extends Component {
       username, user_id, heading, topics,
     } = this.state;
     return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <Grid container spacing={24}>
+      <div className={classes.root}>
+        <Grid container spacing={24}>
             <Grid item xs={12}>
               <Nav topics={topics} />
             </Grid>
@@ -155,8 +141,7 @@ class App extends Component {
               <Footer />
             </Grid>
           </Grid>
-        </div>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }
@@ -167,4 +152,4 @@ App.propTypes = {
   }).isRequired,
 };
 
-export default withStyles(styles)(App);
+export default withRoot(withStyles(styles)(App));
