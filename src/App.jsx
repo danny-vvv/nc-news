@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
 import { Grid, Paper, withStyles } from '@material-ui/core';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
@@ -79,68 +78,68 @@ class App extends Component {
     } = this.state;
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
-            <Grid item xs={12}>
-              <Nav topics={topics} />
-            </Grid>
-            <Grid item xs={12}>
-              <Router>
-                <Header path="/" heading="All" />
-                <Header path="/*" heading={heading} />
-              </Router>
-            </Grid>
-            <Grid item xs={8}>
-              <Router>
-                <Login path="/login" changeLoginState={changeLoginState} />
-                <Articles path="/" setHeading={setHeading} username={username} />
-                <Articles path="/topics/:topic" setHeading={setHeading} username={username} />
-                <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
-                <User path="/users/:username" setHeading={setHeading} />
-                <Form // Post Article
-                  path="/submit"
-                  heading="Submit an Article"
-                  setHeading={setHeading}
-                  requireLoggedIn
-                  username={username}
-                  changeLoginState={changeLoginState}
-                  inputs={[
-                    { id: 'topic', type: 'select', options: topics.map(topic => topic.slug) },
-                    { id: 'title', type: 'text' },
-                    { id: 'body', type: 'text' },
-                  ]}
-                  apiMethod={api.postArticle}
-                  apiArgs={{ user_id }}
-                  successUrl="/articles"
-                  successEndpoint="article_id"
-                  rejectMessage="Oops! An error occurred..."
-                />
-                <Form // Add Topic
-                  path="/newtopic"
-                  heading="Create a New Topic"
-                  setHeading={setHeading}
-                  requireLoggedIn
-                  username={username}
-                  changeLoginState={changeLoginState}
-                  inputs={[
-                    { id: 'slug', type: 'text' },
-                    { id: 'description', type: 'text' },
-                  ]}
-                  apiMethod={api.postTopic}
-                  successUrl="/topics"
-                  successEndpoint="slug"
-                  rejectMessage="Topic already exists!"
-                />
-              </Router>
-            </Grid>
-            <Grid item xs={4}>
-              <Paper>
-                <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Footer />
-            </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+            <Nav topics={topics} />
           </Grid>
+          <Grid item xs={12}>
+            <Router>
+              <Header path="/" />
+              <Header path="/*" heading={heading} />
+            </Router>
+          </Grid>
+          <Grid item xs={8}>
+            <Router>
+              <Login path="/login" changeLoginState={changeLoginState} />
+              <Articles path="/" setHeading={setHeading} username={username} />
+              <Articles path="/topics/:topic" setHeading={setHeading} username={username} />
+              <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
+              <User path="/users/:username" setHeading={setHeading} />
+              <Form // Post Article
+                path="/submit"
+                heading="Submit an Article"
+                setHeading={setHeading}
+                requireLoggedIn
+                username={username}
+                changeLoginState={changeLoginState}
+                inputs={[
+                  { id: 'topic', type: 'select', options: topics.map(topic => topic.slug) },
+                  { id: 'title', type: 'text' },
+                  { id: 'body', type: 'text' },
+                ]}
+                apiMethod={api.postArticle}
+                apiArgs={{ user_id }}
+                successUrl="/articles"
+                successEndpoint="article_id"
+                rejectMessage="Oops! An error occurred..."
+              />
+              <Form // Add Topic
+                path="/newtopic"
+                heading="Create a New Topic"
+                setHeading={setHeading}
+                requireLoggedIn
+                username={username}
+                changeLoginState={changeLoginState}
+                inputs={[
+                  { id: 'slug', type: 'text' },
+                  { id: 'description', type: 'text' },
+                ]}
+                apiMethod={api.postTopic}
+                successUrl="/topics"
+                successEndpoint="slug"
+                rejectMessage="Topic already exists!"
+              />
+            </Router>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper>
+              <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Footer />
+          </Grid>
+        </Grid>
       </div>
     );
   }

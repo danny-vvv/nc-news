@@ -1,28 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import {
-  Grid, Typography, withStyles, Paper,
+  Grid, Typography, withStyles, Card, ButtonBase, CardActionArea, CardContent, CardMedia,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { navigate } from '@reach/router/lib/history';
+import moment from 'moment';
 import Vote from './Vote';
 import Sort from './Sort';
 import * as api from '../api';
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing.unit,
-  },
-  paper: {
-    padding: theme.spacing.unit,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  title: {
-    fontSize: 14,
-    textDecoration: 'none',
-  },
-});
+const styles = (theme) => {
+  console.log(theme);
+  return {
+    root: {
+      flexGrow: 1,
+      padding: theme.spacing.unit,
+    },
+    card: {
+      diplay: 'flex',
+    },
+    details: {
+      display: 'flex',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    controls: {
+      display: 'flex',
+    },
+    title: {
+      fontSize: '14pt',
+      textDecoration: 'none',
+    },
+  };
+};
+
 
 class Articles extends Component {
   state = {
@@ -92,7 +105,7 @@ class Articles extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Card className={classes.card}>
               {page > 1 && <button type="button" onClick={() => this.changePage(-1)}>Previous</button>}
               {!onLastPage && <button type="button" onClick={() => this.changePage(1)}>Next</button>}
               <Sort
@@ -103,23 +116,49 @@ class Articles extends Component {
                   { name: 'New', value: 'created_at' },
                 ]}
               />
-            </Paper>
+            </Card>
           </Grid>
           {articles.map(article => (
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                  <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
-                  <Typography
-                    component={Link}
-                    to={`/articles/${article.article_id}`}
-                    color="primary"
-                    variant="h4"
-                    className={classes.title}
-                  >
-                    {article.title}
-                  </Typography>
-                </Paper>
+
+                <Card className={classes.card}>
+                  <Grid container spacing={12}>
+                    <CardActionArea>
+                      <Grid item xs={12}>
+                        <div className={classes.details}>
+                          <CardContent>
+                            <Typography
+                              component={Link}
+                              to={`/articles/${article.article_id}`}
+                              color="inherit"
+                              variant="h1"
+                              className={classes.title}
+                            >
+                              {article.title}
+                            </Typography>
+                          </CardContent>
+                        </div>
+                      </Grid>
+                    </CardActionArea>
+                    <Grid item xs={12}>
+                      <div className={classes.controls}>
+                        <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
+                        <Typography variant="overline">
+                          Posted by
+                          <Link to={`/users/${article.author}`}>
+                            {' '}
+                            {article.author}
+                          </Link>
+                          {' '}
+                          {`${moment(article.created_at).fromNow()}`}
+                        </Typography>
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Card>
+
+
               </Grid>
             </React.Fragment>
           ))}
@@ -135,7 +174,7 @@ Articles.propTypes = {
   username: PropTypes.string,
   classes: PropTypes.shape({
     root: PropTypes.string,
-    paper: PropTypes.string,
+    card: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
 };

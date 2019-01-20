@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@material-ui/core';
+import {
+ Icon, Button, withStyles, Typography 
+} from '@material-ui/core';
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+  },
+});
 
 class Vote extends Component {
     state = {
@@ -61,11 +69,13 @@ class Vote extends Component {
     render() {
       const { handleClick, disable } = this;
       const { voteChange, apiRejected, promptLogin } = this.state;
-      const { votes } = this.props;
+      const { votes, classes } = this.props;
       return (
-        <div>
+        <div className={classes.root}>
           <Button onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
-          <span>{votes + voteChange}</span>
+          <Typography variant="overline">
+            {votes + voteChange}
+          </Typography>
           <Button onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
           {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
           {promptLogin && <span>Please login to vote.</span>}
@@ -84,4 +94,4 @@ Vote.propTypes = {
   username: PropTypes.string.isRequired,
 };
 
-export default Vote;
+export default withStyles(styles)(Vote);
