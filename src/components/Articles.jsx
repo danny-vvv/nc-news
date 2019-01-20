@@ -114,7 +114,8 @@ class Articles extends Component {
                     component={Link}
                     to={`/articles/${article.article_id}`}
                     className={classes.title}
-                    color="inherit">
+                    color="primary"
+                  >
                     {article.title}
                   </Typography>
                 </Paper>
