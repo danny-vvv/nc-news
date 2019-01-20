@@ -1,37 +1,33 @@
 import React from 'react';
-import { Link } from '@reach/router';
-import { Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Login from './Login';
-import Logout from './Logout';
+import { Link } from '@reach/router';
+import { Button, withStyles, Paper } from '@material-ui/core';
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1,
+    padding: theme.spacing.unit,
   },
-};
+  button: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
 const Sidebar = (props) => {
-  const { username, changeLoginState } = props;
+  const { classes } = props;
   return (
-    <div styles={styles.root}>
-      {!username && <Login changeLoginState={changeLoginState} />}
-      {username && <Logout changeLoginState={changeLoginState} username={username} />}
-      <Button component={Link} to="/submit" color="primary"> Create Post</Button>
-      <br />
-      <Button component={Link} to="/newtopic" color="primary">New Topic</Button>
+    <div className={classes.root}>
+      <Paper>
+        <Button component={Link} to="/submit" color="secondary" className={classes.button}> Create Post</Button>
+        <Button component={Link} to="/newtopic" color="secondary" className={classes.button}>New Topic</Button>
+      </Paper>
     </div>
   );
 };
 
 Sidebar.propTypes = {
-  username: PropTypes.string,
-  changeLoginState: PropTypes.func,
+  classes: PropTypes.shape({}).isRequired,
 };
 
-Sidebar.defaultProps = {
-  username: '',
-  changeLoginState: undefined,
-};
-
-export default Sidebar;
+export default withStyles(styles)(Sidebar);

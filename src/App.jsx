@@ -80,7 +80,7 @@ class App extends Component {
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12}>
-            <Nav topics={topics} />
+            <Nav topics={topics} username={username} changeLoginState={changeLoginState} />
           </Grid>
           <Grid item xs={12}>
             <Router>
@@ -88,7 +88,7 @@ class App extends Component {
               <Header path="/*" heading={heading} />
             </Router>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <Router>
               <Login path="/login" changeLoginState={changeLoginState} />
               <Articles path="/" setHeading={setHeading} username={username} />
@@ -131,10 +131,8 @@ class App extends Component {
               />
             </Router>
           </Grid>
-          <Grid item xs={4}>
-            <Paper>
-              <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
-            </Paper>
+          <Grid item xs={2}>
+            <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
           </Grid>
           <Grid item xs={12}>
             <Footer />

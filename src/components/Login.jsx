@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
-import { Button, Input } from '@material-ui/core';
+import {
+  Button, Input, withStyles,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as api from '../api';
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    float: 'right',
+  },
+  form: {
+    display: 'flex',
+  },
+  input: {
+    margin: theme.spacing.unit,
+  },
+});
 
 class Login extends Component {
   state = {
     usernameInput: '',
     failedLoginAttempt: false,
   }
-
-  styles = theme => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    input: {
-      margin: theme.spacing.unit,
-    },
-  });
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -45,18 +52,18 @@ class Login extends Component {
 
   render() {
     const { usernameInput, failedLoginAttempt } = this.state;
+    const { classes } = this.props;
     return (
-      <div styles={this.styles.container}>
-        <form onSubmit={this.handleSubmit}>
+      <div className={classes.root}>
+        <form className={classes.form} onSubmit={this.handleSubmit}>
           <Input
-            styles={this.styles.input}
+            className={classes.input}
             type="text"
             value={usernameInput}
             placeholder="Username"
             onChange={this.handleChange}
             id="usernameInput"
           />
-          <br />
           <Button type="submit" color="secondary" variant="contained">Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
@@ -67,6 +74,7 @@ class Login extends Component {
 
 Login.propTypes = {
   changeLoginState: PropTypes.func.isRequired,
+  classes: PropTypes.shape({}).isRequired,
 };
 
-export default Login;
+export default withStyles(styles)(Login);

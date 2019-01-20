@@ -9,42 +9,39 @@ import Vote from './Vote';
 import Sort from './Sort';
 import * as api from '../api';
 
-const styles = (theme) => {
-  console.log(theme);
-  return {
-    root: {
-      flexGrow: 1,
-      padding: theme.spacing.unit,
-    },
-    card: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    vote: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-    },
-    titleSection: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    titleText: {
-      fontSize: '14pt',
-      textDecoration: 'none',
-    },
-    content: {
-      flex: '1 0 auto',
-    },
-    details: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    articleLink: {
-      all: 'none',
-    },
-  };
-};
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing.unit,
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  vote: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  titleSection: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  titleText: {
+    fontSize: '14pt',
+    textDecoration: 'none',
+  },
+  content: {
+    flex: '1 0 auto',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  articleLink: {
+    all: 'none',
+  },
+});
 
 
 class Articles extends Component {
