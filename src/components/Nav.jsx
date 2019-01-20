@@ -22,7 +22,7 @@ const styles = theme => ({
   topics: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
 });
 
@@ -35,7 +35,7 @@ const Nav = (props) => {
       <Grid container spacing={12}>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <Grid item xs={9}>
+            <Grid item xs={10}>
               <div className={classes.topics}>
                 <Button variant="contained" component={Link} to="/" color="secondary">
                   <Icon>home</Icon>
@@ -50,7 +50,7 @@ const Nav = (props) => {
                 ))}
               </div>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={2}>
               <div className={classes.account}>
                 {!username && <Login changeLoginState={changeLoginState} />}
                 {username && <Logout changeLoginState={changeLoginState} username={username} />}

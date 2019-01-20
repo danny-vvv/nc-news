@@ -28,7 +28,7 @@ const styles = theme => ({
     flexDirection: 'column',
   },
   titleText: {
-    fontSize: '14pt',
+    fontSize: '16pt',
     textDecoration: 'none',
   },
   content: {

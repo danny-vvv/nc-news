@@ -82,7 +82,7 @@ class App extends Component {
           <Grid item xs={12}>
             <Nav topics={topics} username={username} changeLoginState={changeLoginState} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Router>
               <Header path="/" />
               <Header path="/*" heading={heading} />

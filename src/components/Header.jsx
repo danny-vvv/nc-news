@@ -6,7 +6,7 @@ import withRoot from '../withRoot';
 
 const styles = theme => ({
   root: {
-    textAlign: 'left',
+    textAlign: 'center',
     paddingLeft: '10px',
   },
 });
@@ -18,7 +18,7 @@ const Header = (props) => {
       {heading
       && (
       <header>
-        <Typography variant="h2" color="inherit" className={classes.heading}>
+        <Typography variant="h1" color="inherit" className={classes.heading}>
           {heading && capitalise(heading)}
         </Typography>
       </header>
