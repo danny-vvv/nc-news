@@ -128,8 +128,8 @@ Form.propTypes = {
   successEndpoint: PropTypes.string,
   apiArgs: PropTypes.shape(
     {
-      user_id: PropTypes.string,
-      article_id: PropTypes.string,
+      user_id: PropTypes.number,
+      article_id: PropTypes.number,
       comment_id: PropTypes.number,
     },
   ),

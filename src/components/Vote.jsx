@@ -78,7 +78,7 @@ Vote.propTypes = {
   votes: PropTypes.number.isRequired,
   apiMethod: PropTypes.func.isRequired,
   apiArgs: PropTypes.shape({
-    comment_id: PropTypes.string,
+    comment_id: PropTypes.number,
     article_id: PropTypes.number,
   }).isRequired,
   username: PropTypes.string.isRequired,

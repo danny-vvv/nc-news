@@ -37,7 +37,7 @@ const styles = () => ({
 class App extends Component {
   state = {
     username: '',
-    userId: '',
+    user_id: 0,
     heading: '',
     topics: [],
   }
@@ -48,9 +48,9 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { username, userId, topics } = this.state;
+    const { username, user_id, topics } = this.state;
     if (prevState.username !== username) {
-      localStorage.setItem('loginData', JSON.stringify({ username, userId }));
+      localStorage.setItem('loginData', JSON.stringify({ username, user_id }));
     }
     if (JSON.stringify(topics) !== JSON.stringify(prevState.topics)) {
       this.fetchTopics();
@@ -58,10 +58,10 @@ class App extends Component {
   }
 
   changeLoginState = (data) => {
-    const { username, userId } = data;
+    const { username, user_id } = data;
     this.setState({
       username,
-      userId,
+      user_id,
     });
   }
 
@@ -72,8 +72,8 @@ class App extends Component {
   retrieveLoginData() {
     const loginData = JSON.parse(localStorage.getItem('loginData'));
     if (loginData && loginData.username) {
-      const { username, userId } = loginData;
-      this.changeLoginState({ username, userId });
+      const { username, user_id } = loginData;
+      this.changeLoginState({ username, user_id });
     }
   }
 
@@ -88,7 +88,7 @@ class App extends Component {
     const { classes } = this.props;
     const { changeLoginState, setHeading } = this;
     const {
-      username, userId, heading, topics,
+      username, user_id, heading, topics,
     } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
@@ -105,7 +105,7 @@ class App extends Component {
                 <Login path="/login" changeLoginState={changeLoginState} />
                 <Articles path="/" setHeading={setHeading} username={username} />
                 <Articles path="/topics/:topic" setHeading={setHeading} username={username} />
-                <Article path="/articles/:article_id" username={username} user_id={userId} setHeading={setHeading} />
+                <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
                 <User path="/users/:username" setHeading={setHeading} />
                 <Form // Post Article
                   path="/submit"
@@ -120,7 +120,7 @@ class App extends Component {
                     { id: 'body', type: 'text' },
                   ]}
                   apiMethod={api.postArticle}
-                  apiArgs={{ user_id: userId }}
+                  apiArgs={{ user_id }}
                   successUrl="/articles"
                   successEndpoint="article_id"
                   rejectMessage="Oops! An error occurred..."

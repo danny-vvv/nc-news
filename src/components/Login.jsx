@@ -37,8 +37,8 @@ class Login extends Component {
     const { changeLoginState } = this.props;
     api.fetchUser(username)
       .then(({ user }) => {
-        const userId = user.user_id;
-        changeLoginState({ username, userId });
+        const { user_id } = user;
+        changeLoginState({ username, user_id });
       })
       .catch(this.updateCurrState(true));
   }

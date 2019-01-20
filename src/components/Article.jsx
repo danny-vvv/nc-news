@@ -20,7 +20,7 @@ class Article extends Component {
 
   componentDidMount() {
     const { article_id } = this.props;
-    this.fetchArticle(article_id);
+    this.fetchArticle(+article_id);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -30,7 +30,7 @@ class Article extends Component {
       this.setUserIsAuthor();
     }
     if (article_id !== prevProps.article_id) {
-      this.fetchArticle(article_id);
+      this.fetchArticle(+article_id);
     }
 
     if (prevState.topic !== topic) {
@@ -87,7 +87,7 @@ class Article extends Component {
               <Vote
                 votes={votes}
                 apiMethod={api.voteArticle}
-                apiArgs={{ article_id }}
+                apiArgs={{ article_id: +article_id }}
                 username={username}
               />
               <h2>{title}</h2>
@@ -107,7 +107,7 @@ class Article extends Component {
                 && (
                   <Delete
                     apiMethod={api.deleteArticle}
-                    apiArgs={{ article_id }}
+                    apiArgs={{ article_id: +article_id }}
                     targetItem="article"
                     redirectUrl={`/topics/${topic}`}
                     redirectTarget={topic}
@@ -116,7 +116,7 @@ class Article extends Component {
                 )
               }
               <Comments
-                article_id={article_id}
+                article_id={+article_id}
                 username={username}
                 user_id={user_id}
                 comment_count={comment_count}
@@ -143,11 +143,14 @@ class Article extends Component {
 Article.propTypes = {
   article_id: PropTypes.string,
   username: PropTypes.string,
+  user_id: PropTypes.number,
+  setHeading: PropTypes.func.isRequired,
 };
 
 Article.defaultProps = {
   article_id: undefined,
-  username: '',
+  username: undefined,
+  user_id: undefined,
 };
 
 export default Article;

@@ -66,7 +66,7 @@ Delete.propTypes = {
   apiMethod: PropTypes.func.isRequired,
   apiArgs: PropTypes.shape({
     comment_id: PropTypes.number.isRequired,
-    article_id: PropTypes.string.isRequired,
+    article_id: PropTypes.number.isRequired,
   }).isRequired,
   targetItem: PropTypes.string.isRequired,
   updateParent: PropTypes.func,

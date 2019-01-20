@@ -103,7 +103,7 @@ class Comments extends Component {
 }
 
 Comments.propTypes = {
-  article_id: PropTypes.string.isRequired,
+  article_id: PropTypes.number.isRequired,
   username: PropTypes.string,
   user_id: PropTypes.number,
 };

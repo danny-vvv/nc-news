@@ -13,7 +13,7 @@ Welcome,
         {' '}
         {username}
       </p>
-      <Button onClick={() => changeLoginState({ username: '', userId: '' })}>Logout</Button>
+      <Button onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
       <br />
       <Button component={Link} to={`/users/${username}`}>Profile</Button>
     </div>
