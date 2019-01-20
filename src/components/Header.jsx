@@ -18,7 +18,11 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-  heading: PropTypes.string.isRequired,
+  heading: PropTypes.string,
+};
+
+Header.defaultProps = {
+  heading: 'NC News',
 };
 
 export default Header;

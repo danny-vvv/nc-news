@@ -33,7 +33,7 @@ export const fetchUsers = async () => {
 
 export const fetchTopics = async () => {
   const { data } = await axios.get(`${BASE_URL}/topics`);
-  return data;
+  return data.topics;
 };
 
 export const postArticle = async ({

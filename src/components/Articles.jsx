@@ -35,7 +35,7 @@ class Articles extends Component {
   componentDidMount() {
     const { setHeading, topic } = this.props;
     this.fetchArticles();
-    setHeading(topic);
+    if (topic) setHeading(topic);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -141,7 +141,7 @@ Articles.propTypes = {
 };
 
 Articles.defaultProps = {
-  topic: 'NC News',
+  topic: undefined,
   setHeading: undefined,
   username: undefined,
 };

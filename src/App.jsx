@@ -79,7 +79,7 @@ class App extends Component {
 
   fetchTopics() {
     api.fetchTopics()
-      .then(({ topics }) => {
+      .then((topics) => {
         this.setState({ topics });
       });
   }
@@ -98,7 +98,10 @@ class App extends Component {
               <Nav topics={topics} />
             </Grid>
             <Grid item xs={12}>
-              <Header heading={heading} />
+              <Router>
+                <Header path="/" heading="All" />
+                <Header path="/*" heading={heading} />
+              </Router>
             </Grid>
             <Grid item xs={8}>
               <Router>
