@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
-import { Typography, withStyles, Grid } from '@material-ui/core';
+import {
+  Typography, withStyles, Grid, Button,
+} from '@material-ui/core';
 import moment from 'moment';
 import Delete from './Delete';
 import Vote from './Vote';
@@ -28,6 +30,8 @@ class Comments extends Component {
   state = {
     comments: [],
     sort_by: 'created_at',
+    page: 1,
+    onLastPage: false,
   }
 
   componentDidMount() {
@@ -35,8 +39,8 @@ class Comments extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { sort_by } = this.state;
-    if (sort_by !== prevState.sort_by) {
+    const { sort_by, page } = this.state;
+    if (sort_by !== prevState.sort_by || page !== prevState.page) {
       this.fetchComments();
     }
   }
@@ -52,14 +56,21 @@ class Comments extends Component {
   }
 
   fetchComments() {
-    const { sort_by } = this.state;
+    const { sort_by, page } = this.state;
     const { article_id } = this.props;
-    api.fetchComments({ article_id, sort_by })
+    api.fetchComments({ article_id, sort_by, page })
       .then(({ comments }) => this.setState({ comments }));
   }
 
+  changePage(increment) {
+    const { page } = this.state;
+    this.setState({ page: Math.max(page + increment, 1) });
+  }
+
   render() {
-    const { comments, sort_by } = this.state;
+    const {
+      comments, sort_by, page, onLastPage,
+    } = this.state;
     const {
       classes, username, user_id, article_id,
     } = this.props;
@@ -79,6 +90,16 @@ class Comments extends Component {
             { name: 'Top', value: 'votes' },
           ]}
         />
+        {
+          <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
+                  Previous
+          </Button>
+          }
+        {
+          <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
+                  Next
+          </Button>
+          }
         {comments.map(comment => (
           <React.Fragment key={comment.comment_id}>
             <Grid item xs={12}>
