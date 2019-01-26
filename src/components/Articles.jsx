@@ -6,7 +6,6 @@ import {
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Vote from './Vote';
-import Sort from './Sort';
 import * as api from '../api';
 
 const styles = theme => ({
@@ -41,10 +40,6 @@ const styles = theme => ({
   articleLink: {
     all: 'none',
   },
-  button: {
-    display: 'flex',
-
-  },
 });
 
 
@@ -53,7 +48,6 @@ class Articles extends Component {
     articles: [],
     page: 1,
     onLastPage: false,
-    sort_by: 'comment_count',
   }
 
   componentDidMount() {
@@ -63,8 +57,8 @@ class Articles extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { page, sort_by } = this.state;
-    const { topic, setHeading } = this.props;
+    const { page } = this.state;
+    const { topic, setHeading, sort_by } = this.props;
     if (topic !== prevProps.topic || page !== prevState.page) {
       this.fetchArticles();
       setHeading(topic);
@@ -72,16 +66,9 @@ class Articles extends Component {
     if (topic !== prevProps.topic) {
       this.resetPage();
     }
-    if (sort_by !== prevState.sort_by) {
+    if (sort_by !== prevProps.sort_by) {
       this.fetchArticles();
     }
-  }
-
-  updateState = (newState) => {
-    const { sort_by } = newState;
-    this.setState({
-      sort_by,
-    });
   }
 
   resetPage() {
@@ -89,10 +76,9 @@ class Articles extends Component {
   }
 
   fetchArticles() {
-    const { page, sort_by } = this.state;
-    const { topic } = this.props;
-    const requestBody = { topic, page, sort_by };
-    api.fetchArticles(requestBody)
+    const { page } = this.state;
+    const { topic, sort_by } = this.props;
+    api.fetchArticles({ topic, page, sort_by })
       .then(({ articles }) => {
         this.setState({ articles });
         if (articles.length < 10) {
@@ -116,19 +102,17 @@ class Articles extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Card className={classes.card}>
-              <Sort
-                updateParentState={this.updateState}
-                options={[
-                  { name: 'Popular', value: 'comment_count' },
-                  { name: 'Top', value: 'votes' },
-                  { name: 'New', value: 'created_at' },
-                ]}
-              />
-            </Card>
+            {
+              <Button variant="text" color="primary" onClick={() => this.changePage(-1)}>
+                Previous
+              </Button>
+          }
+            {
+              <Button variant="text" color="primary" onClick={() => this.changePage(1)}>
+                Next
+              </Button>
+          }
           </Grid>
-          {<Button variant="text" color="primary" className={classes.button} onClick={() => this.changePage(-1)}>Previous</Button>}
-          {<Button variant="text" color="primary" className={classes.button} onClick={() => this.changePage(1)}>Next</Button>}
           {articles.map(article => (
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>

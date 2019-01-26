@@ -17,7 +17,7 @@ class Sort extends Component {
 
     changeSortBy(sort_by) {
       const { updateParentState } = this.props;
-      updateParentState({ sort_by });
+      updateParentState(sort_by);
     }
 
     render() {

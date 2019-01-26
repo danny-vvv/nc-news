@@ -13,6 +13,7 @@ import User from './components/User';
 import * as api from './api';
 import Form from './components/Form';
 import withRoot from './withRoot';
+import Sort from './components/Sort';
 
 const styles = () => ({
   root: {
@@ -26,6 +27,7 @@ class App extends Component {
     user_id: 0,
     heading: '',
     topics: [],
+    sort_by: 'comment_count',
   }
 
   componentDidMount() {
@@ -34,7 +36,9 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { username, user_id, topics } = this.state;
+    const {
+      username, user_id, topics, sort_by,
+    } = this.state;
     if (prevState.username !== username) {
       localStorage.setItem('loginData', JSON.stringify({ username, user_id }));
     }
@@ -48,6 +52,12 @@ class App extends Component {
     this.setState({
       username,
       user_id,
+    });
+  }
+
+  changeSortBy = (sort_by) => {
+    this.setState({
+      sort_by,
     });
   }
 
@@ -74,13 +84,23 @@ class App extends Component {
     const { classes } = this.props;
     const { changeLoginState, setHeading } = this;
     const {
-      username, user_id, heading, topics,
+      username, user_id, heading, topics, sort_by,
     } = this.state;
     return (
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12}>
             <Nav topics={topics} username={username} changeLoginState={changeLoginState} />
+          </Grid>
+          <Grid item xs={12}>
+            <Sort
+              updateParentState={this.changeSortBy}
+              options={[
+                { name: 'Popular', value: 'comment_count' },
+                { name: 'Top', value: 'votes' },
+                { name: 'New', value: 'created_at' },
+              ]}
+            />
           </Grid>
           <Grid item xs={10}>
             <Router>
@@ -91,8 +111,8 @@ class App extends Component {
           <Grid item xs={10}>
             <Router>
               <Login path="/login" changeLoginState={changeLoginState} />
-              <Articles path="/" setHeading={setHeading} username={username} />
-              <Articles path="/topics/:topic" setHeading={setHeading} username={username} />
+              <Articles path="/" setHeading={setHeading} username={username} sort_by={sort_by} />
+              <Articles path="/topics/:topic" setHeading={setHeading} username={username} sort_by={sort_by} />
               <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
               <User path="/users/:username" setHeading={setHeading} />
               <Form // Post Article
