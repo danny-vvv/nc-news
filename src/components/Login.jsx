@@ -60,11 +60,11 @@ class Login extends Component {
             className={classes.input}
             type="text"
             value={usernameInput}
-            placeholder="Username"
+            placeholder="Username (e.g. 'jessjelly')"
             onChange={this.handleChange}
             id="usernameInput"
           />
-          <Button type="submit" color="secondary" variant="contained">Sign In</Button>
+          <Button type="submit" color="primary">Sign In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>

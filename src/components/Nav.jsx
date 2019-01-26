@@ -13,16 +13,14 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
-  appBar: {
-    color: theme.palette.primary.contrastText,
-  },
   account: {
-    alignItems: 'right',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   topics: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
 });
 
@@ -33,24 +31,24 @@ const Nav = (props) => {
   return (
     <div className={classes.root}>
       <Grid container spacing={12}>
-        <AppBar position="static" className={classes.appBar}>
+        <AppBar position="static" className={classes.appBar} color="default">
           <Toolbar>
-            <Grid item xs={10}>
+            <Grid item xs={8}>
               <div className={classes.topics}>
-                <Button variant="contained" component={Link} to="/" color="secondary">
+                <Button variant="contained" component={Link} to="/" color="primary">
                   <Icon>home</Icon>
                   <Typography variant="h6" color="inherit">
                   NC News
                   </Typography>
                 </Button>
                 {topics.map(topic => (
-                  <Button component={Link} to={`/topics/${topic.slug}`} color="secondary" key={topic.slug}>
+                  <Button component={Link} to={`/topics/${topic.slug}`} key={topic.slug} color="primary">
                     {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
                   </Button>
                 ))}
               </div>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
               <div className={classes.account}>
                 {!username && <Login changeLoginState={changeLoginState} />}
                 {username && <Logout changeLoginState={changeLoginState} username={username} />}

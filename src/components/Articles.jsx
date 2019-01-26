@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import {
-  Grid, Typography, withStyles, Card, CardActionArea, CardContent, Icon,
+  Grid, Typography, withStyles, Card, CardActionArea, CardContent, Icon, Button,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -40,6 +40,10 @@ const styles = theme => ({
   },
   articleLink: {
     all: 'none',
+  },
+  button: {
+    display: 'flex',
+
   },
 });
 
@@ -113,8 +117,6 @@ class Articles extends Component {
         <Grid container spacing={8}>
           <Grid item xs={12}>
             <Card className={classes.card}>
-              {page > 1 && <button type="button" onClick={() => this.changePage(-1)}>Previous</button>}
-              {!onLastPage && <button type="button" onClick={() => this.changePage(1)}>Next</button>}
               <Sort
                 updateParentState={this.updateState}
                 options={[
@@ -125,12 +127,13 @@ class Articles extends Component {
               />
             </Card>
           </Grid>
+          {<Button variant="text" color="primary" className={classes.button} onClick={() => this.changePage(-1)}>Previous</Button>}
+          {<Button variant="text" color="primary" className={classes.button} onClick={() => this.changePage(1)}>Next</Button>}
           {articles.map(article => (
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>
                 <Card className={classes.card}>
                   <Grid container spacing={12}>
-
                     <Grid item xs={1}>
                       <div className={classes.vote}>
                         <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
@@ -162,7 +165,7 @@ class Articles extends Component {
                         </div>
                         <div className={classes.details}>
                           <Typography variant="caption">
-                            <Icon fontSize="small">comment</Icon>
+                            <Icon fontSize="small" color="primary">comment</Icon>
                             {' '}
                             {`${article.comment_count} comments`}
                           </Typography>
