@@ -83,7 +83,7 @@ class Comments extends Component {
           <React.Fragment key={comment.comment_id}>
             <Grid item xs={12}>
               <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={1}>
                   <Vote
                     votes={comment.votes}
                     apiMethod={api.voteComment}
@@ -91,7 +91,7 @@ class Comments extends Component {
                     username={username}
                   />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={11}>
                   <Typography variant="caption">
                     <Link to={`/users/${comment.author}`}>
                       {comment.author}

@@ -138,7 +138,7 @@ class Article extends Component {
     } = this.props;
     return (
       <React.Fragment>
-        <div>
+        <div className={classes.root}>
           {!deleted && title
           && (
           <Card className={classes.card}>
