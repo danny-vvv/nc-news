@@ -23,8 +23,8 @@ const Sidebar = (props) => {
   return (
     <div className={classes.root}>
       <Card className={classes.card}>
-        <Button component={Link} to="/submit" color="secondary" className={classes.button}> Create Post</Button>
-        <Button component={Link} to="/newtopic" color="secondary" className={classes.button}>New Topic</Button>
+        <Button component={Link} to="/submit" color="primary" className={classes.button}> Create Post</Button>
+        <Button component={Link} to="/newtopic" color="primary" className={classes.button}>New Topic</Button>
       </Card>
     </div>
   );

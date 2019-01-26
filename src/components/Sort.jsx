@@ -1,50 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  withStyles, Select, Input, FormControl, MenuItem,
+  withStyles, Select, Input, FormControl, MenuItem, Typography,
 } from '@material-ui/core';
 
-class Sort extends Component {
-    state = {
-      sort_by: 'comment_count',
-    }
+const Sort = (props) => {
+  const {
+    sort_by, classes, options, updateParentState,
+  } = props;
 
-    handleChange = (event) => {
-      const sort_by = event.target.value;
-      this.changeSortBy(sort_by);
-      this.setState({ sort_by });
-    }
+  const handleChange = (event) => {
+    const newSortBy = event.target.value;
+    updateParentState(newSortBy);
+  };
 
-    changeSortBy(sort_by) {
-      const { updateParentState } = this.props;
-      updateParentState(sort_by);
-    }
-
-    render() {
-      const { sort_by } = this.state;
-      const { classes, options } = this.props;
-
-      return (
-        <form className={classes.root} autoComplete="off">
-          <FormControl className={classes.formControl}>
-            <Select
-              value={sort_by}
-              onChange={event => this.handleChange(event)}
-              input={<Input name="sort_by" id="sort-label-placeholder" />}
-              name="sort_by"
-              className={classes.selectEmpty}
-            >
-              {options.map(option => (
-                <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </form>
-      );
-    }
-}
+  return (
+    <form className={classes.root} autoComplete="off">
+      <FormControl className={classes.formControl}>
+        <Select
+          value={sort_by}
+          onChange={event => handleChange(event)}
+          input={<Input name="sort_by" id="sort-label-placeholder" />}
+          name="sort_by"
+          className={classes.selectEmpty}
+        >
+          {options.map(option => (
+            <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </form>
+  );
+};
 
 Sort.propTypes = {
+  sort_by: PropTypes.string,
   updateParentState: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   classes: PropTypes.shape({
@@ -52,6 +42,10 @@ Sort.propTypes = {
     formControl: PropTypes.string,
     selectEmpty: PropTypes.string,
   }).isRequired,
+};
+
+Sort.defaultProps = {
+  sort_by: undefined,
 };
 
 const styles = theme => ({

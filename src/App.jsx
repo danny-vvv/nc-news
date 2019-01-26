@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
-import { Grid, Paper, withStyles } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
@@ -37,7 +37,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {
-      username, user_id, topics, sort_by,
+      username, user_id, topics,
     } = this.state;
     if (prevState.username !== username) {
       localStorage.setItem('loginData', JSON.stringify({ username, user_id }));
@@ -94,6 +94,7 @@ class App extends Component {
           </Grid>
           <Grid item xs={12}>
             <Sort
+              sort_by={sort_by}
               updateParentState={this.changeSortBy}
               options={[
                 { name: 'Popular', value: 'comment_count' },

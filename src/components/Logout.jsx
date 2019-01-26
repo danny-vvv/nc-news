@@ -16,8 +16,8 @@ const Logout = (props) => {
 
   return (
     <div className={classes.root}>
-      <Button color="secondary" component={Link} to={`/users/${username}`}>{username}</Button>
-      <Button color="secondary" onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
+      <Button color="primary" component={Link} to={`/users/${username}`}>{username}</Button>
+      <Button color="primary" onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
     </div>
   );
 };

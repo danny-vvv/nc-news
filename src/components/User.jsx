@@ -25,12 +25,12 @@ class User extends Component {
       <div className="User">
         <img src={avatar_url} alt={`${username}'s avatar`} />
         <p>
-Username:
+          Username:
           {' '}
           {username}
         </p>
         <p>
-Real name:
+          Real name:
           {' '}
           {name}
         </p>

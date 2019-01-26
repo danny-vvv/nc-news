@@ -1,10 +1,10 @@
 import React from 'react';
-import { Typography, withStyles, Card } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import capitalise from '../utils/capitalise';
 import withRoot from '../withRoot';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     textAlign: 'center',
     paddingLeft: '10px',

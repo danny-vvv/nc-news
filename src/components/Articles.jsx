@@ -103,12 +103,12 @@ class Articles extends Component {
         <Grid container spacing={8}>
           <Grid item xs={12}>
             {
-              <Button variant="text" color="primary" onClick={() => this.changePage(-1)}>
+              <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
                 Previous
               </Button>
           }
             {
-              <Button variant="text" color="primary" onClick={() => this.changePage(1)}>
+              <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
                 Next
               </Button>
           }
@@ -117,26 +117,31 @@ class Articles extends Component {
             <React.Fragment key={article.article_id}>
               <Grid item xs={12}>
                 <Card className={classes.card}>
-                  <Grid container spacing={12}>
+                  <Grid container>
                     <Grid item xs={1}>
                       <div className={classes.vote}>
-                        <Vote votes={article.votes} apiMethod={api.voteArticle} apiArgs={{ article_id: article.article_id }} username={username} />
+                        <Vote
+                          votes={article.votes}
+                          apiMethod={api.voteArticle}
+                          apiArgs={{ article_id: article.article_id }}
+                          username={username}
+                        />
                       </div>
                     </Grid>
                     <Grid item xs={11}>
+                      <div className={classes.details}>
+                        <Typography variant="caption">
+                                Posted by
+                          <Link to={`/users/${article.author}`}>
+                            {' '}
+                            {article.author}
+                          </Link>
+                          {' '}
+                          {`${moment(article.created_at).fromNow()}`}
+                        </Typography>
+                      </div>
                       <CardActionArea component={Link} to={`/articles/${article.article_id}`}>
                         <div className={classes.titleSection}>
-                          <div className={classes.details}>
-                            <Typography variant="caption">
-                          Posted by
-                              <Link to={`/users/${article.author}`}>
-                                {' '}
-                                {article.author}
-                              </Link>
-                              {' '}
-                              {`${moment(article.created_at).fromNow()}`}
-                            </Typography>
-                          </div>
                           <CardContent>
                             <Typography
                               color="inherit"
@@ -147,14 +152,14 @@ class Articles extends Component {
                             </Typography>
                           </CardContent>
                         </div>
-                        <div className={classes.details}>
-                          <Typography variant="caption">
-                            <Icon fontSize="small" color="primary">comment</Icon>
-                            {' '}
-                            {`${article.comment_count} comments`}
-                          </Typography>
-                        </div>
                       </CardActionArea>
+                      <div className={classes.details}>
+                        <Typography variant="caption">
+                          <Icon fontSize="small" color="primary">comment</Icon>
+                          {' '}
+                          {`${article.comment_count} comments`}
+                        </Typography>
+                      </div>
                     </Grid>
                   </Grid>
                 </Card>

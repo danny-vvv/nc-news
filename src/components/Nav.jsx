@@ -9,7 +9,7 @@ import { withStyles, Icon, Grid } from '@material-ui/core';
 import Login from './Login';
 import Logout from './Logout';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     flexGrow: 1,
   },
@@ -30,7 +30,7 @@ const Nav = (props) => {
   } = props;
   return (
     <div className={classes.root}>
-      <Grid container spacing={12}>
+      <Grid container>
         <AppBar position="static" className={classes.appBar} color="default">
           <Toolbar>
             <Grid item xs={8}>
