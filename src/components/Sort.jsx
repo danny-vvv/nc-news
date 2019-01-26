@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  withStyles, Select, Input, FormControl, MenuItem, Typography,
+  withStyles, Select, Input, FormControl, MenuItem, FormHelperText,
 } from '@material-ui/core';
 
 const Sort = (props) => {
@@ -28,6 +28,7 @@ const Sort = (props) => {
             <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>
           ))}
         </Select>
+        <FormHelperText>SORT</FormHelperText>
       </FormControl>
     </form>
   );

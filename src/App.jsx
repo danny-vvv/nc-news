@@ -92,7 +92,17 @@ class App extends Component {
           <Grid item xs={12}>
             <Nav topics={topics} username={username} changeLoginState={changeLoginState} />
           </Grid>
+          {heading
+          && (
           <Grid item xs={12}>
+            <Router>
+              {/* <Header path="/" /> */}
+              <Header path="/*" heading={heading} />
+            </Router>
+          </Grid>
+          )
+          }
+          <Grid item xs={10}>
             <Sort
               sort_by={sort_by}
               updateParentState={this.changeSortBy}
@@ -102,12 +112,6 @@ class App extends Component {
                 { name: 'New', value: 'created_at' },
               ]}
             />
-          </Grid>
-          <Grid item xs={10}>
-            <Router>
-              <Header path="/" />
-              <Header path="/*" heading={heading} />
-            </Router>
           </Grid>
           <Grid item xs={10}>
             <Router>
