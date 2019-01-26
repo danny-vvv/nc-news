@@ -14,6 +14,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
   },
+  appBar: {
+    backgroundColor: 'white',
+  },
   account: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -35,7 +38,7 @@ const Nav = (props) => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <AppBar position="static" className={classes.appBar} color="white">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <Grid item xs={8}>
               <div className={classes.topics}>
