@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router';
-import { Grid, withStyles } from '@material-ui/core';
+import { Grid, withStyles, Hidden } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
@@ -93,7 +93,7 @@ class App extends Component {
           </Grid>
           )
           }
-          <Grid item xs={9}>
+          <Grid item md>
             <Router>
               <Login path="/login" changeLoginState={changeLoginState} />
               <Articles path="/" setHeading={setHeading} username={username} />
@@ -136,9 +136,11 @@ class App extends Component {
               />
             </Router>
           </Grid>
-          <Grid item xs={3}>
-            <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
-          </Grid>
+          <Hidden xsDown>
+            <Grid item xs={4}>
+              <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
+            </Grid>
+          </Hidden>
           <Grid item xs={12}>
             <Footer />
           </Grid>
