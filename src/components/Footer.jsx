@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const Footer = () => (
-  <div className="Footer">
-    <Button href="https://github.com/danielvarcas/nc-news" color="secondary">GitHub</Button>
-  </div>
+  <Typography variant="caption" align="center">
+    {'© Daniel Varcas 2019'}
+  </Typography>
 );
 
 export default Footer;
