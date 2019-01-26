@@ -70,6 +70,7 @@ class CommentForm extends Component {
             error={formRejected}
             label="What are your thoughts?"
             multiline
+            fullWidth
             rowsMax="10"
             onChange={this.handleChange}
             className={classes.textField}
@@ -94,6 +95,7 @@ CommentForm.propTypes = {
   article_id: PropTypes.number.isRequired,
   updateParent: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(CommentForm);
