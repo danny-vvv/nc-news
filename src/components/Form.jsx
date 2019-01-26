@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
+import { withStyles, TextField } from '@material-ui/core';
 import Login from './Login';
+
+const styles = theme => ({
+  root: {
+
+  },
+  textField: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class Form extends Component {
   state = {
@@ -71,22 +84,31 @@ class Form extends Component {
   render() {
     const { success, fail, apiRejected } = this.state;
     const {
-      requireLoggedIn, username, changeLoginState, inputs, rejectMessage,
+      classes, requireLoggedIn, username, changeLoginState, inputs, rejectMessage,
     } = this.props;
     return (
-      <React.Fragment>
+      <div className={classes.root}>
         {requireLoggedIn && !username && <Login changeLoginState={changeLoginState} />}
-
         {((requireLoggedIn && username) || !requireLoggedIn) && !success
           && (
             <form onSubmit={e => this.handleSubmit(e)}>
               {
                 inputs.map((input, i) => (
                   <React.Fragment key={i}>
-                    <span>{`${this.capitalise(input.id)}: `}</span>
                     {input.type === 'text'
-                      && <input type="text" id={input.id} onChange={this.handleChange} />
-                    }
+                      && (
+                      <TextField
+                        id={input.id}
+                        label={`${this.capitalise(input.id)}`}
+                        multiline
+                        rowsMax="30"
+                        onChange={this.handleChange}
+                        className={classes.textField}
+                        margin="normal"
+                        variant="outlined"
+                      />
+                      )
+                      }
                     {input.type === 'select'
                       && (
                         <select id={input.id} onChange={this.handleChange}>
@@ -97,7 +119,6 @@ class Form extends Component {
                         </select>
                       )
                     }
-                    <br />
                   </React.Fragment>
                 ))
               }
@@ -107,7 +128,7 @@ class Form extends Component {
         }
         {fail && <p>Please complete all fields.</p>}
         {apiRejected && rejectMessage && <p>{rejectMessage}</p>}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -153,4 +174,4 @@ Form.defaultProps = {
   updateParent: undefined,
 };
 
-export default Form;
+export default withStyles(styles)(Form);

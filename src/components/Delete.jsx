@@ -66,8 +66,8 @@ class Delete extends Component {
 Delete.propTypes = {
   apiMethod: PropTypes.func.isRequired,
   apiArgs: PropTypes.shape({
-    comment_id: PropTypes.number.isRequired,
-    article_id: PropTypes.number.isRequired,
+    comment_id: PropTypes.number,
+    article_id: PropTypes.number,
   }).isRequired,
   targetItem: PropTypes.string.isRequired,
   updateParent: PropTypes.func,

@@ -27,9 +27,8 @@ class Comments extends Component {
   }
 
   updateState = (newState) => {
-    const { sort_by } = newState;
     this.setState({
-      sort_by,
+      sort_by: newState,
     });
   }
 
@@ -46,7 +45,7 @@ class Comments extends Component {
   }
 
   render() {
-    const { comments } = this.state;
+    const { comments, sort_by } = this.state;
     const { username, user_id, article_id } = this.props;
     return (
       <div>
@@ -64,6 +63,7 @@ class Comments extends Component {
           />
           )}
         <Sort
+          sort_by={sort_by}
           updateParentState={this.updateState}
           options={[
             { name: 'Top', value: 'votes' },
