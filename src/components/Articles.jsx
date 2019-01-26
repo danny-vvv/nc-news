@@ -12,7 +12,10 @@ import Sort from './Sort';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingRight: theme.spacing.unit * 4,
+    paddingBottom: theme.spacing.unit,
   },
   card: {
     display: 'flex',
@@ -40,6 +43,11 @@ const styles = theme => ({
   },
   articleLink: {
     all: 'none',
+  },
+  articlesNavigation: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingLeft: theme.spacing.unit,
   },
 });
 
@@ -73,8 +81,15 @@ class Articles extends Component {
     }
   }
 
-  resetPage() {
-    this.setState({ page: 1 });
+  changeSortBy = (sort_by) => {
+    this.setState({
+      sort_by,
+    });
+  }
+
+  changePage(increment) {
+    const { page } = this.state;
+    this.setState({ page: Math.max(page + increment, 1) });
   }
 
   fetchArticles() {
@@ -92,15 +107,8 @@ class Articles extends Component {
       .catch(err => console.log(err));
   }
 
-  changePage(increment) {
-    const { page } = this.state;
-    this.setState({ page: Math.max(page + increment, 1) });
-  }
-
-  changeSortBy = (sort_by) => {
-    this.setState({
-      sort_by,
-    });
+  resetPage() {
+    this.setState({ page: 1 });
   }
 
   render() {
@@ -112,25 +120,29 @@ class Articles extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Sort
-              sort_by={sort_by}
-              updateParentState={this.changeSortBy}
-              options={[
-                { name: 'Popular', value: 'comment_count' },
-                { name: 'Top', value: 'votes' },
-                { name: 'New', value: 'created_at' },
-              ]}
-            />
-            {
-              <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
-                Previous
-              </Button>
+            <Card className={classes.card}>
+              <div className={classes.articlesNavigation}>
+                <Sort
+                  sort_by={sort_by}
+                  updateParentState={this.changeSortBy}
+                  options={[
+                    { name: 'Popular', value: 'comment_count' },
+                    { name: 'Top', value: 'votes' },
+                    { name: 'New', value: 'created_at' },
+                  ]}
+                />
+                {
+                  <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
+                  Previous
+                  </Button>
           }
-            {
-              <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
-                Next
-              </Button>
+                {
+                  <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
+                  Next
+                  </Button>
           }
+              </div>
+            </Card>
           </Grid>
           {articles.map(article => (
             <React.Fragment key={article.article_id}>

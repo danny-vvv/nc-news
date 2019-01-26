@@ -88,13 +88,12 @@ class App extends Component {
           && (
           <Grid item xs={12}>
             <Router>
-              {/* <Header path="/" /> */}
               <Header path="/*" heading={heading} />
             </Router>
           </Grid>
           )
           }
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <Router>
               <Login path="/login" changeLoginState={changeLoginState} />
               <Articles path="/" setHeading={setHeading} username={username} />
@@ -137,7 +136,7 @@ class App extends Component {
               />
             </Router>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
           </Grid>
           <Grid item xs={12}>
