@@ -72,12 +72,12 @@ class Vote extends Component {
     render() {
       const { handleClick, disable } = this;
       const { voteChange, apiRejected, promptLogin } = this.state;
-      const { votes, classes } = this.props;
+      const { votes, classes, hideVotes } = this.props;
       return (
         <div className={classes.root}>
           <Button variant="text" size="small" onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
           <Typography variant="overline">
-            {votes + voteChange}
+            {!hideVotes && votes + voteChange}
           </Typography>
           <Button variant="text" size="small" onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
           {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
@@ -95,6 +95,12 @@ Vote.propTypes = {
     article_id: PropTypes.number,
   }).isRequired,
   username: PropTypes.string.isRequired,
+  classes: PropTypes.shape({}).isRequired,
+  hideVotes: PropTypes.bool,
+};
+
+Vote.defaultProps = {
+  hideVotes: false,
 };
 
 export default withStyles(styles)(Vote);

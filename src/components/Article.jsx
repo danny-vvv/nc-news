@@ -40,7 +40,7 @@ const styles = theme => ({
   },
   details: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   articleLink: {
     all: 'none',
@@ -49,6 +49,14 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'row',
     paddingLeft: theme.spacing.unit,
+  },
+  delete: {
+    display: 'flex',
+    paddingTop: theme.spacing.unit * 2,
+  },
+  comments: {
+    display: 'flex',
+    paddingTop: theme.spacing.unit * 4,
   },
 });
 
@@ -148,18 +156,13 @@ class Article extends Component {
               <Grid item xs={11}>
                 <div className={classes.details}>
                   <Typography variant="caption">
-                                Posted by
                     <Link to={`/users/${author}`}>
-                      {' '}
                       {author}
                     </Link>
-                    {' '}
-                    {userIsAuthor && <i>(you)</i>}
-                    {' '}
+                    {userIsAuthor && <i> (you) </i>}
                     {`${moment(created_at).fromNow()}`}
                   </Typography>
                 </div>
-
                 <div className={classes.titleSection}>
                   <CardContent>
                     <Typography
@@ -172,27 +175,35 @@ class Article extends Component {
                     <article>
                       <p>{body}</p>
                     </article>
-                    {userIsAuthor
-            && (
-              <Delete
-                apiMethod={api.deleteArticle}
-                apiArgs={{ article_id: +article_id }}
-                targetItem="article"
-                redirectUrl={`/topics/${topic}`}
-                redirectTarget={topic}
-                updateParent={this.setDeleted}
-              />
-            )
-          }
+                    <div className={classes.details}>
+                      <Typography variant="caption">
+                        <Icon fontSize="small" color="primary">comment</Icon>
+                        {` ${comment_count} comments`}
+                      </Typography>
+                      {userIsAuthor
+                      && (
+                      <Delete
+                        apiMethod={api.deleteArticle}
+                        apiArgs={{ article_id: +article_id }}
+                        targetItem="article"
+                        redirectUrl={`/topics/${topic}`}
+                        redirectTarget={topic}
+                        updateParent={this.setDeleted}
+                      />
+                      )
+                    }
+                    </div>
+                    <div className={classes.comments}>
+                      <Comments
+                        article_id={+article_id}
+                        username={username}
+                        user_id={user_id}
+                        comment_count={comment_count}
+                      />
+                    </div>
                   </CardContent>
                 </div>
-                <div className={classes.details}>
-                  <Typography variant="caption">
-                    <Icon fontSize="small" color="primary">comment</Icon>
-                    {' '}
-                    {`${comment_count} comments`}
-                  </Typography>
-                </div>
+
               </Grid>
             </Grid>
           </Card>
@@ -210,13 +221,6 @@ class Article extends Component {
             )
           }
         </div>
-
-        <Comments
-          article_id={+article_id}
-          username={username}
-          user_id={user_id}
-          comment_count={comment_count}
-        />
       </React.Fragment>
     );
   }
