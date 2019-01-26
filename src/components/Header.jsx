@@ -7,7 +7,7 @@ import withRoot from '../withRoot';
 const styles = theme => ({
   root: {
     padding: '10px',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.main,
   },
   heading: {
     color: 'white',

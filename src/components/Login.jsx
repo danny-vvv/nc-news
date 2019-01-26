@@ -15,9 +15,6 @@ const styles = theme => ({
   form: {
     display: 'flex',
   },
-  input: {
-    margin: theme.spacing.unit,
-  },
 });
 
 class Login extends Component {
@@ -57,14 +54,13 @@ class Login extends Component {
       <div className={classes.root}>
         <form className={classes.form} onSubmit={this.handleSubmit}>
           <Input
-            className={classes.input}
             type="text"
             value={usernameInput}
             placeholder="Username (e.g. 'jessjelly')"
             onChange={this.handleChange}
             id="usernameInput"
           />
-          <Button type="submit" color="primary">Sign In</Button>
+          <Button type="submit" variant="contained" color="primary">Log In</Button>
         </form>
         {failedLoginAttempt && <alert>Incorrect username</alert>}
       </div>

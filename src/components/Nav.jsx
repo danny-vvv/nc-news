@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { withStyles, Icon, Grid } from '@material-ui/core';
+import {
+  withStyles, Icon, Grid, Hidden,
+} from '@material-ui/core';
 import Login from './Login';
 import Logout from './Logout';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -22,6 +23,9 @@ const styles = () => ({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  icon: {
+    color: theme.palette.secondary.main,
+  },
 });
 
 const Nav = (props) => {
@@ -31,28 +35,30 @@ const Nav = (props) => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <AppBar position="static" className={classes.appBar} color="default">
+        <AppBar position="static" className={classes.appBar} color="white">
           <Toolbar>
             <Grid item xs={8}>
               <div className={classes.topics}>
-                <Button variant="contained" component={Link} to="/" color="primary">
-                  <Icon>home</Icon>
-                  <Typography variant="h6" color="inherit">
-                  NC News
-                  </Typography>
+                <Button component={Link} to="/">
+                  <Icon className={classes.icon}>home</Icon>
+                  nc news
                 </Button>
-                {topics.map(topic => (
-                  <Button component={Link} to={`/topics/${topic.slug}`} key={topic.slug} color="primary">
-                    {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-                  </Button>
-                ))}
+                <Hidden xsDown>
+                  {topics.map(topic => (
+                    <Button component={Link} to={`/topics/${topic.slug}`} key={topic.slug}>
+                      {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                    </Button>
+                  ))}
+                </Hidden>
               </div>
             </Grid>
             <Grid item xs={4}>
-              <div className={classes.account}>
-                {!username && <Login changeLoginState={changeLoginState} />}
-                {username && <Logout changeLoginState={changeLoginState} username={username} />}
-              </div>
+              <Hidden xsDown>
+                <div className={classes.account}>
+                  {!username && <Login changeLoginState={changeLoginState} />}
+                  {username && <Logout changeLoginState={changeLoginState} username={username} />}
+                </div>
+              </Hidden>
             </Grid>
           </Toolbar>
         </AppBar>
