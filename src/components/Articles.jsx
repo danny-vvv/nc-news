@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Vote from './Vote';
 import * as api from '../api';
+import Sort from './Sort';
 
 const styles = theme => ({
   root: {
@@ -48,6 +49,7 @@ class Articles extends Component {
     articles: [],
     page: 1,
     onLastPage: false,
+    sort_by: 'comment_count',
   }
 
   componentDidMount() {
@@ -57,8 +59,8 @@ class Articles extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { page } = this.state;
-    const { topic, setHeading, sort_by } = this.props;
+    const { page, sort_by } = this.state;
+    const { topic, setHeading } = this.props;
     if (topic !== prevProps.topic || page !== prevState.page) {
       this.fetchArticles();
       setHeading(topic);
@@ -66,7 +68,7 @@ class Articles extends Component {
     if (topic !== prevProps.topic) {
       this.resetPage();
     }
-    if (sort_by !== prevProps.sort_by) {
+    if (sort_by !== prevState.sort_by) {
       this.fetchArticles();
     }
   }
@@ -76,8 +78,8 @@ class Articles extends Component {
   }
 
   fetchArticles() {
-    const { page } = this.state;
-    const { topic, sort_by } = this.props;
+    const { page, sort_by } = this.state;
+    const { topic } = this.props;
     api.fetchArticles({ topic, page, sort_by })
       .then(({ articles }) => {
         this.setState({ articles });
@@ -95,13 +97,30 @@ class Articles extends Component {
     this.setState({ page: Math.max(page + increment, 1) });
   }
 
+  changeSortBy = (sort_by) => {
+    this.setState({
+      sort_by,
+    });
+  }
+
   render() {
-    const { articles, page, onLastPage } = this.state;
+    const {
+      articles, page, onLastPage, sort_by,
+    } = this.state;
     const { username, classes } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
+            <Sort
+              sort_by={sort_by}
+              updateParentState={this.changeSortBy}
+              options={[
+                { name: 'Popular', value: 'comment_count' },
+                { name: 'Top', value: 'votes' },
+                { name: 'New', value: 'created_at' },
+              ]}
+            />
             {
               <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
                 Previous
