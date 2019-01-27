@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
+import { Button, Typography, Icon } from '@material-ui/core';
 
 class Delete extends Component {
     state = {
@@ -23,7 +23,9 @@ class Delete extends Component {
         .then(() => {
           if (updateParent) updateParent();
         })
-        .catch(this.setState({ apiRejected: true }));
+        .catch((err) => {
+          if (err) this.setState({ apiRejected: true });
+        });
     }
 
     render() {
@@ -32,29 +34,35 @@ class Delete extends Component {
       const { targetItem } = this.props;
       return (
         <div>
-          {!deleted && <Button color="inherit" variant="contained" onClick={() => handleClick('clicked')}>Delete</Button>}
+          {!deleted
+            && (
+            <Button
+              variant="text"
+              color="primary"
+              onClick={() => handleClick('clicked')}
+            >
+              <Icon fontSize="small">
+                deleteForeverOutlinedIcon
+              </Icon>
+              Delete
+            </Button>
+            )
+          }
           {clicked && !deleted
                       && (
                       <React.Fragment>
-                        <p>
-  Permanently delete this
-                          {' '}
-                          {targetItem}
-  ?
-                        </p>
-                        <Button color="secondary" variant="contained" onClick={handleApiRequest}>Yes</Button>
+                        <Typography variant="caption">
+                          {`Permanently delete this ${targetItem}?`}
+                        </Typography>
+                        <Button color="secondary" variant="text" onClick={handleApiRequest}>Yes</Button>
                         {' '}
-                        <Button color="secondary" variant="contained" onClick={() => handleClick('clicked')}>No</Button>
+                        <Button color="secondary" variant="text" onClick={() => handleClick('clicked')}>No</Button>
                       </React.Fragment>
                       )
                   }
           {deleted && (
           <p>
-            {' '}
-  Successfully deleted
-            {' '}
-            {targetItem}
-            {' '}
+            {` Successfully deleted ${targetItem} `}
           </p>
           )}
           {apiRejected && <p>Unexpected error. Deletion unsuccessful</p>}
@@ -66,8 +74,8 @@ class Delete extends Component {
 Delete.propTypes = {
   apiMethod: PropTypes.func.isRequired,
   apiArgs: PropTypes.shape({
-    comment_id: PropTypes.number.isRequired,
-    article_id: PropTypes.number.isRequired,
+    comment_id: PropTypes.number,
+    article_id: PropTypes.number,
   }).isRequired,
   targetItem: PropTypes.string.isRequired,
   updateParent: PropTypes.func,

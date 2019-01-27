@@ -3,15 +3,22 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { withStyles, Icon, Grid } from '@material-ui/core';
-import Login from './Login';
+import {
+  withStyles, Icon, Grid, Hidden, Grow, Slide,
+} from '@material-ui/core';
 import Logout from './Logout';
+import LoginButton from './LoginButton';
+import TopicsMenu from './TopicsMenu';
+import ControlsMenu from './ControlsMenu';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
+
+  },
+  appBar: {
+    backgroundColor: 'white',
   },
   account: {
     display: 'flex',
@@ -22,6 +29,12 @@ const styles = () => ({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  icon: {
+    color: theme.palette.secondary.main,
+  },
+  menu: {
+    justifyContent: 'flex-end',
+  },
 });
 
 const Nav = (props) => {
@@ -31,26 +44,43 @@ const Nav = (props) => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <AppBar position="static" className={classes.appBar} color="default">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <Grid item xs={8}>
               <div className={classes.topics}>
-                <Button variant="contained" component={Link} to="/" color="primary">
-                  <Icon>home</Icon>
-                  <Typography variant="h6" color="inherit">
-                  NC News
-                  </Typography>
+                <Button component={Link} to="/">
+                  <Icon className={classes.icon}>home</Icon>
+                  nc news
                 </Button>
-                {topics.map(topic => (
-                  <Button component={Link} to={`/topics/${topic.slug}`} key={topic.slug} color="primary">
-                    {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-                  </Button>
-                ))}
+                <Hidden xsDown>
+                  {topics.map(topic => (
+                    <Grow in key={topic.slug}>
+                      <Button component={Link} to={`/topics/${topic.slug}`}>
+                        {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                      </Button>
+                    </Grow>
+                  ))}
+                </Hidden>
+                <TopicsMenu
+                  options={topics.map(topic => topic.slug)}
+                  className={classes.menu}
+                />
+                <ControlsMenu
+                  username={username}
+                  className={classes.menu}
+                  changeLoginState={changeLoginState}
+                />
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={classes.account}>
-                {!username && <Login changeLoginState={changeLoginState} />}
+                {!username && (
+                <React.Fragment>
+                  <Slide in direction="left">
+                    <LoginButton changeLoginState={changeLoginState} />
+                  </Slide>
+                </React.Fragment>
+                ) }
                 {username && <Logout changeLoginState={changeLoginState} username={username} />}
               </div>
             </Grid>

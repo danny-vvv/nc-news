@@ -15,9 +15,9 @@ export const fetchArticles = async ({ topic, page, sort_by }) => {
   return data;
 };
 
-export const fetchComments = async ({ article_id, sort_by }) => {
-  const sortByQuery = `?sort_by=${sort_by}`;
-  const { data } = await axios.get(`${BASE_URL}/articles/${article_id}/comments${sortByQuery}`);
+export const fetchComments = async ({ article_id, sort_by, page }) => {
+  const sortByQuery = `&sort_by=${sort_by}`;
+  const { data } = await axios.get(`${BASE_URL}/articles/${article_id}/comments?p=${page}${sortByQuery}`);
   return data;
 };
 

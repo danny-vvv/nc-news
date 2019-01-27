@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
-import Login from './Login';
+import {
+  withStyles, TextField, Typography, Button,
+} from '@material-ui/core';
+import LoginButton from './LoginButton';
+
+const styles = theme => ({
+  root: {
+
+  },
+  textField: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class Form extends Component {
   state = {
@@ -65,28 +80,48 @@ class Form extends Component {
         if (successUrl) navigate(`${successUrl}/${res[successEndpoint]}`);
         else if (updateParent) updateParent();
       })
-      .catch(this.setState({ apiRejected: true }));
+      .catch((err) => {
+        if (err) this.setState({ apiRejected: true });
+      });
   }
 
   render() {
     const { success, fail, apiRejected } = this.state;
     const {
-      requireLoggedIn, username, changeLoginState, inputs, rejectMessage,
+      classes, requireLoggedIn, username, changeLoginState, inputs, rejectMessage,
     } = this.props;
     return (
-      <React.Fragment>
-        {requireLoggedIn && !username && <Login changeLoginState={changeLoginState} />}
-
+      <div className={classes.root}>
+        {requireLoggedIn && !username
+        && (
+        <React.Fragment>
+          <Typography variant="body1">
+          Please log in to continue.
+          </Typography>
+          <LoginButton changeLoginState={changeLoginState} />
+        </React.Fragment>
+        )
+        }
         {((requireLoggedIn && username) || !requireLoggedIn) && !success
           && (
             <form onSubmit={e => this.handleSubmit(e)}>
               {
                 inputs.map((input, i) => (
                   <React.Fragment key={i}>
-                    <span>{`${this.capitalise(input.id)}: `}</span>
                     {input.type === 'text'
-                      && <input type="text" id={input.id} onChange={this.handleChange} />
-                    }
+                      && (
+                      <TextField
+                        id={input.id}
+                        label={`${this.capitalise(input.id)}`}
+                        multiline
+                        rowsMax="30"
+                        onChange={this.handleChange}
+                        className={classes.textField}
+                        margin="normal"
+                        variant="outlined"
+                      />
+                      )
+                      }
                     {input.type === 'select'
                       && (
                         <select id={input.id} onChange={this.handleChange}>
@@ -97,17 +132,16 @@ class Form extends Component {
                         </select>
                       )
                     }
-                    <br />
                   </React.Fragment>
                 ))
               }
-              {<button type="submit" className="btn-submit">Submit</button>}
+              {<Button type="submit" className="btn-submit">Submit</Button>}
             </form>
           )
         }
         {fail && <p>Please complete all fields.</p>}
         {apiRejected && rejectMessage && <p>{rejectMessage}</p>}
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -153,4 +187,4 @@ Form.defaultProps = {
   updateParent: undefined,
 };
 
-export default Form;
+export default withStyles(styles)(Form);

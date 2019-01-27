@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Icon, Button, withStyles, Typography,
 } from '@material-ui/core';
+import LoginDialogue from './LoginDialogue';
 
 const styles = theme => ({
   root: {
@@ -22,7 +23,7 @@ class Vote extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-      const voteChange = this.state;
+      const { voteChange } = this.state;
       const { username } = this.props;
       if (username !== prevProps.username) {
         this.resetLoginPrompt();
@@ -47,7 +48,7 @@ class Vote extends Component {
       }
     }
 
-    resetLoginPrompt() {
+    resetLoginPrompt = () => {
       this.setState({ promptLogin: false });
     }
 
@@ -66,22 +67,31 @@ class Vote extends Component {
         inc_votes: lastIncrement,
         ...apiArgs,
       };
-      apiMethod(requestBody).catch(() => this.setState({ apiRejected: true }));
+      apiMethod(requestBody).catch((err) => {
+        if (err) this.setState({ apiRejected: true });
+      });
     }
 
     render() {
-      const { handleClick, disable } = this;
+      const { handleClick, disable, resetLoginPrompt } = this;
       const { voteChange, apiRejected, promptLogin } = this.state;
-      const { votes, classes } = this.props;
+      const {
+        votes, classes, hideVotes, changeLoginState,
+      } = this.props;
       return (
         <div className={classes.root}>
           <Button variant="text" size="small" onClick={() => handleClick(1)} disabled={disable(1)}><Icon>arrow_drop_up</Icon></Button>
           <Typography variant="overline">
-            {votes + voteChange}
+            {!hideVotes && votes + voteChange}
           </Typography>
           <Button variant="text" size="small" onClick={() => handleClick(-1)} disabled={disable(-1)}><Icon>arrow_drop_down</Icon></Button>
           {apiRejected && <p>Oops! Vote could not be counted. Try again later.</p>}
-          {promptLogin && <span>Please login to vote.</span>}
+          {promptLogin && (
+          <LoginDialogue
+            changeLoginState={changeLoginState}
+            resetLoginPrompt={resetLoginPrompt}
+          />
+          )}
         </div>
       );
     }
@@ -94,7 +104,15 @@ Vote.propTypes = {
     comment_id: PropTypes.number,
     article_id: PropTypes.number,
   }).isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
+  classes: PropTypes.shape({}).isRequired,
+  hideVotes: PropTypes.bool,
+  changeLoginState: PropTypes.func.isRequired,
+};
+
+Vote.defaultProps = {
+  hideVotes: false,
+  username: undefined,
 };
 
 export default withStyles(styles)(Vote);

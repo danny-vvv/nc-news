@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  withStyles, Select, Input, FormControl, MenuItem, Typography,
+  withStyles, Select, FormControl, MenuItem, InputLabel,
 } from '@material-ui/core';
 
 const Sort = (props) => {
@@ -16,13 +16,12 @@ const Sort = (props) => {
 
   return (
     <form className={classes.root} autoComplete="off">
-      <FormControl className={classes.formControl}>
+      <FormControl variant="filled" className={classes.formControl}>
+        <InputLabel htmlFor="sort">SORT</InputLabel>
         <Select
           value={sort_by}
           onChange={event => handleChange(event)}
-          input={<Input name="sort_by" id="sort-label-placeholder" />}
           name="sort_by"
-          className={classes.selectEmpty}
         >
           {options.map(option => (
             <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>
@@ -40,7 +39,6 @@ Sort.propTypes = {
   classes: PropTypes.shape({
     root: PropTypes.string,
     formControl: PropTypes.string,
-    selectEmpty: PropTypes.string,
   }).isRequired,
 };
 
@@ -56,9 +54,6 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
   },
 });
 

@@ -1,12 +1,60 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
+import {
+  Grid, Typography, Card, CardContent, Icon, withStyles, Fade,
+} from '@material-ui/core';
 import moment from 'moment';
 import * as api from '../api';
 import Comments from './Comments';
 import Delete from './Delete';
 import Vote from './Vote';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing.unit,
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  vote: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  titleSection: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  titleText: {
+    fontSize: '16pt',
+    textDecoration: 'none',
+  },
+  content: {
+    flex: '1 0 auto',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  articleLink: {
+    all: 'none',
+  },
+  articlesNavigation: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingLeft: theme.spacing.unit,
+  },
+  delete: {
+    display: 'flex',
+    paddingTop: theme.spacing.unit * 2,
+  },
+  comments: {
+    display: 'flex',
+  },
+});
 
 class Article extends Component {
   state = {
@@ -81,64 +129,99 @@ class Article extends Component {
     const {
       title, body, author, created_at, votes, userIsAuthor, deleted, topic, comment_count,
     } = this.state;
-    const { article_id, username, user_id } = this.props;
+    const {
+      classes, article_id, username, user_id, changeLoginState,
+    } = this.props;
     return (
-      <div className="Article">
-        {!deleted && title
+      <Fade in timeout={1000}>
+        <div className={classes.root}>
+          {!deleted && title
           && (
-            <article>
-              <Vote
-                votes={votes}
-                apiMethod={api.voteArticle}
-                apiArgs={{ article_id: +article_id }}
-                username={username}
-              />
-              <h2>{title}</h2>
-              <Typography variant="caption">
-                          Posted by
-                <Link to={`/users/${author}`}>
-                  {' '}
-                  {author}
-                </Link>
-                {' '}
-                {userIsAuthor && <i>(you)</i>}
-                {' '}
-                {`${moment(created_at).fromNow()}`}
-              </Typography>
-              <p>{body}</p>
-              {userIsAuthor
-                && (
-                  <Delete
-                    apiMethod={api.deleteArticle}
+          <Card>
+            <Grid container>
+              <Grid item xs={1}>
+                <div className={classes.vote}>
+                  <Vote
+                    votes={votes}
+                    apiMethod={api.voteArticle}
                     apiArgs={{ article_id: +article_id }}
-                    targetItem="article"
-                    redirectUrl={`/topics/${topic}`}
-                    redirectTarget={topic}
-                    updateParent={this.setDeleted}
+                    username={username}
+                    changeLoginState={changeLoginState}
                   />
-                )
-              }
-              <Comments
-                article_id={+article_id}
-                username={username}
-                user_id={user_id}
-                comment_count={comment_count}
-              />
-            </article>
+                </div>
+              </Grid>
+              <Grid item xs={11}>
+                <div className={classes.details}>
+                  <Typography variant="caption">
+                    <Link to={`/users/${author}`}>
+                      {author}
+                    </Link>
+                    {userIsAuthor && <i> (you) </i>}
+                    {`${moment(created_at).fromNow()}`}
+                  </Typography>
+                </div>
+                <div className={classes.titleSection}>
+                  <CardContent className={classes.cardContent}>
+                    <Typography
+                      color="inherit"
+                      variant="h1"
+                      className={classes.titleText}
+                    >
+                      {title}
+                    </Typography>
+                    <article>
+                      <Typography variant="body1">
+                        {body}
+                      </Typography>
+                    </article>
+                    <div className={classes.details}>
+                      <Typography variant="caption">
+                        <Icon fontSize="small" color="primary">comment</Icon>
+                        {` ${comment_count} comments`}
+                      </Typography>
+                      {userIsAuthor
+                      && (
+                      <Delete
+                        apiMethod={api.deleteArticle}
+                        apiArgs={{ article_id: +article_id }}
+                        targetItem="article"
+                        redirectUrl={`/topics/${topic}`}
+                        redirectTarget={topic}
+                        updateParent={this.setDeleted}
+                      />
+                      )
+                    }
+                    </div>
+                  </CardContent>
+                </div>
+
+              </Grid>
+              <div className={classes.comments}>
+                <Comments
+                  article_id={+article_id}
+                  username={username}
+                  user_id={user_id}
+                  comment_count={comment_count}
+                  changeLoginState={changeLoginState}
+                />
+              </div>
+            </Grid>
+          </Card>
           )}
-        {deleted
-          && (
-            <React.Fragment>
-              <p>Your post has been successfully deleted.</p>
-              <Link to={`/topics/${topic}`}>
-                Return to
-                {' '}
-                {topic}
-              </Link>
-            </React.Fragment>
-          )
-        }
-      </div>
+          {deleted
+            && (
+              <React.Fragment>
+                <p>Your post has been successfully deleted.</p>
+                <Link to={`/topics/${topic}`}>
+                  Return to
+                  {' '}
+                  {topic}
+                </Link>
+              </React.Fragment>
+            )
+          }
+        </div>
+      </Fade>
     );
   }
 }
@@ -147,6 +230,9 @@ Article.propTypes = {
   article_id: PropTypes.string,
   username: PropTypes.string,
   user_id: PropTypes.number,
+  classes: PropTypes.shape({}).isRequired,
+  changeLoginState: PropTypes.func.isRequired,
+  setHeading: PropTypes.func.isRequired,
 };
 
 Article.defaultProps = {
@@ -155,4 +241,4 @@ Article.defaultProps = {
   user_id: undefined,
 };
 
-export default Article;
+export default withStyles(styles)(Article);
