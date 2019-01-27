@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
-import { withStyles, TextField, Typography } from '@material-ui/core';
+import {
+  withStyles, TextField, Typography, Button,
+} from '@material-ui/core';
 import LoginButton from './LoginButton';
 
 const styles = theme => ({
@@ -78,7 +80,9 @@ class Form extends Component {
         if (successUrl) navigate(`${successUrl}/${res[successEndpoint]}`);
         else if (updateParent) updateParent();
       })
-      .catch(this.setState({ apiRejected: true }));
+      .catch((err) => {
+        if (err) this.setState({ apiRejected: true });
+      });
   }
 
   render() {
@@ -131,7 +135,7 @@ class Form extends Component {
                   </React.Fragment>
                 ))
               }
-              {<button type="submit" className="btn-submit">Submit</button>}
+              {<Button type="submit" className="btn-submit">Submit</Button>}
             </form>
           )
         }

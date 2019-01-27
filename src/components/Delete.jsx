@@ -23,7 +23,9 @@ class Delete extends Component {
         .then(() => {
           if (updateParent) updateParent();
         })
-        .catch(this.setState({ apiRejected: true }));
+        .catch((err) => {
+          if (err) this.setState({ apiRejected: true });
+        });
     }
 
     render() {

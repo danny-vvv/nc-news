@@ -67,7 +67,9 @@ class Vote extends Component {
         inc_votes: lastIncrement,
         ...apiArgs,
       };
-      apiMethod(requestBody).catch(() => this.setState({ apiRejected: true }));
+      apiMethod(requestBody).catch((err) => {
+        if (err) this.setState({ apiRejected: true });
+      });
     }
 
     render() {
