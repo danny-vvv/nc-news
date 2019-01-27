@@ -94,13 +94,14 @@ Vote.propTypes = {
     comment_id: PropTypes.number,
     article_id: PropTypes.number,
   }).isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
   classes: PropTypes.shape({}).isRequired,
   hideVotes: PropTypes.bool,
 };
 
 Vote.defaultProps = {
   hideVotes: false,
+  username: undefined,
 };
 
 export default withStyles(styles)(Vote);

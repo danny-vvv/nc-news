@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
-import { withStyles, TextField } from '@material-ui/core';
+import { withStyles, TextField, Typography } from '@material-ui/core';
 import Login from './Login';
 
 const styles = theme => ({
@@ -88,7 +88,16 @@ class Form extends Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        {requireLoggedIn && !username && <Login changeLoginState={changeLoginState} />}
+        {requireLoggedIn && !username
+        && (
+        <React.Fragment>
+          <Typography variant="body1">
+          Please log in to continue.
+          </Typography>
+          <Login changeLoginState={changeLoginState} />
+        </React.Fragment>
+        )
+        }
         {((requireLoggedIn && username) || !requireLoggedIn) && !success
           && (
             <form onSubmit={e => this.handleSubmit(e)}>

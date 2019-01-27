@@ -20,7 +20,7 @@ const styles = theme => ({
 });
 
 const Sidebar = (props) => {
-  const { classes } = props;
+  const { classes, username } = props;
   return (
     <div className={classes.root}>
       <Card className={classes.card}>
