@@ -104,7 +104,9 @@ class Articles extends Component {
           this.setState({ onLastPage: false });
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        if (err) console.log(err);
+      });
   }
 
   resetPage() {
@@ -115,7 +117,7 @@ class Articles extends Component {
     const {
       articles, page, onLastPage, sort_by,
     } = this.state;
-    const { username, classes } = this.props;
+    const { username, classes, changeLoginState } = this.props;
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
@@ -156,6 +158,7 @@ class Articles extends Component {
                           apiMethod={api.voteArticle}
                           apiArgs={{ article_id: article.article_id }}
                           username={username}
+                          changeLoginState={changeLoginState}
                         />
                       </div>
                     </Grid>
@@ -212,6 +215,7 @@ Articles.propTypes = {
     card: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
+  changeLoginState: PropTypes.func.isRequired,
 };
 
 Articles.defaultProps = {

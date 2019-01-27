@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Button, Input, withStyles, Dialog, DialogContent, DialogTitle, DialogContentText, TextField, DialogActions, Typography,
+  Button, withStyles, Dialog, DialogContent, DialogTitle, DialogContentText, TextField, DialogActions, Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import * as api from '../api';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',

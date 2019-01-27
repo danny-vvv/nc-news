@@ -96,8 +96,8 @@ class App extends Component {
           <Grid item md>
             <Router>
               <Login path="/login" changeLoginState={changeLoginState} />
-              <Articles path="/" setHeading={setHeading} username={username} />
-              <Articles path="/topics/:topic" setHeading={setHeading} username={username} />
+              <Articles path="/" setHeading={setHeading} username={username} changeLoginState={changeLoginState} />
+              <Articles path="/topics/:topic" setHeading={setHeading} username={username} changeLoginState={changeLoginState} />
               <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
               <User path="/users/:username" setHeading={setHeading} />
               <Form // Post Article
