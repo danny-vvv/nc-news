@@ -15,13 +15,13 @@ class ControlsMenu extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { selected } = this.state;
     const { username } = this.props;
-    if (selected !== prevState.selected) {
+    if (selected && selected !== prevState.selected) {
       if (username) {
-        navigate(`${selected}`);
+        this.navigateToSelected();
       }
     }
-    if (selected && username) {
-      navigate(`${selected}`);
+    if (username && selected && username !== prevProps.username) {
+      this.navigateToSelected();
     }
   }
 
@@ -32,7 +32,6 @@ class ControlsMenu extends Component {
   handleClick = (event) => {
     this.setState({ anchorEl: event.currentTarget, promptLogin: false });
   };
-
 
   handleClose = (event) => {
     const selected = event.target.id;
@@ -46,6 +45,16 @@ class ControlsMenu extends Component {
       }
     }
   };
+
+  navigateToSelected() {
+    const { selected } = this.state;
+    navigate(`${selected}`);
+    this.setState({
+      anchorEl: null,
+      selected: null,
+      promptLogin: false,
+    });
+  }
 
   render() {
     const { anchorEl, promptLogin } = this.state;
@@ -76,7 +85,12 @@ class ControlsMenu extends Component {
             </MenuItem>
           ))}
         </Menu>
-        {promptLogin && <LoginDialogue changeLoginState={changeLoginState} resetLoginPrompt={this.resetLoginPrompt} />}
+        {promptLogin && (
+        <LoginDialogue
+          changeLoginState={changeLoginState}
+          resetLoginPrompt={this.resetLoginPrompt}
+        />
+        )}
       </div>
     );
   }
