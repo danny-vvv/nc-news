@@ -50,7 +50,7 @@ class User extends Component {
         <Card className={classes.card}>
           <Typography variant="h2">{username}</Typography>
           <Avatar alt={username} src={avatar_url} className={classes.avatar} />
-          <Typography variant="subtitle">{name}</Typography>
+          <Typography variant="subtitle1">{name}</Typography>
         </Card>
       </div>
     );
@@ -60,7 +60,7 @@ class User extends Component {
 User.propTypes = {
   username: PropTypes.string,
   setHeading: PropTypes.func.isRequired,
-  classes: PropTypes.shape.isRequired,
+  classes: PropTypes.shape({}).isRequired,
 };
 
 User.defaultProps = {
