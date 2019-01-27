@@ -72,7 +72,7 @@ class Comments extends Component {
       comments, sort_by, page, onLastPage,
     } = this.state;
     const {
-      classes, username, user_id, article_id,
+      classes, username, user_id, article_id, changeLoginState,
     } = this.props;
     return (
       <div>
@@ -110,6 +110,7 @@ class Comments extends Component {
                     apiMethod={api.voteComment}
                     apiArgs={{ article_id, comment_id: comment.comment_id }}
                     username={username}
+                    changeLoginState={changeLoginState}
                   />
                 </Grid>
                 <Grid item xs={11}>
@@ -152,6 +153,7 @@ Comments.propTypes = {
   article_id: PropTypes.number.isRequired,
   username: PropTypes.string,
   user_id: PropTypes.number,
+  changeLoginState: PropTypes.func.isRequired,
 };
 
 Comments.defaultProps = {

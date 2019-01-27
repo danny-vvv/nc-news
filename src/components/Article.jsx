@@ -134,7 +134,7 @@ class Article extends Component {
       title, body, author, created_at, votes, userIsAuthor, deleted, topic, comment_count,
     } = this.state;
     const {
-      classes, article_id, username, user_id,
+      classes, article_id, username, user_id, changeLoginState,
     } = this.props;
     return (
       <React.Fragment>
@@ -150,6 +150,7 @@ class Article extends Component {
                     apiMethod={api.voteArticle}
                     apiArgs={{ article_id: +article_id }}
                     username={username}
+                    changeLoginState={changeLoginState}
                   />
                 </div>
               </Grid>
@@ -199,6 +200,7 @@ class Article extends Component {
                         username={username}
                         user_id={user_id}
                         comment_count={comment_count}
+                        changeLoginState={changeLoginState}
                       />
                     </div>
                   </CardContent>
@@ -231,6 +233,7 @@ Article.propTypes = {
   username: PropTypes.string,
   user_id: PropTypes.number,
   classes: PropTypes.shape({}).isRequired,
+  changeLoginState: PropTypes.func.isRequired,
 };
 
 Article.defaultProps = {

@@ -6,13 +6,13 @@ import Nav from './components/Nav';
 import Sidebar from './components/Sidebar';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Login from './components/Login';
 import Articles from './components/Articles';
 import Article from './components/Article';
 import User from './components/User';
 import * as api from './api';
 import Form from './components/Form';
 import withRoot from './withRoot';
+import LoginButton from './components/LoginButton';
 
 const styles = () => ({
   root: {
@@ -95,10 +95,10 @@ class App extends Component {
           }
           <Grid item md>
             <Router>
-              <Login path="/login" changeLoginState={changeLoginState} />
+              <LoginButton path="/login" changeLoginState={changeLoginState} />
               <Articles path="/" setHeading={setHeading} username={username} changeLoginState={changeLoginState} />
               <Articles path="/topics/:topic" setHeading={setHeading} username={username} changeLoginState={changeLoginState} />
-              <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} />
+              <Article path="/articles/:article_id" username={username} user_id={user_id} setHeading={setHeading} changeLoginState={changeLoginState} />
               <User path="/users/:username" setHeading={setHeading} />
               <Form // Post Article
                 path="/submit"

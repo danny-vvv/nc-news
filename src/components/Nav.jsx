@@ -7,8 +7,8 @@ import Button from '@material-ui/core/Button';
 import {
   withStyles, Icon, Grid, Hidden,
 } from '@material-ui/core';
-import Login from './Login';
 import Logout from './Logout';
+import LoginButton from './LoginButton';
 
 const styles = theme => ({
   root: {
@@ -58,7 +58,7 @@ const Nav = (props) => {
             <Grid item xs={4}>
               <Hidden xsDown>
                 <div className={classes.account}>
-                  {!username && <Login changeLoginState={changeLoginState} />}
+                  {!username && <LoginButton changeLoginState={changeLoginState} />}
                   {username && <Logout changeLoginState={changeLoginState} username={username} />}
                 </div>
               </Hidden>

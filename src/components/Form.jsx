@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from '@reach/router';
 import { withStyles, TextField, Typography } from '@material-ui/core';
-import Login from './Login';
+import LoginButton from './LoginButton';
 
 const styles = theme => ({
   root: {
@@ -94,7 +94,7 @@ class Form extends Component {
           <Typography variant="body1">
           Please log in to continue.
           </Typography>
-          <Login changeLoginState={changeLoginState} />
+          <LoginButton changeLoginState={changeLoginState} />
         </React.Fragment>
         )
         }
