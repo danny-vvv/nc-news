@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import {
-  Grid, Typography, withStyles, Card, CardActionArea, CardContent, Icon, Button, Grow, CircularProgress,
+  Grid, Typography, withStyles, Card, CardActionArea, CardContent, Icon, Button, CircularProgress, Fade,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -150,7 +150,7 @@ class Articles extends Component {
           {!fetched && <CircularProgress className={classes.circularProgress} /> }
           {articles.map(article => (
             <React.Fragment key={article.article_id}>
-              <Grow in>
+              <Fade in>
                 <Grid item xs={12}>
                   <Card className={classes.card}>
                     <Grid container>
@@ -201,7 +201,7 @@ class Articles extends Component {
                     </Grid>
                   </Card>
                 </Grid>
-              </Grow>
+              </Fade>
             </React.Fragment>
           ))}
         </Grid>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 import {
-  Typography, withStyles, Grid, Button,
+  Typography, withStyles, Grid, Button, Fade,
 } from '@material-ui/core';
 import moment from 'moment';
 import Delete from './Delete';
@@ -12,13 +12,16 @@ import CommentForm from './CommentForm';
 import * as api from '../api';
 
 const styles = theme => ({
-  comments: {
+  root: {
     display: 'flex',
     flexDirection: 'column',
+    padding: theme.spacing.unit * 2,
   },
   comment: {
     display: 'flex',
     flexDirection: 'column',
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
   },
   commentBody: {
     display: 'flex',
@@ -75,9 +78,9 @@ class Comments extends Component {
       classes, username, user_id, article_id, changeLoginState,
     } = this.props;
     return (
-      <div>
+      <div className={classes.root}>
         {!comments.length && <p><i>Be the first to comment!</i></p>}
-        {!username && <p>(You must be logged in to post comments.)</p>}
+        {!username && <Typography>(You must be logged in to post comments.)</Typography>}
         {username
           && (
             <CommentForm username={username} user_id={user_id} article_id={article_id} updateParent={this.refreshComments} />
@@ -90,18 +93,21 @@ class Comments extends Component {
             { name: 'Top', value: 'votes' },
           ]}
         />
-        {
-          <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
+        <div>
+          {
+            <Button variant="text" color="primary" onClick={() => this.changePage(-1)} disabled={page === 1}>
                   Previous
-          </Button>
+            </Button>
           }
-        {
-          <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
+          {
+            <Button variant="text" color="primary" onClick={() => this.changePage(1)} disabled={onLastPage}>
                   Next
-          </Button>
+            </Button>
           }
+        </div>
         {comments.map(comment => (
-          <React.Fragment key={comment.comment_id}>
+          <Fade in key={comment.comment_id}>
+            <div className={classes.comment}>
             <Grid item xs={12}>
               <Grid container>
                 <Grid item xs={1}>
@@ -127,7 +133,7 @@ class Comments extends Component {
                     )}
                     {`· ${moment(comment.created_at).fromNow()}`}
                   </Typography>
-                  <Typography variant="body1" className={classes.commentBody}>
+                  <Typography variant="body2" className={classes.commentBody}>
                     {comment.body}
                   </Typography>
                   {comment.author === username && (
@@ -141,9 +147,9 @@ class Comments extends Component {
                 </Grid>
               </Grid>
             </Grid>
-          </React.Fragment>
+          </div>
+          </Fade>
         ))}
-
       </div>
     );
   }

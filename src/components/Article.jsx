@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 import {
-  Grid, Typography, Card, CardContent, Icon, withStyles,
+  Grid, Typography, Card, CardContent, Icon, withStyles, Fade,
 } from '@material-ui/core';
 import moment from 'moment';
 import * as api from '../api';
@@ -13,10 +13,7 @@ import Vote from './Vote';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 4,
-    paddingRight: theme.spacing.unit * 4,
-    paddingBottom: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
   card: {
     display: 'flex',
@@ -56,7 +53,6 @@ const styles = theme => ({
   },
   comments: {
     display: 'flex',
-    paddingTop: theme.spacing.unit * 4,
   },
 });
 
@@ -137,11 +133,11 @@ class Article extends Component {
       classes, article_id, username, user_id, changeLoginState,
     } = this.props;
     return (
-      <React.Fragment>
+      <Fade in timeout={1000}>
         <div className={classes.root}>
           {!deleted && title
           && (
-          <Card className={classes.card}>
+          <Card>
             <Grid container>
               <Grid item xs={1}>
                 <div className={classes.vote}>
@@ -165,7 +161,7 @@ class Article extends Component {
                   </Typography>
                 </div>
                 <div className={classes.titleSection}>
-                  <CardContent>
+                  <CardContent className={classes.cardContent}>
                     <Typography
                       color="inherit"
                       variant="h1"
@@ -174,7 +170,9 @@ class Article extends Component {
                       {title}
                     </Typography>
                     <article>
-                      <p>{body}</p>
+                      <Typography variant="body1">
+                        {body}
+                      </Typography>
                     </article>
                     <div className={classes.details}>
                       <Typography variant="caption">
@@ -194,19 +192,19 @@ class Article extends Component {
                       )
                     }
                     </div>
-                    <div className={classes.comments}>
-                      <Comments
-                        article_id={+article_id}
-                        username={username}
-                        user_id={user_id}
-                        comment_count={comment_count}
-                        changeLoginState={changeLoginState}
-                      />
-                    </div>
                   </CardContent>
                 </div>
 
               </Grid>
+              <div className={classes.comments}>
+                <Comments
+                  article_id={+article_id}
+                  username={username}
+                  user_id={user_id}
+                  comment_count={comment_count}
+                  changeLoginState={changeLoginState}
+                />
+              </div>
             </Grid>
           </Card>
           )}
@@ -223,7 +221,7 @@ class Article extends Component {
             )
           }
         </div>
-      </React.Fragment>
+      </Fade>
     );
   }
 }
@@ -234,6 +232,7 @@ Article.propTypes = {
   user_id: PropTypes.number,
   classes: PropTypes.shape({}).isRequired,
   changeLoginState: PropTypes.func.isRequired,
+  setHeading: PropTypes.func.isRequired,
 };
 
 Article.defaultProps = {
