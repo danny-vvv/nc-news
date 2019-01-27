@@ -57,7 +57,7 @@ class LoginDialogue extends Component {
         <DialogTitle id="form-dialog-title">Log In</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {'Try using \'jessjelly\' or any other username you see around the site. Don\'t worry, these aren\'t real users!'}
+            {'Try using \'jessjelly\' or any other username you see around the site. All accounts are test accounts and do not belong to anyone.'}
           </DialogContentText>
           <TextField
             autoFocus
