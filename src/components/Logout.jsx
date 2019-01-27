@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import { Button, withStyles, Hidden } from '@material-ui/core';
+import {
+  Button, withStyles, Hidden, Slide,
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const styles = theme => ({
@@ -18,27 +20,29 @@ const Logout = (props) => {
   const { username, changeLoginState, classes } = props;
 
   return (
-    <div className={classes.root}>
-      <Hidden xsDown>
+    <Slide in direction="left">
+      <div className={classes.root}>
+        <Hidden xsDown>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            component={Link}
+            to={`/users/${username}`}
+          >
+            {username}
+          </Button>
+        </Hidden>
         <Button
           variant="outlined"
           color="primary"
           className={classes.button}
-          component={Link}
-          to={`/users/${username}`}
+          onClick={() => changeLoginState({ username: undefined, user_id: undefined })}
         >
-          {username}
-        </Button>
-      </Hidden>
-      <Button
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-        onClick={() => changeLoginState({ username: undefined, user_id: undefined })}
-      >
         Logout
-      </Button>
-    </div>
+        </Button>
+      </div>
+    </Slide>
   );
 };
 

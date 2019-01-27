@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import {
-  withStyles, Icon, Grid, Hidden,
+  withStyles, Icon, Grid, Hidden, Grow, Slide,
 } from '@material-ui/core';
 import Logout from './Logout';
 import LoginButton from './LoginButton';
@@ -48,16 +48,24 @@ const Nav = (props) => {
                 </Button>
                 <Hidden xsDown>
                   {topics.map(topic => (
-                    <Button component={Link} to={`/topics/${topic.slug}`} key={topic.slug}>
-                      {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
-                    </Button>
+                    <Grow in key={topic.slug}>
+                      <Button component={Link} to={`/topics/${topic.slug}`}>
+                        {topic.slug[0].toUpperCase() + topic.slug.slice(1)}
+                      </Button>
+                    </Grow>
                   ))}
                 </Hidden>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={classes.account}>
-                {!username && <LoginButton changeLoginState={changeLoginState} />}
+                {!username && (
+                <React.Fragment>
+                  <Slide in direction="left">
+                    <LoginButton changeLoginState={changeLoginState} />
+                  </Slide>
+                </React.Fragment>
+                ) }
                 {username && <Logout changeLoginState={changeLoginState} username={username} />}
               </div>
             </Grid>
