@@ -9,10 +9,12 @@ import {
 } from '@material-ui/core';
 import Logout from './Logout';
 import LoginButton from './LoginButton';
+import TopicsMenu from './TopicsMenu';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+
   },
   appBar: {
     backgroundColor: 'white',
@@ -29,6 +31,9 @@ const styles = theme => ({
   icon: {
     color: theme.palette.secondary.main,
   },
+  topicsMenu: {
+    justifyContent: 'flex-end',
+  },
 });
 
 const Nav = (props) => {
@@ -40,7 +45,7 @@ const Nav = (props) => {
       <Grid container>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <Grid item xs={8}>
+            <Grid item xs={10}>
               <div className={classes.topics}>
                 <Button component={Link} to="/">
                   <Icon className={classes.icon}>home</Icon>
@@ -55,9 +60,13 @@ const Nav = (props) => {
                     </Grow>
                   ))}
                 </Hidden>
+                <TopicsMenu
+                  options={topics.map(topic => topic.slug)}
+                  className={classes.topicsMenu}
+                />
               </div>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={2}>
               <div className={classes.account}>
                 {!username && (
                 <React.Fragment>
