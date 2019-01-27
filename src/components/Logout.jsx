@@ -3,11 +3,14 @@ import { Link } from '@reach/router';
 import { Button, withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
     float: 'right',
+  },
+  button: {
+    marginLeft: theme.spacing.unit,
   },
 });
 
@@ -16,8 +19,23 @@ const Logout = (props) => {
 
   return (
     <div className={classes.root}>
-      <Button color="primary" component={Link} to={`/users/${username}`}>{username}</Button>
-      <Button color="primary" onClick={() => changeLoginState({ username: undefined, user_id: undefined })}>Logout</Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        component={Link}
+        to={`/users/${username}`}
+      >
+        {username}
+      </Button>
+      <Button
+        variant="outlined"
+        color="primary"
+        className={classes.button}
+        onClick={() => changeLoginState({ username: undefined, user_id: undefined })}
+      >
+        Logout
+      </Button>
     </div>
   );
 };
