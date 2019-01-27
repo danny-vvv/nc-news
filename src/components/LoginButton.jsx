@@ -18,11 +18,11 @@ class LoginButton extends Component {
 
   render() {
     const { open } = this.state;
-    const { changeLoginState } = this.props;
+    const { changeLoginState, buttonText } = this.props;
     return (
       <div>
         <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Log In
+          {buttonText}
         </Button>
         {open && <LoginDialogue changeLoginState={changeLoginState} resetLoginPrompt={this.handleClose} />}
       </div>
@@ -32,6 +32,11 @@ class LoginButton extends Component {
 
 LoginButton.propTypes = {
   changeLoginState: PropTypes.func.isRequired,
+  buttonText: PropTypes.string,
+};
+
+LoginButton.defaultProps = {
+  buttonText: 'Log In',
 };
 
 export default LoginButton;

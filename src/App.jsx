@@ -138,7 +138,11 @@ class App extends Component {
           </Grid>
           <Hidden xsDown>
             <Grid item xs={4}>
-              <Sidebar username={username} changeLoginState={changeLoginState} topics={topics} />
+              <Sidebar
+                username={username}
+                changeLoginState={changeLoginState}
+                topics={topics}
+              />
             </Grid>
           </Hidden>
           <Grid item xs={12}>
