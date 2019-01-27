@@ -56,12 +56,10 @@ const Nav = (props) => {
               </div>
             </Grid>
             <Grid item xs={4}>
-              <Hidden xsDown>
-                <div className={classes.account}>
-                  {!username && <LoginButton changeLoginState={changeLoginState} />}
-                  {username && <Logout changeLoginState={changeLoginState} username={username} />}
-                </div>
-              </Hidden>
+              <div className={classes.account}>
+                {!username && <LoginButton changeLoginState={changeLoginState} />}
+                {username && <Logout changeLoginState={changeLoginState} username={username} />}
+              </div>
             </Grid>
           </Toolbar>
         </AppBar>

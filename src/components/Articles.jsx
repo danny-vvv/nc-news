@@ -12,10 +12,7 @@ import Sort from './Sort';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 4,
-    paddingRight: theme.spacing.unit * 4,
-    paddingBottom: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
   card: {
     display: 'flex',

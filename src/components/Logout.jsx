@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import { Button, withStyles } from '@material-ui/core';
+import { Button, withStyles, Hidden } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const styles = theme => ({
@@ -19,15 +19,17 @@ const Logout = (props) => {
 
   return (
     <div className={classes.root}>
-      <Button
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-        component={Link}
-        to={`/users/${username}`}
-      >
-        {username}
-      </Button>
+      <Hidden xsDown>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.button}
+          component={Link}
+          to={`/users/${username}`}
+        >
+          {username}
+        </Button>
+      </Hidden>
       <Button
         variant="outlined"
         color="primary"
