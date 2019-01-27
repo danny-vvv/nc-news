@@ -79,7 +79,11 @@ class Sidebar extends Component {
 Sidebar.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   changeLoginState: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
+};
+
+Sidebar.defaultProps = {
+  username: undefined,
 };
 
 export default withStyles(styles)(Sidebar);

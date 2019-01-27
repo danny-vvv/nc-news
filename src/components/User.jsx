@@ -1,6 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {
+  Typography, Card, withStyles, Avatar,
+} from '@material-ui/core';
 import * as api from '../api';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    paddingTop: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingRight: theme.spacing.unit * 4,
+    paddingBottom: theme.spacing.unit,
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: 10,
+    width: 60,
+    height: 60,
+  },
+});
 
 class User extends Component {
   state = {
@@ -20,20 +43,15 @@ class User extends Component {
 
   render() {
     const { user } = this.state;
+    const { classes } = this.props;
     const { username, avatar_url, name } = user;
     return (
-      <div className="User">
-        <img src={avatar_url} alt={`${username}'s avatar`} />
-        <p>
-          Username:
-          {' '}
-          {username}
-        </p>
-        <p>
-          Real name:
-          {' '}
-          {name}
-        </p>
+      <div className={classes.root}>
+        <Card className={classes.card}>
+          <Typography variant="h2">{username}</Typography>
+          <Avatar alt={username} src={avatar_url} className={classes.avatar} />
+          <Typography variant="subtitle">{name}</Typography>
+        </Card>
       </div>
     );
   }
@@ -42,10 +60,11 @@ class User extends Component {
 User.propTypes = {
   username: PropTypes.string,
   setHeading: PropTypes.func.isRequired,
+  classes: PropTypes.shape.isRequired,
 };
 
 User.defaultProps = {
   username: '',
 };
 
-export default User;
+export default withStyles(styles)(User);

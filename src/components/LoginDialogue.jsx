@@ -35,9 +35,13 @@ class LoginDialogue extends Component {
     const { changeLoginState } = this.props;
     api.fetchUser(username)
       .then(({ user }) => {
-        const { user_id } = user;
+        const {
+          user_id, avatar_url, name,
+        } = user;
         this.handleClose();
-        changeLoginState({ username, user_id });
+        changeLoginState({
+          user_id, username, avatar_url, name,
+        });
       })
       .catch((err) => {
         if (err) this.setState({ failedLoginAttempt: true });
