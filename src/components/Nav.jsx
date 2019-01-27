@@ -10,6 +10,7 @@ import {
 import Logout from './Logout';
 import LoginButton from './LoginButton';
 import TopicsMenu from './TopicsMenu';
+import ControlsMenu from './ControlsMenu';
 
 const styles = theme => ({
   root: {
@@ -31,7 +32,7 @@ const styles = theme => ({
   icon: {
     color: theme.palette.secondary.main,
   },
-  topicsMenu: {
+  menu: {
     justifyContent: 'flex-end',
   },
 });
@@ -45,7 +46,7 @@ const Nav = (props) => {
       <Grid container>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <Grid item xs={10}>
+            <Grid item xs={8}>
               <div className={classes.topics}>
                 <Button component={Link} to="/">
                   <Icon className={classes.icon}>home</Icon>
@@ -62,11 +63,16 @@ const Nav = (props) => {
                 </Hidden>
                 <TopicsMenu
                   options={topics.map(topic => topic.slug)}
-                  className={classes.topicsMenu}
+                  className={classes.menu}
+                />
+                <ControlsMenu
+                  username={username}
+                  className={classes.menu}
+                  changeLoginState={changeLoginState}
                 />
               </div>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
               <div className={classes.account}>
                 {!username && (
                 <React.Fragment>

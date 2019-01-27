@@ -99,7 +99,11 @@ class LoginDialogue extends Component {
 
 LoginDialogue.propTypes = {
   changeLoginState: PropTypes.func.isRequired,
-  resetLoginPrompt: PropTypes.func.isRequired,
+  resetLoginPrompt: PropTypes.func,
+};
+
+LoginDialogue.defaultProps = {
+  resetLoginPrompt: undefined,
 };
 
 export default LoginDialogue;
